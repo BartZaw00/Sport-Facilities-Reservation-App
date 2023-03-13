@@ -2,7 +2,7 @@ import React from "react";
 
 const SportFacilities = () => {
   return (
-  <div className="px-20 ">SportFacilities</div>
+  <div className="px-20 "></div>
   )
 };
 
