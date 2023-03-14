@@ -3,10 +3,12 @@ import tennis_icon from "../assets/tennis.svg";
 import basketball_icon from "../assets/basketball.svg";
 import voleyball_icon from "../assets/volleyball.svg";
 
+import orlik from "../assets/orlik.jpg";
+
 export const categories = [
   {
     id: 1,
-    name: "Football",
+    name: "Piłka nożna",
     icon: football_icon,
   },
   {
@@ -16,12 +18,98 @@ export const categories = [
   },
   {
     id: 3,
-    name: "Basketball",
+    name: "Koszykówka",
     icon: basketball_icon,
   },
   {
     id: 4,
-    name: "Volleyball",
+    name: "Siatkówka",
     icon: voleyball_icon,
+  },
+];
+
+export const sportFacilitiesData = [
+  {
+    id: 1,
+    category: "football",
+    facilities: [
+      {
+        id: 1,
+        img: orlik,
+        type: "Orlik",
+        address: "Żwirowa 18",
+        city: "Starowa Góra",
+      },
+      {
+        id: 2,
+        img: orlik,
+        type: "Orlik",
+        address: "Żwirowa 18",
+        city: "Starowa Góra",
+      },
+      {
+        id: 3,
+        img: orlik,
+        type: "Orlik",
+        address: "Żwirowa 18",
+        city: "Starowa Góra",
+      },
+      {
+        id: 4,
+        img: orlik,
+        type: "Orlik",
+        address: "Żwirowa 18",
+        city: "Starowa Góra",
+      },
+      {
+        id: 5,
+        img: orlik,
+        type: "Orlik",
+        address: "Żwirowa 18",
+        city: "Starowa Góra",
+      },
+      {
+        id: 6,
+        img: orlik,
+        type: "Orlik",
+        address: "Żwirowa 18",
+        city: "Starowa Góra",
+      },
+      {
+        id: 7,
+        img: orlik,
+        type: "Orlik",
+        address: "Żwirowa 18",
+        city: "Starowa Góra",
+      },
+      {
+        id: 8,
+        img: orlik,
+        type: "Orlik",
+        address: "Żwirowa 18",
+        city: "Starowa Góra",
+      },
+      {
+        id: 9,
+        img: orlik,
+        type: "Orlik",
+        address: "Żwirowa 18",
+        city: "Starowa Góra",
+      },
+      {
+        id: 10,
+        img: orlik,
+        type: "Orlik",
+        address: "Żwirowa 18",
+        city: "Starowa Góra",
+      },
+      {
+        id: 11,
+        img: orlik,
+        type: "Orlik",
+        address: "Żwirowa 18",
+        city: "Starowa Góra",
+      },
+    ],
   },
 ];
