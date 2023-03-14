@@ -3,8 +3,11 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     screens: {
-      "3xl": { max: "2000px" },
-      // => @media (max-width: 2000px) { ... }
+      "4xl": { max: "2500px" },
+      // => @media (max-width: 2500px) { ... }
+
+      "3xl": { max: "1880px" },
+      // => @media (max-width: 1880px) { ... }
 
       "2xl": { max: "1535px" },
       // => @media (max-width: 1535px) { ... }

@@ -14,10 +14,6 @@ export const menuItemsData = [
     id: 2,
     item: "Zaloguj się",
   },
-  {
-    id: 3,
-    item: "Ustawienia",
-  },
 ];
 
 export const categories = [
