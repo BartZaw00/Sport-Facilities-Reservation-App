@@ -5,6 +5,21 @@ import voleyball_icon from "../assets/volleyball.svg";
 
 import orlik from "../assets/orlik.jpg";
 
+export const menuItemsData = [
+  {
+    id: 1,
+    item: "Zarejestruj się",
+  },
+  {
+    id: 2,
+    item: "Zaloguj się",
+  },
+  {
+    id: 3,
+    item: "Ustawienia",
+  },
+];
+
 export const categories = [
   {
     id: 1,
