@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import Filter from "../components/Filter";
+import Filter from "../../components/Filter";
 
-import { Category } from "../components/index";
+import { Category } from "../../components/index";
 
-import { categories } from "../utils/data";
+import { categories } from "../../utils/data";
 
 const Categories = () => {
   const [selectedCategory, setSelectedCategory] = useState(1);
@@ -38,7 +38,10 @@ const Categories = () => {
       } else {
         setShowLeftArrow(false);
       }
-      if (categoriesDiv.scrollWidth - categoriesDiv.scrollLeft <= categoriesDiv.clientWidth) {
+      if (
+        categoriesDiv.scrollWidth - categoriesDiv.scrollLeft <=
+        categoriesDiv.clientWidth
+      ) {
         setShowRightArrow(false);
       } else {
         setShowRightArrow(true);
@@ -68,7 +71,7 @@ const Categories = () => {
 
   return (
     <div
-      className={`bg-my-primary-bg mt-24 mb-6 sm:mt-20 px-20 2xl:px-10 xl:px-8 lg:px-6 md:px-4  flex  items-center ${
+      className={`bg-my-primary-bg mt-24 mb-6 sm:mt-20 px-20 2xl:px-10 xl:px-8 lg:px-6 md:px-4 flex items-center ${
         isSticky
           ? "sticky top-20 shadow-sm border-solid border-b-2 border-my-divider z-30"
           : ""
@@ -84,7 +87,7 @@ const Categories = () => {
       )}
       <div
         ref={categoriesRef}
-        className="flex gap-14 sm:gap-8 whitespace-nowrap overflow-x-auto overflow-y-hidden"
+        className="flex gap-14 sm:gap-8 whitespace-nowrap overflow-x-auto overflow-y-hidden scrollbar-hide"
       >
         {categories.map((item) => (
           <Category

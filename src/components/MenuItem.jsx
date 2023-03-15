@@ -5,7 +5,9 @@ const MenuItem = ({ menuOption }) => {
     <a
       className={`${
         menuOption.item === "Zarejestruj się" ? "font-semibold" : ""
-      } hover:bg-my-divider px-3 py-2`}
+      } ${
+        menuOption.item === "Zaloguj się" ? "border-b-2" : ""
+      } hover:bg-my-divider px-3 py-2 my-1`}
     >
       {menuOption?.item}
     </a>

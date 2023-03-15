@@ -37,7 +37,7 @@ const Profile = () => {
         <div
           className={`${
             toggleMenu ? "flex" : "hidden"
-          } absolute top-12 right-0 bg-my-primary-bg w-40 py-3 border-1 border-solid border-my-divider rounded-2xl flex-col shadow-lg z-50 animate-scale-up-center`}
+          } absolute top-12 right-0 bg-my-primary-bg w-40 py-3 border-2 border-solid border-my-divider rounded-2xl flex-col shadow-lg z-50 animate-scale-up-center`}
         >
           {menuItemsData.map((menuItem) => {
             return <MenuItem key={menuItem.id} menuOption={menuItem} />;

@@ -34,12 +34,12 @@ module.exports = {
         "my-primary-text": "#000000",
         "my-divider": "#EEE",
         "my-scrollbar-btn": "#AAA",
-        "my-black-rgba": "rgba(0,0,0,0.3)",
+        "my-black-rgba": "rgba(0,0,0,0.2)",
       },
       fontFamily: {
         montserrat: ["Montserrat", "sans-serif"],
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 };
