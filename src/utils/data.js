@@ -105,16 +105,16 @@ export const categories = [
     name: "Snowboard",
     icon: snowboard_icon,
   },
-  // {
-  //   id: 16,
-  //   name: "Dart",
-  //   icon: dart_icon,
-  // },
-  // {
-  //   id: 17,
-  //   name: "Jeździectwo",
-  //   icon: horseriding_icon,
-  // },
+  {
+    id: 16,
+    name: "Dart",
+    icon: dart_icon,
+  },
+  {
+    id: 17,
+    name: "Jeździectwo",
+    icon: horseriding_icon,
+  },
 ];
 
 export const sportFacilitiesData = [

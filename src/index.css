@@ -10,6 +10,7 @@
   box-sizing: border-box;
 }
 
+
 ::-webkit-scrollbar {
   width: 0;
   height: 0;
@@ -26,5 +27,5 @@
 }
 
 .animate-scale-up-center {
-  animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+  animation: scale-up-center 0.4s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 }

@@ -33,6 +33,8 @@ module.exports = {
         "my-primary-bg": "#FFFFFF",
         "my-primary-text": "#000000",
         "my-divider": "#EEE",
+        "my-scrollbar-btn": "#AAA",
+        "my-black-rgba": "rgba(0,0,0,0.3)",
       },
       fontFamily: {
         montserrat: ["Montserrat", "sans-serif"],
