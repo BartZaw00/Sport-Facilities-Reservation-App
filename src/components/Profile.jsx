@@ -3,12 +3,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { TfiMenu } from "react-icons/tfi";
 import { CgProfile } from "react-icons/cg";
 
-import { MenuItem } from "./index";
-
-import { menuItemsData } from "../utils/data";
+import Menu from "../containers/Menu";
 
 const Profile = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -23,6 +22,24 @@ const Profile = () => {
     };
   }, [menuRef]);
 
+  const handleOptionClick = (option) => {
+    setSelectedOption(option);
+    setToggleMenu(false);
+  };
+
+  const getModalContent = (option) => {
+    switch (option) {
+      case "Zarejestruj się":
+        return <SignUpModal />;
+      case "Zaloguj się":
+        return <LogInModal />;
+      case "Ustawienia":
+        return <SettingsModal />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div
       className="relative pr-1 pl-3 py-1 flex items-center gap-2 border border-gray-300 rounded-full shadow cursor-pointer hover:shadow-md"
@@ -34,15 +51,10 @@ const Profile = () => {
       <TfiMenu size={15} />
       <CgProfile size={25} />
       {toggleMenu && (
-        <div
-          className={`${
-            toggleMenu ? "flex" : "hidden"
-          } absolute top-12 right-0 bg-my-primary-bg w-40 py-3 border-2 border-solid border-my-divider rounded-2xl flex-col shadow-lg z-50 animate-scale-up-center`}
-        >
-          {menuItemsData.map((menuItem) => {
-            return <MenuItem key={menuItem.id} menuOption={menuItem} />;
-          })}
-        </div>
+        <Menu
+          getModalContent={getModalContent}
+          handleOptionClick={handleOptionClick}
+        />
       )}
     </div>
   );

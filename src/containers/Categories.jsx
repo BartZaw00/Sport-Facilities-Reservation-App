@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import Filter from "../../components/Filter";
+import Filter from "../components/Filter";
 
-import { Category } from "../../components/index";
+import { Category } from "../components/index";
 
-import { categories } from "../../utils/data";
+import { categories } from "../utils/data";
 
 const Categories = () => {
   const [selectedCategory, setSelectedCategory] = useState(1);

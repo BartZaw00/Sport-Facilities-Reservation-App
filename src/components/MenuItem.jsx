@@ -1,6 +1,10 @@
 import React from "react";
 
-const MenuItem = ({ menuOption }) => {
+const MenuItem = ({ menuOption, getModalContent, handleOptionClick }) => {
+  const handleMenuItemClick = () => {
+    handleOptionClick(menuOption.item);
+  };
+
   return (
     <a
       className={`${

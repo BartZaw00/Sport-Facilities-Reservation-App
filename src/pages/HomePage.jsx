@@ -1,5 +1,7 @@
 import React from "react";
 
+import { MapButton } from "../components";
+
 import { Categories, Navbar, SportFacilities } from "../containers/index";
 
 const HomePage = () => {
@@ -8,6 +10,7 @@ const HomePage = () => {
       <Navbar />
       <Categories />
       <SportFacilities />
+      <MapButton />
     </div>
   );
 };
