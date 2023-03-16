@@ -27,18 +27,18 @@ const Profile = () => {
     setToggleMenu(false);
   };
 
-  const getModalContent = (option) => {
-    switch (option) {
-      case "Zarejestruj się":
-        return <SignUpModal />;
-      case "Zaloguj się":
-        return <LogInModal />;
-      case "Ustawienia":
-        return <SettingsModal />;
-      default:
-        return null;
-    }
-  };
+  // const getModalContent = (option) => {
+  //   switch (option) {
+  //     case "Zarejestruj się":
+  //       return <SignUpModal />;
+  //     case "Zaloguj się":
+  //       return <LogInModal />;
+  //     case "Ustawienia":
+  //       return <SettingsModal />;
+  //     default:
+  //       return null;
+  //   }
+  // };
 
   return (
     <div
@@ -52,7 +52,7 @@ const Profile = () => {
       <CgProfile size={25} />
       {toggleMenu && (
         <Menu
-          getModalContent={getModalContent}
+          //getModalContent={getModalContent}
           handleOptionClick={handleOptionClick}
         />
       )}

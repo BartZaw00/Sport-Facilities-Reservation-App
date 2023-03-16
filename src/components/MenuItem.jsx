@@ -1,19 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 
-const MenuItem = ({ menuOption, getModalContent, handleOptionClick }) => {
+import { ModalContext } from "../pages/HomePage";
+
+const MenuItem = ({ menuOption }) => {
+  const { setIsModalOpen } = useContext(ModalContext);
+
   const handleMenuItemClick = () => {
-    handleOptionClick(menuOption.item);
+    setIsModalOpen(true);
   };
 
   return (
     <a
-      className={`${
-        menuOption.item === "Zarejestruj się" ? "font-semibold" : ""
-      } ${
-        menuOption.item === "Zaloguj się" ? "border-b-2" : ""
+      className={`${menuOption === "Zarejestruj się" ? "font-semibold" : ""} ${
+        menuOption === "Zaloguj się" ? "border-b-2" : ""
       } hover:bg-my-divider px-3 py-2 my-1`}
+      onClick={handleMenuItemClick}
     >
-      {menuOption?.item}
+      {menuOption}
     </a>
   );
 };
