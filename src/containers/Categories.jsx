@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-import Filter from "../components/Filter";
 
-import { Category } from "../components/index";
+import { Category, FilterButton } from "../components/index";
 
 import { categories } from "../utils/data";
 
-const Categories = () => {
+const Categories = ({ handleModalOpenClick }) => {
   const [selectedCategory, setSelectedCategory] = useState(1);
   const [isSticky, setIsSticky] = useState(false);
   const categoriesRef = useRef(null);
@@ -109,7 +108,7 @@ const Categories = () => {
         <AiOutlineRight />
       </div>
       <div className="ml-auto">
-        <Filter />
+        <FilterButton handleModalOpenClick={handleModalOpenClick} />
       </div>
     </div>
   );

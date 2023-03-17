@@ -5,9 +5,8 @@ import { CgProfile } from "react-icons/cg";
 
 import Menu from "../containers/Menu";
 
-const Profile = () => {
+const ProfileButton = ({ handleModalOpenClick }) => {
   const [toggleMenu, setToggleMenu] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(null);
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -22,23 +21,9 @@ const Profile = () => {
     };
   }, [menuRef]);
 
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
+  const handleOptionClick = () => {
     setToggleMenu(false);
   };
-
-  // const getModalContent = (option) => {
-  //   switch (option) {
-  //     case "Zarejestruj się":
-  //       return <SignUpModal />;
-  //     case "Zaloguj się":
-  //       return <LogInModal />;
-  //     case "Ustawienia":
-  //       return <SettingsModal />;
-  //     default:
-  //       return null;
-  //   }
-  // };
 
   return (
     <div
@@ -52,12 +37,12 @@ const Profile = () => {
       <CgProfile size={25} />
       {toggleMenu && (
         <Menu
-          //getModalContent={getModalContent}
           handleOptionClick={handleOptionClick}
+          handleModalOpenClick={handleModalOpenClick}
         />
       )}
     </div>
   );
 };
 
-export default Profile;
+export default ProfileButton;

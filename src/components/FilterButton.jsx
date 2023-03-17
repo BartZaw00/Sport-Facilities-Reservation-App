@@ -4,11 +4,12 @@ import { FaFilter } from "react-icons/fa";
 
 import { ModalContext } from "../pages/HomePage";
 
-const Filter = () => {
+const FilterButton = ({ handleModalOpenClick }) => {
   const { setIsModalOpen } = useContext(ModalContext);
 
   const handleFilterClick = () => {
     setIsModalOpen(true);
+    handleModalOpenClick("filter");
   };
 
   return (
@@ -22,4 +23,4 @@ const Filter = () => {
   );
 };
 
-export default Filter;
+export default FilterButton;

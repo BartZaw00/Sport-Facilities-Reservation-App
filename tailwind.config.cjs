@@ -30,11 +30,13 @@ module.exports = {
     extend: {
       colors: {
         "my-primary": "#228B22",
+        "my-primary-hover": "#1E7B1E",
         "my-primary-bg": "#FFFFFF",
         "my-primary-text": "#000000",
         "my-divider": "#EEE",
         "my-scrollbar-btn": "#AAA",
-        "my-black-rgba": "rgba(0,0,0,0.2)",
+        "my-sport-facility-overlay": "rgba(0,0,0,0.1)",
+        "my-modal-overlay": "rgba(0,0,0,0.3)",
       },
       fontFamily: {
         montserrat: ["Montserrat", "sans-serif"],

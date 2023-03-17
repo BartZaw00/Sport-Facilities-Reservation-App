@@ -11,7 +11,7 @@ const SportFacilityBox = ({ sportFacility }) => {
   return (
     <div className="relative flex flex-col gap-1 cursor-pointer">
       <div className="relative rounded-xl aspect-[643/611] overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-full bg-my-black-rgba"></div>
+      <div className="absolute top-0 left-0 w-full h-full bg-my-sport-facility-overlay"></div>
         <img
           className="h-full w-full object-cover"
           src={sportFacility.img}
