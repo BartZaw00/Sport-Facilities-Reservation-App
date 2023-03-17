@@ -17,6 +17,9 @@ const MenuItem = ({ menuOption, handleModalOpenClick }) => {
       case "Ustawienia":
         handleModalOpenClick("settings");
         break;
+      case "Profil":
+        handleModalOpenClick("profile");
+        break;
       default:
         handleModalOpenClick("");
     }

@@ -1,45 +1,67 @@
-import React from "react";
+import React, { useState } from "react";
+import { FormInput, FormButton } from "../components";
 
 const SignUpForm = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+  };
+
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    // handle sign up logic here
+  };
+
   return (
-    <div className="flex flex-col gap-5 px-10 pt-6 pb-10">
-      <div className="flex flex-col gap-4">
-        <label htmlFor="name" className="text-my-gray">
-          Nazwa
-        </label>
-        <input
-          type="text"
-          id="name"
-          placeholder="John Doe"
-          className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-my-primary"
-        />
-      </div>
-      <div className="flex flex-col gap-4">
-        <label htmlFor="email" className="text-my-gray">
-          Email
-        </label>
-        <input
-          type="email"
-          id="email"
-          placeholder="you@example.com"
-          className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-my-primary"
-        />
-      </div>
-      <div className="flex flex-col gap-4">
-        <label htmlFor="password" className="text-my-gray">
-          Hasło
-        </label>
-        <input
-          type="password"
-          id="password"
-          placeholder="********"
-          className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-my-primary"
-        />
-      </div>
-      <button className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover focus:outline-none">
+    <form
+      onSubmit={handleSignUp}
+      className="flex flex-col gap-5 px-10 pt-6 pb-10 "
+    >
+      <FormInput
+        label="Email"
+        id="email"
+        placeholder="you@example.com"
+        value={email}
+        onChange={handleEmailChange}
+        type="email"
+        isEditMode={true}
+      />
+      <FormInput
+        label="Hasło"
+        id="password"
+        placeholder="********"
+        value={password}
+        onChange={handlePasswordChange}
+        type="password"
+        isEditMode={true}
+      />
+      <FormInput
+        label="Potwierdź hasło"
+        id="confirmPassword"
+        placeholder="********"
+        value={confirmPassword}
+        onChange={handleConfirmPasswordChange}
+        type="password"
+        isEditMode={true}
+      />
+      <FormButton
+        onClick={handleSignUp}
+        className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover focus:outline-none"
+      >
         Zarejestruj się
-      </button>
-    </div>
+      </FormButton>
+    </form>
   );
 };
 

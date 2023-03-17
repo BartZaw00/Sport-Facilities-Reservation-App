@@ -3,7 +3,13 @@ import { IoMdClose } from "react-icons/io";
 
 import { ModalContext } from "../pages/HomePage";
 
-import { Filter, LoginForm, Settings, SignUpForm } from "../containers/index";
+import {
+  FilterForm,
+  LoginForm,
+  ProfileForm,
+  SettingsForm,
+  SignUpForm,
+} from "../containers/index";
 
 const Modal = ({ option }) => {
   const { isModalOpen, setIsModalOpen } = useContext(ModalContext);
@@ -43,15 +49,21 @@ const Modal = ({ option }) => {
             <IoMdClose size={20} />
           </div>
           {option === "login" && <span className="font-bold">Logowanie</span>}
-          {option === "signup" && <span className="font-bold">Rejestracja</span>}
+          {option === "signup" && (
+            <span className="font-bold">Rejestracja</span>
+          )}
           {option === "filter" && <span className="font-bold">Filtruj</span>}
-          {option === "settings" && <span className="font-bold">Ustawienia</span>}
+          {option === "settings" && (
+            <span className="font-bold">Ustawienia</span>
+          )}
+          {option === "profile" && <span className="font-bold">Profil</span>}
         </div>
         <div className="px-6 py-5 overflow-y-auto">
           {option === "login" && <LoginForm />}
           {option === "signup" && <SignUpForm />}
-          {option === "filter" && <Filter />}
-          {option === "settings" && <Settings />}
+          {option === "filter" && <FilterForm />}
+          {option === "settings" && <SettingsForm />}
+          {option === "profile" && <ProfileForm />}
         </div>
       </div>
     </div>

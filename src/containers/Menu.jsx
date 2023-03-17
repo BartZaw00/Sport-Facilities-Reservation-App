@@ -17,6 +17,10 @@ const Menu = ({ handleModalOpenClick }) => {
         menuOption="Ustawienia"
         handleModalOpenClick={handleModalOpenClick}
       />
+      <MenuItem
+        menuOption="Profil"
+        handleModalOpenClick={handleModalOpenClick}
+      />
     </div>
   );
 };
