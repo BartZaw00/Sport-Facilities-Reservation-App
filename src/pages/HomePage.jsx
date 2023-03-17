@@ -16,14 +16,9 @@ const HomePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleModalOpenClick = (option) => {
-    console.log("opcja: " + option);
     setSelectedOption(option);
     // setIsModalOpen(true);
   };
-
-  useEffect(() => {
-    console.log(selectedOption);
-  }, [selectedOption]);
 
   return (
     <div id="home-page" className="bg-my-primary-bg">

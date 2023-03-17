@@ -35,7 +35,7 @@ module.exports = {
         "my-primary-text": "#000000",
         "my-divider": "#EEE",
         "my-scrollbar-btn": "#AAA",
-        "my-sport-facility-overlay": "rgba(0,0,0,0.1)",
+        "my-sport-facility-overlay": "rgba(0,0,0,0.05)",
         "my-modal-overlay": "rgba(0,0,0,0.3)",
       },
       fontFamily: {

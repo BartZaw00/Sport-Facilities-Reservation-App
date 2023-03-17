@@ -15,7 +15,7 @@ const Filter = () => {
         </label>
         <select
           id="category"
-          className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-my-primary"
+          className="px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:border-my-primary"
         >
           <option value="">Wybierz kategorię</option>
           <option value="sport">Sport</option>
@@ -36,7 +36,7 @@ const Filter = () => {
             step="1"
             value={distance}
             onChange={handleDistanceChange}
-            className="flex-1 h-1 appearance-none bg-gray-300 rounded-md focus:outline-none"
+            className="flex-1 h-1 appearance-none bg-gray-300 rounded-sm focus:outline-none"
           />
           <span className="text-my-gray">{distance} km</span>
         </div>
