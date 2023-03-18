@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 
 import { FaFilter } from "react-icons/fa";
 
-import { ModalContext } from "../pages/HomePage";
+import { ModalContext } from "../App";
 
 const FilterButton = ({ handleModalOpenClick }) => {
   const { setIsModalOpen } = useContext(ModalContext);

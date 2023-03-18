@@ -21,6 +21,9 @@ const Menu = ({ handleModalOpenClick }) => {
         menuOption="Profil"
         handleModalOpenClick={handleModalOpenClick}
       />
+      <MenuItem
+        menuOption="Wyloguj się"
+      />
     </div>
   );
 };

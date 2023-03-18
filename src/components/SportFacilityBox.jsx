@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BsSuitHeartFill, BsSuitHeart } from "react-icons/bs";
 
-const SportFacilityBox = ({ sportFacility }) => {
+const SportFacilityBox = ({ sportFacility, onClick }) => {
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = () => {
@@ -9,9 +9,12 @@ const SportFacilityBox = ({ sportFacility }) => {
   };
 
   return (
-    <div className="relative flex flex-col gap-1 cursor-pointer">
+    <div
+      className="relative flex flex-col gap-1 cursor-pointer"
+      onClick={onClick}
+    >
       <div className="relative rounded-xl aspect-[643/611] overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-full bg-my-sport-facility-overlay"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-my-sport-facility-overlay"></div>
         <img
           className="h-full w-full object-cover"
           src={sportFacility.img}

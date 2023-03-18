@@ -1,27 +1,29 @@
 import React, { useContext } from "react";
 
-import { ModalContext } from "../pages/HomePage";
+import { ModalContext } from "../App";
 
 const MenuItem = ({ menuOption, handleModalOpenClick }) => {
   const { setIsModalOpen } = useContext(ModalContext);
 
   const handleMenuItemClick = () => {
-    setIsModalOpen(true);
-    switch (menuOption) {
-      case "Zarejestruj się":
-        handleModalOpenClick("signup");
-        break;
-      case "Zaloguj się":
-        handleModalOpenClick("login");
-        break;
-      case "Ustawienia":
-        handleModalOpenClick("settings");
-        break;
-      case "Profil":
-        handleModalOpenClick("profile");
-        break;
-      default:
-        handleModalOpenClick("");
+    if (menuOption !== "Wyloguj się") {
+      setIsModalOpen(true);
+      switch (menuOption) {
+        case "Zarejestruj się":
+          handleModalOpenClick("signup");
+          break;
+        case "Zaloguj się":
+          handleModalOpenClick("login");
+          break;
+        case "Ustawienia":
+          handleModalOpenClick("settings");
+          break;
+        case "Profil":
+          handleModalOpenClick("profile");
+          break;
+        default:
+          handleModalOpenClick("");
+      }
     }
   };
 

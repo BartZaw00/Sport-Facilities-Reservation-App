@@ -36,6 +36,7 @@ module.exports = {
         "my-divider": "#EEE",
         "my-scrollbar-btn": "#AAA",
         "my-sport-facility-overlay": "rgba(0,0,0,0.05)",
+        "my-sport-facility-hover": "rgba(0,0,0,0.1)",
         "my-modal-overlay": "rgba(0,0,0,0.3)",
       },
       fontFamily: {
