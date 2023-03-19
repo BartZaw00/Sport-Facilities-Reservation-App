@@ -4,9 +4,15 @@ import { BsGrid3X3GapFill } from "react-icons/bs";
 import { Image } from "../components";
 import { Modal } from "./index";
 
+import { ModalContext } from "../App";
+
 const ImageGrid = ({ images }) => {
+  const { setIsModalOpen, setSelectedOption } = useContext(ModalContext);
+
   const handleClick = (index) => {
     console.log(`Image clicked: ${index}`);
+    setIsModalOpen(true);
+    setSelectedOption("image");
   };
 
   // Get only the first 5 images from the array
@@ -24,7 +30,13 @@ const ImageGrid = ({ images }) => {
           onClick={() => handleClick(index)}
         />
       ))}
-      <button className="absolute bottom-4 left-4 flex items-center gap-2 px-3 py-2 bg-slate-200 hover:bg-slate-300 rounded-full">
+      <button
+        className="absolute bottom-4 left-4 flex items-center gap-2 px-3 py-2 bg-slate-200 hover:bg-slate-300 rounded-full"
+        onClick={() => {
+          setIsModalOpen(true);
+          setSelectedOption("images");
+        }}
+      >
         <span>Zobacz więcej</span>
         <BsGrid3X3GapFill />
       </button>

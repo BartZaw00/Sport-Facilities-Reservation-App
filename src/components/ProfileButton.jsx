@@ -5,7 +5,7 @@ import { CgProfile } from "react-icons/cg";
 
 import Menu from "../containers/Menu";
 
-const ProfileButton = ({ handleModalOpenClick }) => {
+const ProfileButton = () => {
   const [toggleMenu, setToggleMenu] = useState(false);
   const menuRef = useRef(null);
 
@@ -38,7 +38,6 @@ const ProfileButton = ({ handleModalOpenClick }) => {
       {toggleMenu && (
         <Menu
           handleOptionClick={handleOptionClick}
-          handleModalOpenClick={handleModalOpenClick}
         />
       )}
     </div>

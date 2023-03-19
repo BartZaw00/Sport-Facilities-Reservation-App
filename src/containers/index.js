@@ -3,6 +3,7 @@ export { default as Categories } from "./Categories";
 export { default as FilterForm } from "./FilterForm";
 export { default as ImageGrid } from "./ImageGrid";
 export { default as LoginForm } from "./LoginForm";
+export { default as Map } from "./Map";
 export { default as Modal } from "./Modal";
 export { default as Navbar } from "./Navbar";
 export { default as ProfileForm } from "./ProfileForm";

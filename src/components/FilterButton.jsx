@@ -4,12 +4,12 @@ import { FaFilter } from "react-icons/fa";
 
 import { ModalContext } from "../App";
 
-const FilterButton = ({ handleModalOpenClick }) => {
-  const { setIsModalOpen } = useContext(ModalContext);
+const FilterButton = () => {
+  const { setIsModalOpen, setSelectedOption } = useContext(ModalContext);
 
   const handleFilterClick = () => {
     setIsModalOpen(true);
-    handleModalOpenClick("filter");
+    setSelectedOption("filter");
   };
 
   return (

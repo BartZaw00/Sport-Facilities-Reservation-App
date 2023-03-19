@@ -2,27 +2,27 @@ import React, { useContext } from "react";
 
 import { ModalContext } from "../App";
 
-const MenuItem = ({ menuOption, handleModalOpenClick }) => {
-  const { setIsModalOpen } = useContext(ModalContext);
+const MenuItem = ({ menuOption }) => {
+  const { setIsModalOpen, setSelectedOption } = useContext(ModalContext);
 
   const handleMenuItemClick = () => {
     if (menuOption !== "Wyloguj się") {
       setIsModalOpen(true);
       switch (menuOption) {
         case "Zarejestruj się":
-          handleModalOpenClick("signup");
+          setSelectedOption("signup");
           break;
         case "Zaloguj się":
-          handleModalOpenClick("login");
+          setSelectedOption("login");
           break;
         case "Ustawienia":
-          handleModalOpenClick("settings");
+          setSelectedOption("settings");
           break;
         case "Profil":
-          handleModalOpenClick("profile");
+          setSelectedOption("profile");
           break;
         default:
-          handleModalOpenClick("");
+          setSelectedOption("");
       }
     }
   };

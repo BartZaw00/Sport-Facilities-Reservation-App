@@ -59,7 +59,8 @@ const Modal = ({ option }) => {
             <span className="font-bold">Ustawienia</span>
           )}
           {option === "profile" && <span className="font-bold">Profil</span>}
-          {/* {option === "image" && <span className="font-bold">Zdjęcie</span>} */}
+          {option === "image" && <span className="font-bold">Zdjęcie</span>}
+          {option === "images" && <span className="font-bold">Zdjęcia</span>}
         </div>
         <div className="px-6 py-5 overflow-y-auto">
           {option === "login" && <LoginForm />}
@@ -68,6 +69,7 @@ const Modal = ({ option }) => {
           {option === "settings" && <SettingsForm />}
           {option === "profile" && <ProfileForm />}
           {/* {option === "image" && <img src={images[selectedImageIndex]} alt="" />} */}
+          {/* {option === "images" && <img src={images[selectedImageIndex]} alt="" />} */}
         </div>
       </div>
     </div>

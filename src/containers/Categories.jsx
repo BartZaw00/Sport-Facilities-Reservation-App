@@ -5,7 +5,7 @@ import { Category, FilterButton } from "../components/index";
 
 import { categories } from "../utils/data";
 
-const Categories = ({ handleModalOpenClick }) => {
+const Categories = () => {
   const [selectedCategory, setSelectedCategory] = useState(1);
   const [isSticky, setIsSticky] = useState(false);
   const categoriesRef = useRef(null);
@@ -108,7 +108,7 @@ const Categories = ({ handleModalOpenClick }) => {
         <AiOutlineRight />
       </div>
       <div className="ml-auto">
-        <FilterButton handleModalOpenClick={handleModalOpenClick} />
+        <FilterButton />
       </div>
     </div>
   );

@@ -10,18 +10,24 @@ function App() {
   const [selectedOption, setSelectedOption] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleModalOpenClick = (option) => {
-    setSelectedOption(option);
-    document.body.classList.add("modal-open");
-    // setIsModalOpen(true);
-  };
 
   return (
-    <ModalContext.Provider value={{ isModalOpen, setIsModalOpen }}>
+    <ModalContext.Provider
+      value={{ isModalOpen, setIsModalOpen, selectedOption, setSelectedOption }}
+    >
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={<HomePage handleModalOpenClick={handleModalOpenClick}/>} />
-          <Route path="/sport-facility" element={<SportFacilityPage handleModalOpenClick={handleModalOpenClick}/>} />
+          <Route
+            exact
+            path="/"
+            element={<HomePage/>}
+          />
+          <Route
+            path="/sport-facility"
+            element={
+              <SportFacilityPage/>
+            }
+          />
           <Route path="/*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>

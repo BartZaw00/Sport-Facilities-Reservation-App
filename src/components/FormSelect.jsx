@@ -1,8 +1,8 @@
 import React from "react";
 
-const FormSelect = ({ label, id, options, className, labelClassName }) => {
+const FormSelect = ({ label, id, options, className, labelClassName, divClassName }) => {
   return (
-    <div className="flex flex-col gap-4">
+    <div className={divClassName}>
       <label htmlFor={id} className={labelClassName}>
         {label}
       </label>

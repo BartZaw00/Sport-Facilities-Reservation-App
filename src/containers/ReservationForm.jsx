@@ -48,7 +48,7 @@ const ReservationForm = () => {
 
   return (
     <>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 md:gap-2">
         <label
           className="text-lg font-medium md:text-xs hidden md:block"
           htmlFor="date"
@@ -69,7 +69,7 @@ const ReservationForm = () => {
           className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-my-primary bg-white text-gray-900 shadow-sm"
         />
       </div>
-      <div className="flex flex-col gap-4 mt-6  md:mt-0">
+      <div className="flex flex-col gap-4 mt-6 md:mt-0 md:gap-2">
         <label
           className="text-lg font-medium md:text-xs hidden md:block"
           htmlFor="time"
@@ -104,6 +104,7 @@ const ReservationForm = () => {
           options={durationOptions}
           className="border border-gray-300 rounded-sm px-4 py-2 focus:outline-none focus:ring-2 focus:ring-my-primary"
           labelClassName="text-lg font-medium md:text-xs"
+          divClassName="flex flex-col gap-4 md:gap-2"
           onChange={(event) => setDuration(event.target.value)}
           value={duration}
         />

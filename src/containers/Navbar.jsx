@@ -2,7 +2,7 @@ import React from "react";
 
 import { Logo, Search, ProfileButton } from "../components/index";
 
-const Navbar = ({ handleModalOpenClick, className }) => {
+const Navbar = ({ className }) => {
   return (
     <div className={className}>
       <div className="flex sm:hidden">
@@ -12,7 +12,7 @@ const Navbar = ({ handleModalOpenClick, className }) => {
         <Search />
       </div>
       <div className="flex justify-end">
-        <ProfileButton handleModalOpenClick={handleModalOpenClick} />
+        <ProfileButton />
       </div>
     </div>
   );
