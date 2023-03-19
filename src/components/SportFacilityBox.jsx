@@ -4,7 +4,8 @@ import { BsSuitHeartFill, BsSuitHeart } from "react-icons/bs";
 const SportFacilityBox = ({ sportFacility, onClick }) => {
   const [isClicked, setIsClicked] = useState(false);
 
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.stopPropagation();
     setIsClicked(!isClicked);
   };
 

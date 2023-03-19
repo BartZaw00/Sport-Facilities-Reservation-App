@@ -13,7 +13,7 @@ const ImageGrid = ({ images }) => {
   const slicedImages = images.slice(0, 5);
 
   return (
-    <div className="relative grid grid-cols-4 grid-rows-2 gap-2 rounded-xl overflow-hidden">
+    <div className="relative grid grid-cols-4 grid-rows-2 gap-2 rounded-xl overflow-hidden sm:grid-cols-none sm:w-full sm:overflow-x-auto sm:gap-x-4">
       {slicedImages.map((image, index) => (
         <Image
           key={index}

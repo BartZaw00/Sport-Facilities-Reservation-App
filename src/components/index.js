@@ -13,3 +13,4 @@ export { default as ProfileButton } from "./ProfileButton";
 export { default as ProfilePicture } from "./ProfilePicture";
 export { default as Search } from "./Search";
 export { default as SportFacilityBox } from "./SportFacilityBox";
+export { default as SportFacilityHeader } from "./SportFacilityHeader";

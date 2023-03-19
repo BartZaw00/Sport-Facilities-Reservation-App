@@ -4,7 +4,7 @@ import { IoMdTime } from "react-icons/io";
 import { GiTennisCourt, GiGrass } from "react-icons/gi";
 import { BsSuitHeartFill, BsSuitHeart } from "react-icons/bs";
 
-import { FacilityDetail } from "../components";
+import { FacilityDetail, SportFacilityHeader } from "../components";
 import { ImageGrid } from "../containers";
 
 const SportFacility = () => {
@@ -33,26 +33,23 @@ const SportFacility = () => {
   };
 
   return (
-    <div className="mt-28 px-96 flex flex-col lg:flex-row justify-center">
-      <h2 className="font-bold text-gray-800 text-4xl">{facility.name}</h2>
-      <p className="mt-2 text-gray-600 font-semibold text-2xl">
-        {facility.type}
-      </p>
-      <div className="mt-2 flex justify-between">
-        <div className="flex items-center gap-4">
+    <div className="mt-28 px-96 2xl:px-60 xl:px-32 lg:px-6 md:px-4 flex flex-col sm:mt-24">
+      <SportFacilityHeader name={facility.name} type={facility.type} />
+      <div className="mt-2 flex justify-between sm:mt-4">
+        <div className="flex items-center gap-4 sm:flex-1 sm:justify-between sm:gap-2">
           <FacilityDetail icon={MdLocationOn} text={facility.address} />
           <FacilityDetail icon={GiGrass} text={facility.surface} />
           <FacilityDetail icon={IoMdTime} text={facility.hours} />
         </div>
         <button
-          className="px-3 py-2 bg-slate-200 flex items-center gap-2 rounded-full hover:bg-slate-300"
+          className="px-3 py-2 bg-slate-200 flex items-center gap-2 rounded-full hover:bg-slate-300 sm:hidden"
           onClick={handleClick}
         >
           Dodaj do ulubionych{" "}
           {isClicked ? <BsSuitHeartFill color="red" /> : <BsSuitHeart />}
         </button>
       </div>
-      <div className="mt-4 lg:w-1/2">
+      <div className="mt-4">
         <ImageGrid images={facility.images} />
       </div>
       <div className="flex items-center mt-4">
