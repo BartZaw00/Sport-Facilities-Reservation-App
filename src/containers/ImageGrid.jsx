@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { BsGrid3X3GapFill } from "react-icons/bs";
 
 import { Image } from "../components";
+import { Modal } from "./index";
 
 const ImageGrid = ({ images }) => {
   const handleClick = (index) => {
     console.log(`Image clicked: ${index}`);
-    // Handle click event here, e.g. navigate to a detail page
   };
 
   // Get only the first 5 images from the array
@@ -20,7 +20,7 @@ const ImageGrid = ({ images }) => {
           className={`relative cursor-pointer ${
             index === 0 ? "col-span-2 row-span-2" : ""
           }`}
-          image={image}
+          src={image}
           onClick={() => handleClick(index)}
         />
       ))}

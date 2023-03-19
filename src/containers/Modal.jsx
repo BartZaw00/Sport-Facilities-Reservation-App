@@ -17,13 +17,13 @@ const Modal = ({ option }) => {
 
   const handleCloseModalClick = () => {
     setIsModalOpen(false);
-    document.body.classList.remove("modal-open");
+    //document.body.classList.remove("modal-open");
   };
 
   const handleModalOutsideClick = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       setIsModalOpen(false);
-      document.body.classList.remove("modal-open");
+      //document.body.classList.remove("modal-open");
     }
   };
 
@@ -36,12 +36,12 @@ const Modal = ({ option }) => {
   }, []);
 
   return (
-    <div className="absolute top-0 left-0 w-full h-full bg-my-modal-overlay z-50">
+    <div className="fixed top-0 left-0 w-full h-full bg-my-modal-overlay z-50">
       <div
         ref={modalRef}
         className={`${
           isModalOpen ? "flex" : "hidden"
-        } flex-col min-w-[568px] sm:min-w-[90vw] max-h-[80vh] bg-white absolute top-1/2 left-1/2 rounded-2xl slide-top`}
+        } flex-col min-w-[568px] sm:min-w-[90vw] max-h-[80vh] bg-white fixed top-1/2 left-1/2 rounded-2xl slide-top`}
       >
         <div className="relative flex justify-center py-5 border-b-2 border-my-divider">
           <div
@@ -59,6 +59,7 @@ const Modal = ({ option }) => {
             <span className="font-bold">Ustawienia</span>
           )}
           {option === "profile" && <span className="font-bold">Profil</span>}
+          {/* {option === "image" && <span className="font-bold">Zdjęcie</span>} */}
         </div>
         <div className="px-6 py-5 overflow-y-auto">
           {option === "login" && <LoginForm />}
@@ -66,6 +67,7 @@ const Modal = ({ option }) => {
           {option === "filter" && <FilterForm />}
           {option === "settings" && <SettingsForm />}
           {option === "profile" && <ProfileForm />}
+          {/* {option === "image" && <img src={images[selectedImageIndex]} alt="" />} */}
         </div>
       </div>
     </div>
