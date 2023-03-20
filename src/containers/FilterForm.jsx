@@ -47,6 +47,7 @@ const FilterForm = () => {
         id="category"
         options={categoryOptions}
         className="px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:border-my-primary"
+        divClassName="flex flex-col gap-2"
       />
       <DistanceFilter
         distance={distance}
@@ -57,6 +58,7 @@ const FilterForm = () => {
         id="location"
         options={locationOptions}
         className="px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:border-my-primary"
+        divClassName="flex flex-col gap-2"
       />
       <FormButton className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover focus:outline-none">
         Filtruj
