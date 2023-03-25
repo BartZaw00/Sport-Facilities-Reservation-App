@@ -4,6 +4,7 @@ import { FormButton, FormInput, ProfilePicture } from "../components";
 const ProfileForm = () => {
   const [name, setName] = useState("Jan");
   const [surname, setSurname] = useState("Kowalski");
+  const [nick, setNick] = useState("Kowal123");
   const [email, setEmail] = useState("jan.kowalski@example.com");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -59,6 +60,14 @@ const ProfileForm = () => {
             isEditMode={isEditMode}
           />
         </div>
+        <FormInput
+          label="Nick"
+          id="nick"
+          value={nick}
+          onChange={(e) => setNick(e.target.value)}
+          type="text"
+          isEditMode={isEditMode}
+        />
         <FormInput
           label="Email"
           id="email"
