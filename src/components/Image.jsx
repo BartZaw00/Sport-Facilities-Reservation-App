@@ -1,7 +1,6 @@
 import React from "react";
 
 const Image = ({ src, onClick, className }) => {
-  
 
   return (
     <div className={className} onClick={onClick}>

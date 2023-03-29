@@ -7,16 +7,18 @@ import { Modal } from "./index";
 import { ModalContext } from "../App";
 
 const ImageGrid = ({ images }) => {
-  const { setIsModalOpen, setSelectedOption } = useContext(ModalContext);
+  const { setIsModalOpen, setSelectedOption, setSelectedImages } = useContext(ModalContext);
+
+  // Get only the first 5 images from the array
+  const slicedImages = images.slice(0, 5);
 
   const handleClick = (index) => {
     console.log(`Image clicked: ${index}`);
     setIsModalOpen(true);
     setSelectedOption("image");
+    setSelectedImages(slicedImages[index]);
   };
 
-  // Get only the first 5 images from the array
-  const slicedImages = images.slice(0, 5);
 
   return (
     <div className="relative grid grid-cols-4 grid-rows-2 gap-2 rounded-xl overflow-hidden sm:grid-cols-none sm:w-full sm:overflow-x-auto sm:gap-x-4">
@@ -35,6 +37,7 @@ const ImageGrid = ({ images }) => {
         onClick={() => {
           setIsModalOpen(true);
           setSelectedOption("images");
+          setSelectedImages(images);
         }}
       >
         <span>Zobacz więcej</span>

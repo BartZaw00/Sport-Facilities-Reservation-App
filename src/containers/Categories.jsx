@@ -5,8 +5,7 @@ import { Category, FilterButton } from "../components/index";
 
 import { categories } from "../utils/data";
 
-const Categories = () => {
-  const [selectedCategory, setSelectedCategory] = useState(1);
+const Categories = ({selectedCategory, setSelectedCategory}) => {
   const [isSticky, setIsSticky] = useState(false);
   const categoriesRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);

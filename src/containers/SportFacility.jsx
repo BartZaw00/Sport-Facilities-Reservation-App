@@ -27,11 +27,11 @@ const SportFacility = ({ handleModalOpenClick }) => {
     description:
       "Boisko Piłkarskie typu Orlik to obiekt sportowy znajdujący się przy ulicy Rajdowej 18 w Łodzi. Boisko wyposażone jest w sztuczną trawę, co pozwala na grę w piłkę nożną przez większą część roku. Obiekt jest dostępny dla ludzi od godziny 8:00 do 22:00, co pozwala na organizację treningów czy meczów o różnych porach dnia. Boisko to idealne miejsce dla miłośników piłki nożnej, którzy chcą aktywnie spędzać czas na świeżym powietrzu.",
     images: [
-      "https://upload.wikimedia.org/wikipedia/commons/4/42/Dygowo_-_Orlik.jpg",
-      "http://osir.brzostek.pl/wp-content/uploads/2018/01/kompleks-sportowy-orlik.jpg",
-      "https://wadowiceonline.pl/images/stories/ZDJECIA/2020/orlik_jak_nowy_pilkarze_sie_ciesza/orlik.jpg",
-      "https://i.gremicdn.pl/image/free/053c6035d72cac423014caa05f887e4c/?t=resize:fill:1200:716,enlarge:1",
-      "https://mosirleszno.pl/wp-content/uploads/2017/03/DJI_0813-1.png",
+      "https://i.ibb.co/Y0sn8rC/Orlik2012-SP41-Lodz-boisko-wielofunkcyjne.jpg",
+      "https://i.ibb.co/QdPyhSb/Rajdowa18-2.png",
+      "https://i.ibb.co/bdSYttb/Rajdowa18-3.png",
+      "https://i.ibb.co/mb7h6Gn/Rajdowa18-4.png",
+      "https://i.ibb.co/pwkwL1m/Rajdowa18-5.png",
       "https://www.osirmokotow.waw.pl/wp-content/uploads/2019/03/kazimierzowska_orlik006-1024x683.jpg",
     ],
   };

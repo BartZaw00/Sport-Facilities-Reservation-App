@@ -8,12 +8,13 @@ export const ModalContext = createContext();
 
 function App() {
   const [selectedOption, setSelectedOption] = useState("");
+  const [selectedImages, setSelectedImages] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
 
   return (
     <ModalContext.Provider
-      value={{ isModalOpen, setIsModalOpen, selectedOption, setSelectedOption }}
+      value={{ isModalOpen, setIsModalOpen, selectedOption, setSelectedOption, setSelectedImages }}
     >
       <BrowserRouter>
         <Routes>
@@ -31,7 +32,7 @@ function App() {
           <Route path="/*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
-      {isModalOpen && <Modal option={selectedOption} />}
+      {isModalOpen && <Modal option={selectedOption} images={selectedImages}/>}
     </ModalContext.Provider>
   );
 }

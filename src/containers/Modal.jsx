@@ -6,12 +6,13 @@ import { ModalContext } from "../App";
 import {
   FilterForm,
   LoginForm,
+  PhotoForm,
   ProfileForm,
   SettingsForm,
   SignUpForm,
 } from "../containers/index";
 
-const Modal = ({ option }) => {
+const Modal = ({ option, images }) => {
   const { isModalOpen, setIsModalOpen } = useContext(ModalContext);
   const modalRef = useRef(null);
 
@@ -68,8 +69,7 @@ const Modal = ({ option }) => {
           {option === "filter" && <FilterForm />}
           {option === "settings" && <SettingsForm />}
           {option === "profile" && <ProfileForm />}
-          {/* {option === "image" && <img src={images[selectedImageIndex]} alt="" />} */}
-          {/* {option === "images" && <img src={images[selectedImageIndex]} alt="" />} */}
+          {(option === "image" || option === "images") && <PhotoForm images={images}/>}
         </div>
       </div>
     </div>

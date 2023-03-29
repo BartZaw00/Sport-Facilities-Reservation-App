@@ -6,6 +6,7 @@ export { default as LoginForm } from "./LoginForm";
 export { default as Map } from "./Map";
 export { default as Modal } from "./Modal";
 export { default as Navbar } from "./Navbar";
+export { default as PhotoForm } from "./PhotoForm";
 export { default as ProfileForm } from "./ProfileForm";
 export { default as ReservationForm } from "./ReservationForm";
 export { default as SettingsForm } from "./SettingsForm";
