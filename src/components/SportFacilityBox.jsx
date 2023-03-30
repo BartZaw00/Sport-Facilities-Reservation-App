@@ -18,7 +18,7 @@ const SportFacilityBox = ({ sportFacility, onClick }) => {
         <div className="absolute top-0 left-0 w-full h-full bg-my-sport-facility-overlay"></div>
         <img
           className="h-full w-full object-cover"
-          src={sportFacility.img}
+          src={sportFacility.photos[0].photoUrl}
           alt="sport facility"
         />
       </div>
@@ -27,7 +27,7 @@ const SportFacilityBox = ({ sportFacility, onClick }) => {
           <span className="font-semibold">{`${sportFacility.address}, ${sportFacility.city}`}</span>
           <span>{(Math.random() * 4.9 + 0.1).toFixed(1)} km</span>
         </div>
-        <span className="font-light">{sportFacility.type}</span>
+        <span className="font-light">{sportFacility.type.name}</span>
       </div>
       <div onClick={handleClick}>
         {isClicked ? (

@@ -16,7 +16,6 @@ import snowboard_icon from "../assets/snowboard.svg";
 import dart_icon from "../assets/dart.svg";
 import horseriding_icon from "../assets/horseriding.svg";
 
-import orlik from "../assets/orlik.jpg";
 
 export const menuItemsData = [
   {
@@ -128,7 +127,7 @@ export const sportFacilitiesData = [
     facilities: [
       {
         id: 1,
-        img: orlik,
+        img: "https://i.ibb.co/LSmYzs0/Rajdowa-18-1.jpg",
         type: "Orlik",
         address: "Rajdowa 18",
         city: "Łódź",
