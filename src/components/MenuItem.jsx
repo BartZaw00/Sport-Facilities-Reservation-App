@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useLayoutEffect } from "react";
 
 import { ModalContext } from "../App";
 
@@ -30,7 +30,9 @@ const MenuItem = ({ menuOption }) => {
   return (
     <a
       className={`${menuOption === "Zarejestruj się" ? "font-semibold" : ""} ${
-        menuOption === "Zaloguj się" ? "border-b-2" : ""
+        menuOption === "Zaloguj się" || menuOption === "Rezerwacje"
+          ? "border-b-2"
+          : ""
       } hover:bg-my-divider px-3 py-2 my-1`}
       onClick={handleMenuItemClick}
     >

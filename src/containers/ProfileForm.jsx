@@ -1,14 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FormButton, FormInput, ProfilePicture } from "../components";
+import useAuth from "../hooks/useAuth";
+
 
 const ProfileForm = () => {
-  const [name, setName] = useState("Jan");
-  const [surname, setSurname] = useState("Kowalski");
-  const [nick, setNick] = useState("Kowal123");
-  const [email, setEmail] = useState("jan.kowalski@example.com");
+  const { auth } = useAuth();
+
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [nick, setNick] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isEditMode, setIsEditMode] = useState(false);
+
+  useEffect(() => {
+    setNick(auth.username || "");
+    setName(auth.name || "");
+    setSurname(auth.surname || "");
+    setEmail(auth.email || "");
+  }, [auth]);
 
   const handleEditClick = () => {
     setIsEditMode(true);

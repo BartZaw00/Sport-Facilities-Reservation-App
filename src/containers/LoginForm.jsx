@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { FormInput, FormButton } from "../components";
 import { ModalContext } from "../App";
-import AuthContext from "../context/AuthProvider";
+import useAuth from "../hooks/useAuth";
 
 const LoginForm = () => {
   const { setIsModalOpen } = useContext(ModalContext);
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
 
   const emailRef = useRef();
   const errRef = useRef();
@@ -42,12 +42,13 @@ const LoginForm = () => {
       body: JSON.stringify({ email, password }),
     })
       .then(async (response) => {
+        console.log(response);
         const data = await response.json();
-        const token = data?.token;
-        const role = data?.roles;
-        setAuth({ role, token });
+        const { username, name, surname, email, roleId: role, token } = data;
+        console.log(username, name, surname, email, role, token)
+        setAuth({ username, name, surname, email, role, token });
 
-        if (response?.ok) {
+        if (response?.status === 200) {
           setEmail("");
           setPassword("");
           setSuccess(true);
@@ -58,6 +59,7 @@ const LoginForm = () => {
       })
       .catch((error) => {
         console.log(error);
+        setErrMsg("Podany Email lub Hasło są błędne. Spróbuj ponownie.");
       });
   };
 
