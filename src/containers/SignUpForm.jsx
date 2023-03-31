@@ -20,7 +20,22 @@ const SignUpForm = () => {
 
   const handleSignUp = (e) => {
     e.preventDefault();
-    // handle sign up logic here
+    
+    fetch(`${import.meta.env.VITE_ACCOUNT_URL}/register`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(registrationData)
+  })
+    .then(response => {
+      console.log(response);
+      // handle successful registration
+    })
+    .catch(error => {
+      console.log(error);
+      // handle registration error
+    });
   };
 
   return (

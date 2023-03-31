@@ -1,4 +1,3 @@
-export { default as AuthProvider } from "./AuthProvider";
 export { default as Categories } from "./Categories";
 export { default as FilterForm } from "./FilterForm";
 export { default as LoginForm } from "./LoginForm";

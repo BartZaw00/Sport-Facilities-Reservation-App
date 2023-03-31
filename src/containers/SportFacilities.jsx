@@ -20,7 +20,7 @@ const SportFacilities = ({ selectedCategory }) => {
         setIsLoading(false);
       })
       .catch((error) => console.error(error));
-  }, []);
+  }, [selectedCategory]);
 
   const handleSportFacilityClick = (id) => {
     navigate(`/sport-facility/${id}`);

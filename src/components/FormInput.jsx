@@ -8,6 +8,7 @@ const FormInput = ({
   onChange,
   type,
   isEditMode,
+  propRef,
 }) => {
   return (
     <div className="flex-1 flex flex-col gap-2">
@@ -22,6 +23,7 @@ const FormInput = ({
           value={value}
           onChange={onChange}
           className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-my-primary"
+          ref={propRef}
         />
       ) : (
         <div className="px-4 py-2 border border-gray-300 rounded-md">
