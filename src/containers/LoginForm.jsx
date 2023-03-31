@@ -42,12 +42,10 @@ const LoginForm = () => {
       body: JSON.stringify({ email, password }),
     })
       .then(async (response) => {
-        console.log(response);
         const data = await response.json();
-        console.log(data);
         const token = data?.token;
         const role = data?.roles;
-        setAuth({ user, password, role, token });
+        setAuth({ role, token });
 
         if (response?.ok) {
           setEmail("");
@@ -59,7 +57,6 @@ const LoginForm = () => {
         }
       })
       .catch((error) => {
-        
         console.log(error);
       });
   };
@@ -67,24 +64,38 @@ const LoginForm = () => {
   return (
     <>
       {success ? (
-        <p>Udalo się!</p>
+        <p className="text-green-500 text-sm mt-1 border-2 border-green-500 rounded-md px-3 py-2">
+          Pomyślnie udało się zalogować!
+        </p>
       ) : (
         <>
-          <p ref={errRef}>{errMsg}</p>
+          <p
+            ref={errRef}
+            className={
+              errMsg &&
+              "text-red-500 text-sm mt-1 border-2 border-red-500 rounded-md px-3 py-2"
+            }
+          >
+            {errMsg}
+          </p>
           <form
             onSubmit={handleLogin}
             className="flex flex-col gap-5 px-10 pt-6 pb-10 "
           >
-            <FormInput
-              label="Email"
-              id="email"
-              placeholder="jan.kowalski@gmail.com"
-              value={email}
-              onChange={handleEmailChange}
-              type="email"
-              isEditMode={true}
-              propRef={emailRef}
-            />
+            <div className="flex-1 flex flex-col gap-2">
+              <label htmlFor="email" className="text-my-gray">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                ref={emailRef}
+                placeholder="jan.kowalski@gmail.com"
+                value={email}
+                onChange={handleEmailChange}
+                className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-my-primary"
+              />
+            </div>
             <FormInput
               label="Password"
               id="password"
