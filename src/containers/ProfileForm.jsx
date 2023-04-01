@@ -4,7 +4,7 @@ import useAuth from "../hooks/useAuth";
 
 
 const ProfileForm = () => {
-  const { auth } = useAuth();
+  const { user } = useAuth();
 
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
@@ -15,11 +15,11 @@ const ProfileForm = () => {
   const [isEditMode, setIsEditMode] = useState(false);
 
   useEffect(() => {
-    setNick(auth.username || "");
-    setName(auth.name || "");
-    setSurname(auth.surname || "");
-    setEmail(auth.email || "");
-  }, [auth]);
+    setNick(user.username || "");
+    setName(user.name || "");
+    setSurname(user.surname || "");
+    setEmail(user.email || "");
+  }, [user]);
 
   const handleEditClick = () => {
     setIsEditMode(true);

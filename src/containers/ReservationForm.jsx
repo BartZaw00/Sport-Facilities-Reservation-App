@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import { DatePicker, TimePicker } from "antd";
 import { FormButton, FormSelect } from "../components";
 import locale from "antd/es/date-picker/locale/pl_PL";
+import Cookies from "universal-cookie";
+import useAuth from "../hooks/useAuth";
+import { ModalContext } from "../App";
 
 const useMediaQuery = (query) => {
   const [matches, setMatches] = useState(false);
@@ -26,13 +29,22 @@ const useMediaQuery = (query) => {
 };
 
 const ReservationForm = () => {
+  const { user } = useAuth();
+
+  const { setIsModalOpen, setSelectedOption } = useContext(ModalContext);
+
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [duration, setDuration] = useState("");
 
   const handleReservation = () => {
-    // TODO: Add code to handle reservation
-    console.log("Reservation submitted:", { date, time });
+    if (!user) {
+      setIsModalOpen(true);
+      setSelectedOption("login");
+      // }
+      // TODO: Add code to handle reservation
+      console.log("Reservation submitted:", { date, time });
+    }
   };
 
   const durationOptions = [

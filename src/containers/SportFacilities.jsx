@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 import { SportFacilityBox } from "../components";
 
-//import { sportFacilitiesData } from "../utils/data.js";
 
 const SportFacilities = ({ selectedCategory }) => {
   const navigate = useNavigate();
@@ -36,7 +35,9 @@ const SportFacilities = ({ selectedCategory }) => {
         <SportFacilityBox
           key={sportFacility.sportFacilityId}
           sportFacility={sportFacility}
-          onClick={() => handleSportFacilityClick(sportFacility.sportFacilityId)}
+          onClick={() =>
+            handleSportFacilityClick(sportFacility.sportFacilityId)
+          }
         />
       ))}
     </div>

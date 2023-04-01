@@ -1,8 +1,10 @@
 import React, { useContext, useLayoutEffect } from "react";
-
 import { ModalContext } from "../App";
+import useAuth from "../hooks/useAuth";
 
 const MenuItem = ({ menuOption }) => {
+  const { logout } = useAuth();
+
   const { setIsModalOpen, setSelectedOption } = useContext(ModalContext);
 
   const handleMenuItemClick = () => {
@@ -24,12 +26,18 @@ const MenuItem = ({ menuOption }) => {
         default:
           setSelectedOption("");
       }
+    } else {
+      logout();
     }
   };
 
   return (
     <a
-      className={`${menuOption === "Zarejestruj się" ? "font-semibold" : ""} ${
+      className={`${
+        menuOption === "Zarejestruj się" || menuOption === "Profil"
+          ? "font-semibold"
+          : ""
+      } ${
         menuOption === "Zaloguj się" || menuOption === "Rezerwacje"
           ? "border-b-2"
           : ""

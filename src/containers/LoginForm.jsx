@@ -3,9 +3,10 @@ import { FormInput, FormButton } from "../components";
 import { ModalContext } from "../App";
 import useAuth from "../hooks/useAuth";
 
+
 const LoginForm = () => {
   const { setIsModalOpen } = useContext(ModalContext);
-  const { setAuth } = useAuth();
+  const { login } = useAuth();
 
   const emailRef = useRef();
   const errRef = useRef();
@@ -45,12 +46,9 @@ const LoginForm = () => {
         console.log(response);
         const data = await response.json();
         const { username, name, surname, email, roleId: role, token } = data;
-        console.log(username, name, surname, email, role, token)
-        setAuth({ username, name, surname, email, role, token });
-
+        
         if (response?.status === 200) {
-          setEmail("");
-          setPassword("");
+          login({ username, name, surname, email, role, token });
           setSuccess(true);
           setTimeout(() => {
             setIsModalOpen(false);
