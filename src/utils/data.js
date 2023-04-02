@@ -35,7 +35,7 @@ export const menuItemsData = [
 export const categories = [
   {
     id: 1,
-    name: "Piłka nożna",
+    name: "Piłka Nożna",
     icon: football_icon,
   },
   {
@@ -55,7 +55,7 @@ export const categories = [
   },
   {
     id: 5,
-    name: "Piłka ręczna",
+    name: "Piłka Ręczna",
     icon: handball_icon,
   },
   {
@@ -65,7 +65,7 @@ export const categories = [
   },
   {
     id: 7,
-    name: "Boks",
+    name: "Sztuki Walki",
     icon: boxing_icon,
   },
   {

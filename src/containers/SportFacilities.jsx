@@ -3,13 +3,25 @@ import { useNavigate } from "react-router-dom";
 
 import { SportFacilityBox } from "../components";
 
-
-const SportFacilities = ({ selectedCategory }) => {
+const SportFacilities = ({ selectedCategory, searchQuery }) => {
   const navigate = useNavigate();
-  const [sportFacilities, setSportFacilities] = useState("");
+  const [sportFacilities, setSportFacilities] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    fetchSportFacilitiesByCategory();
+  }, [selectedCategory]);
+
+  useEffect(() => {
+    if (searchQuery === "") {
+      fetchSportFacilitiesByCategory();
+      return;
+    }
+    fetchSportFacilitiesBySearchQuery(searchQuery);
+  }, [searchQuery]);
+
+  
+  const fetchSportFacilitiesByCategory = () => {
     fetch(
       `${import.meta.env.VITE_HOME_URL}/getBySport?sportID=${selectedCategory}`
     )
@@ -19,7 +31,19 @@ const SportFacilities = ({ selectedCategory }) => {
         setIsLoading(false);
       })
       .catch((error) => console.error(error));
-  }, [selectedCategory]);
+  };
+  
+  const fetchSportFacilitiesBySearchQuery = (query) => {
+    fetch(
+      `${import.meta.env.VITE_HOME_URL}/getBySearchQuery?searchQuery=${query}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setSportFacilities(data);
+        setIsLoading(false);
+      })
+      .catch((error) => console.error(error));
+  };
 
   const handleSportFacilityClick = (id) => {
     navigate(`/sport-facility/${id}`);
