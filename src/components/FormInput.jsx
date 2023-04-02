@@ -19,7 +19,7 @@ const FormInput = ({
           type={type}
           id={id}
           placeholder={placeholder}
-          value={value}
+          value={value ? value : ""}
           onChange={onChange}
           className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-my-primary"
         />

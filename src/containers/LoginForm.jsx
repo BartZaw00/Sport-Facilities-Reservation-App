@@ -45,10 +45,9 @@ const LoginForm = () => {
       .then(async (response) => {
         console.log(response);
         const data = await response.json();
-        const { username, name, surname, email, roleId: role, token } = data;
-        
+        const { userId: id, username, name, surname, email, roleId: role, token } = data;
         if (response?.status === 200) {
-          login({ username, name, surname, email, role, token });
+          login({ id, username, name, surname, email, role, token });
           setSuccess(true);
           setTimeout(() => {
             setIsModalOpen(false);

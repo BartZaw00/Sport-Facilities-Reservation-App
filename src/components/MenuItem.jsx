@@ -23,6 +23,9 @@ const MenuItem = ({ menuOption }) => {
         case "Profil":
           setSelectedOption("profile");
           break;
+          case "Rezerwacje":
+          setSelectedOption("reservations");
+          break;
         default:
           setSelectedOption("");
       }
