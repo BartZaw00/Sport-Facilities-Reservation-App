@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { SportFacilityBox } from "../components";
+import { LoadingSpinner, SportFacilityBox } from "../components";
 
 const SportFacilities = ({ selectedCategory, searchQuery }) => {
   const navigate = useNavigate();
@@ -20,7 +20,6 @@ const SportFacilities = ({ selectedCategory, searchQuery }) => {
     fetchSportFacilitiesBySearchQuery(searchQuery);
   }, [searchQuery]);
 
-  
   const fetchSportFacilitiesByCategory = () => {
     fetch(
       `${import.meta.env.VITE_HOME_URL}/getBySport?sportID=${selectedCategory}`
@@ -32,7 +31,7 @@ const SportFacilities = ({ selectedCategory, searchQuery }) => {
       })
       .catch((error) => console.error(error));
   };
-  
+
   const fetchSportFacilitiesBySearchQuery = (query) => {
     fetch(
       `${import.meta.env.VITE_HOME_URL}/getBySearchQuery?searchQuery=${query}`
@@ -49,21 +48,21 @@ const SportFacilities = ({ selectedCategory, searchQuery }) => {
     navigate(`/sport-facility/${id}`);
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="px-20 2xl:px-10 xl:px-8 lg:px-6 md:px-4 grid grid-cols-7 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6 gap-x-6 gap-y-8">
-      {sportFacilities.map((sportFacility) => (
-        <SportFacilityBox
-          key={sportFacility.sportFacilityId}
-          sportFacility={sportFacility}
-          onClick={() =>
-            handleSportFacilityClick(sportFacility.sportFacilityId)
-          }
-        />
-      ))}
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        sportFacilities.map((sportFacility) => (
+          <SportFacilityBox
+            key={sportFacility.sportFacilityId}
+            sportFacility={sportFacility}
+            onClick={() =>
+              handleSportFacilityClick(sportFacility.sportFacilityId)
+            }
+          />
+        ))
+      )}
     </div>
   );
 };

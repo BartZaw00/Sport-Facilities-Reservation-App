@@ -5,6 +5,7 @@ export { default as FormButton } from "./FormButton";
 export { default as FormInput } from "./FormInput";
 export { default as FormSelect } from "./FormSelect";
 export { default as Image } from "./Image";
+export { default as LoadingSpinner } from "./LoadingSpinner";
 export { default as Logo } from "./Logo";
 export { default as MapButton } from "./MapButton";
 export { default as MenuItem } from "./MenuItem";
