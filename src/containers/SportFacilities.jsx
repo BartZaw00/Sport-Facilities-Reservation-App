@@ -29,7 +29,7 @@ const SportFacilities = ({ selectedCategory, searchQuery }) => {
         setSportFacilities(data);
         setIsLoading(false);
       })
-      .catch((error) => console.error(error));
+      .catch(() => console.log("Wystąpił błąd. Spróbuj ponownie."));
   };
 
   const fetchSportFacilitiesBySearchQuery = (query) => {

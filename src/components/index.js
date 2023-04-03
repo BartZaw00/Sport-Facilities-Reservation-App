@@ -16,3 +16,6 @@ export { default as SportFacilityBox } from "./SportFacilityBox";
 export { default as SportFacilityCalendar } from "./SportFacilityCalendar";
 export { default as SportFacilityDetail } from "./SportFacilityDetail";
 export { default as SportFacilityHeader } from "./SportFacilityHeader";
+
+export { default as SuccessMessage } from "./SuccessMessage";
+export { default as ErrorMessage } from "./ErrorMessage";

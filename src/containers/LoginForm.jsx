@@ -1,8 +1,13 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { FormInput, FormButton } from "../components";
+import {
+  FormInput,
+  FormButton,
+  ErrorMessage,
+  SuccessMessage,
+  LoadingSpinner,
+} from "../components";
 import { ModalContext } from "../App";
 import useAuth from "../hooks/useAuth";
-
 
 const LoginForm = () => {
   const { setIsModalOpen } = useContext(ModalContext);
@@ -13,8 +18,10 @@ const LoginForm = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errMsg, setErrMsg] = useState("");
+
   const [success, setSuccess] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     emailRef.current.focus();
@@ -34,6 +41,7 @@ const LoginForm = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     fetch(`${import.meta.env.VITE_ACCOUNT_URL}/login`, {
       method: "POST",
@@ -45,9 +53,19 @@ const LoginForm = () => {
       .then(async (response) => {
         console.log(response);
         const data = await response.json();
-        const { userId: id, username, name, surname, email, roleId: role, token } = data;
+        console.log(data)
+        const {
+          userId: id,
+          photoUrl,
+          username,
+          name,
+          surname,
+          email,
+          roleId: role,
+          token,
+        } = data;
         if (response?.status === 200) {
-          login({ id, username, name, surname, email, role, token });
+          login({ id, photoUrl, username, name, surname, email, role, token });
           setSuccess(true);
           setTimeout(() => {
             setIsModalOpen(false);
@@ -57,26 +75,19 @@ const LoginForm = () => {
       .catch((error) => {
         console.log(error);
         setErrMsg("Podany Email lub Hasło są błędne. Spróbuj ponownie.");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
   return (
     <>
       {success ? (
-        <p className="text-green-500 text-sm mt-1 border-2 border-green-500 rounded-md px-3 py-2">
-          Pomyślnie udało się zalogować!
-        </p>
+        <SuccessMessage successMsg="Pomyślnie udało się zalogować!" />
       ) : (
         <>
-          <p
-            ref={errRef}
-            className={
-              errMsg &&
-              "text-red-500 text-sm mt-1 border-2 border-red-500 rounded-md px-3 py-2"
-            }
-          >
-            {errMsg}
-          </p>
+          <ErrorMessage errMsg={errMsg} />
           <form
             onSubmit={handleLogin}
             className="flex flex-col gap-5 px-10 pt-6 pb-10 "
@@ -104,12 +115,16 @@ const LoginForm = () => {
               type="password"
               isEditMode={true}
             />
-            <FormButton
-              onClick={handleLogin}
-              className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover focus:outline-none"
-            >
-              Zaloguj się
-            </FormButton>
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : (
+              <FormButton
+                onClick={handleLogin}
+                className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover focus:outline-none"
+              >
+                Zaloguj się
+              </FormButton>
+            )}
           </form>
         </>
       )}

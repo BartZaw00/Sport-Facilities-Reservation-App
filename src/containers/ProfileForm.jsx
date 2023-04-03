@@ -1,6 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FormButton, FormInput, ProfilePicture } from "../components";
+import {
+  ErrorMessage,
+  FormButton,
+  FormInput,
+  ProfilePicture,
+  SuccessMessage,
+} from "../components";
 import useAuth from "../hooks/useAuth";
+import { GoX, GoCheck } from "react-icons/go";
+import { FaInfoCircle } from "react-icons/fa";
+
+const USERNAME_REGEX = /^[a-zA-Z][a-zA-Z0-9_-]{3,29}$/;
+const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+const PASSWORD_REGEX =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%])[A-Za-z\d!@#$%]{8,30}$/;
 
 const ProfileForm = () => {
   const { user } = useAuth();
@@ -14,13 +27,18 @@ const ProfileForm = () => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
+
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [validPassword, setValidPassword] = useState(false);
+  const [passwordFocus, setPasswordFocus] = useState(false);
+
+  const [matchPassword, setMatchPassword] = useState("");
+  const [validMatch, setValidMatch] = useState(false);
+  const [matchFocus, setMatchFocus] = useState(false);
 
   const [isEditProfileMode, setIsEditProfileMode] = useState(false);
   const [isEditPasswordMode, setIsEditPasswordMode] = useState(false);
 
-  const [success, setSuccess] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
@@ -32,54 +50,89 @@ const ProfileForm = () => {
 
   useEffect(() => {
     setErrMsg("");
-  }, [username, name, surname, email, password, confirmPassword]);
+  }, [username, name, surname, email, password, matchPassword]);
 
   useEffect(() => {
     setUserId(user.id);
+    setPhotoUrl(user.photoUrl || "");
     setUsername(user.username);
     setName(user.name || "");
     setSurname(user.surname || "");
     setEmail(user.email);
-    //setPhotoUrl()
-  }, [user]);
+  }, [
+    user.id,
+    user.photoUrl,
+    user.username,
+    user.name,
+    user.surname,
+    user.email,
+  ]);
+
+  useEffect(() => {
+    const result = PASSWORD_REGEX.test(password);
+    setValidPassword(result);
+    const match = password === matchPassword;
+    setValidMatch(match);
+  }, [password, matchPassword]);
 
   const updateUserDetails = async () => {
-    console.log("DANE");
-    console.log("username:" + username);
-    console.log("username:" + name);
-    console.log("username:" + surname);
-    console.log("username:" + email);
-    console.log("username:" + password);
-    console.log("username:" + photoUrl);
-    fetch(`${import.meta.env.VITE_ACCOUNT_URL}/update/${user.id}`, {
+    fetch(`${import.meta.env.VITE_ACCOUNT_URL}/updateUser/${user.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        photoUrl,
         username,
         name,
         surname,
         email,
-        password,
-        photoUrl,
       }),
     })
       .then(async (response) => {
         console.log(response);
         const data = await response.json();
         console.log(data);
-        setSuccess(true);
-        setSuccessMsg("Pomyślnie udało się zaktualizować profil");
-        setTimeout(() => {
-          setSuccess(false);
-        }, 5000);
+        if (response.ok) {
+          setSuccessMsg("Pomyślnie udało się zaktualizować profil");
+          setIsEditProfileMode(false);
+          setTimeout(() => {
+            setSuccessMsg("");
+          }, 5000);
+        }
       })
       .catch((error) => {
-        console.log(error);
         setErrMsg(
           "Podana Nazwa Użytkownika lub Email jest już zajęty. Spróbuj ponownie."
         );
+      });
+  };
+
+  const updateUserPassword = async () => {
+    fetch(`${import.meta.env.VITE_ACCOUNT_URL}/updateUserPassword/${user.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        password,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          setErrMsg("Nie udało się zaktualizować hasła. Spróbuj ponownie");
+          return;
+        }
+
+        setSuccessMsg("Pomyślnie udało się zaktualizować profil");
+        setIsEditPasswordMode(false);
+        setTimeout(() => {
+          setSuccessMsg("");
+        }, 5000);
+      })
+
+      .catch(() => {
+        setErrMsg("Wystąpił błąd. Spróbuj ponownie.");
       });
   };
 
@@ -92,49 +145,47 @@ const ProfileForm = () => {
   };
 
   const handleSaveClick = async () => {
-    if (!username) {
-      setErrMsg("Podaj Nazwę Użytkownika.");
+    const usr = USERNAME_REGEX.test(username);
+    const eml = EMAIL_REGEX.test(email);
+
+    if (!usr || !eml) {
+      setErrMsg("Niedozwolona operacja");
       return;
     }
-    if (!email) {
-      setErrMsg("Podaj Email.");
-      return;
+
+    if (isEditProfileMode) {
+      if (!username) {
+        setErrMsg("Podaj Nazwę Użytkownika.");
+        return;
+      }
+      if (!email) {
+        setErrMsg("Podaj Email.");
+        return;
+      }
+
+      await updateUserDetails();
     }
-    if (!password) {
-      setErrMsg("Podaj Hasło.");
-      return;
+
+    if (isEditPasswordMode) {
+      if (!password) {
+        setErrMsg("Podaj Hasło.");
+        return;
+      }
+
+      await updateUserPassword();
     }
-    setIsEditProfileMode(false);
-    await updateUserDetails();
   };
 
   const handleCancelClick = () => {
     if (isEditProfileMode) setIsEditProfileMode(false);
     if (isEditPasswordMode) setIsEditPasswordMode(false);
-    // TODO: Implement cancel changes logic
+    setErrMsg("");
   };
 
   return (
     <>
-      <p
-        className={
-          success
-            ? "text-green-500 text-sm mt-1 border-2 border-green-500 rounded-md px-3 py-2"
-            : undefined
-        }
-      >
-        {successMsg}
-      </p>
-      <p
-        ref={errRef}
-        className={
-          errMsg
-            ? "text-red-500 text-sm mt-1 border-2 border-red-500 rounded-md px-3 py-2"
-            : undefined
-        }
-      >
-        {errMsg}
-      </p>
+      <SuccessMessage successMsg={successMsg} />
+      <ErrorMessage errMsg={errMsg} />
       <div className="flex flex-col gap-5 px-10 pt-6 pb-10">
         {isEditPasswordMode || (
           <div className="flex justify-center items-center gap-4">
@@ -151,33 +202,90 @@ const ProfileForm = () => {
             )}
           </div>
         )}
-        <div className="flex flex-col gap-4">
+        <div className="max-w-md flex flex-col gap-4">
           {isEditPasswordMode ? (
             <>
               <div className="flex-1 flex flex-col gap-2">
-                <label htmlFor="password" className="text-my-gray">
-                  Hasło
+                <label
+                  htmlFor="password"
+                  className="text-my-gray flex items-center"
+                >
+                  <span>Hasło:</span>
+                  <GoCheck
+                    color="green"
+                    className={validPassword ? "block" : "hidden"}
+                  />
+                  <GoX
+                    color="red"
+                    className={validPassword || !password ? "hidden" : "block"}
+                  />
                 </label>
                 <input
-                  type="password"
                   id="password"
-                  placeholder="*********"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  type="password"
                   className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-my-primary"
+                  placeholder="*********"
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  aria-invalid={validPassword ? "false" : "true"}
+                  aria-describedby="passwordnote"
+                  onFocus={() => setPasswordFocus(true)}
+                  onBlur={() => setPasswordFocus(false)}
                 />
               </div>
+              <p
+                id="passwordnote"
+                className={
+                  passwordFocus && password && !validPassword
+                    ? "relative bg-gray-100 border border-gray-300 text-gray-600 py-2 px-4 rounded mt-2 transition-opacity"
+                    : "hidden"
+                }
+              >
+                <FaInfoCircle className="absolute right-2 top-2" />
+                <span>
+                  Od 8 do 30 znaków.
+                  <br />
+                  Musi zawierać przynajmniej jedną wielką literę, małą literę
+                  oraz cyfrę.
+                  <br />
+                  Musi zawierać przynajmniej jeden z nastepujących znaków
+                  specjalnych:&nbsp;
+                  <span aria-label="exclamantion mark">!</span>&nbsp;
+                  <span aria-label="at symbol">@</span>&nbsp;
+                  <span aria-label="hashtag">#</span>&nbsp;
+                  <span aria-label="dollar sign">$</span>&nbsp;
+                  <span aria-label="percent">%</span>.
+                </span>
+              </p>
               <div className="flex-1 flex flex-col gap-2">
-                <label htmlFor="confirm_password" className="text-my-gray">
-                  Potwierdź Hasło
+                <label
+                  htmlFor="confirm_password"
+                  className="text-my-gray flex items-center"
+                >
+                  <span>Potwierdź Hasło:</span>
+                  <GoCheck
+                    color="green"
+                    className={validMatch && matchPassword ? "block" : "hidden"}
+                  />
+                  <GoX
+                    color="red"
+                    className={
+                      validMatch || !matchPassword ? "hidden" : "block"
+                    }
+                  />
                 </label>
                 <input
-                  type="password"
                   id="confirm_password"
-                  placeholder="*********"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
                   className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-my-primary"
+                  type="password"
+                  placeholder="*********"
+                  autoComplete="off"
+                  onChange={(e) => setMatchPassword(e.target.value)}
+                  required
+                  aria-invalid={validMatch ? "false" : "true"}
+                  aria-describedby="confirmnote"
+                  onFocus={() => setMatchFocus(true)}
+                  onBlur={() => setMatchFocus(false)}
                 />
               </div>
             </>

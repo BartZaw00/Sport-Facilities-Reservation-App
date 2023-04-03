@@ -1,5 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { FormInput, FormButton } from "../components";
+import {
+  FormInput,
+  FormButton,
+  ErrorMessage,
+  SuccessMessage,
+  LoadingSpinner,
+} from "../components";
 import { GoCheck, GoX } from "react-icons/go";
 import { FaInfoCircle } from "react-icons/fa";
 import { ModalContext } from "../App";
@@ -33,6 +39,7 @@ const SignUpForm = () => {
 
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     usernameRef.current.focus();
@@ -67,9 +74,11 @@ const SignUpForm = () => {
     const eml = EMAIL_REGEX.test(email);
     const pwd = PASSWORD_REGEX.test(password);
     if (!usr || !eml || !pwd) {
-      setErrMsg("Niedozwolone wejście");
+      setErrMsg("Niedozwolona operacja");
       return;
     }
+
+    setIsLoading(true);
 
     fetch(`${import.meta.env.VITE_ACCOUNT_URL}/register`, {
       method: "POST",
@@ -79,9 +88,11 @@ const SignUpForm = () => {
       body: JSON.stringify({ username, email, password }),
     })
       .then((response) => {
-        console.log(response);
-
-        if (response?.ok) {
+        if (!response.ok) {
+          setErrMsg(
+            "Podana Nazwa Użytkownika lub Email już istnieje. Spróbuj ponownie."
+          );
+        } else {
           setUsername("");
           setEmail("");
           setPassword("");
@@ -91,28 +102,26 @@ const SignUpForm = () => {
             setSelectedOption("login");
           }, 2000);
         }
-        else {
-          setErrMsg("Podana Nazwa Użytkownika lub Email już istnieje. Spróbuj ponownie.")
-        }
       })
-      .catch((error) => {
-        console.log(error);
-        setErrMsg("Brak połączenia z serwerem.");
+      .catch(() => {
+        setErrMsg("Wystąpił błąd. Spróbuj ponownie.");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
   return (
     <>
       {success ? (
-        <p className="text-green-500 text-sm mt-1 border-2 border-green-500 rounded-md px-3 py-2">Pomyślnie udało się zarejestrować!</p>
+        <SuccessMessage successMsg="Pomyślnie udało się zarejestrować!" />
       ) : (
         <>
-          <p ref={errRef} className={errMsg && "text-red-500 text-sm mt-1 border-2 border-red-500 rounded-md px-3 py-2"} aria-live="assertive">
-            {errMsg}
-          </p>
+          <ErrorMessage errMsg={errMsg} ariaLive="assertive" />
+
           <form
             onSubmit={handleSignUp}
-            className="flex flex-col gap-5 px-10 pt-6 pb-10 "
+            className="max-w-lg flex flex-col gap-5 px-10 pt-6 pb-10 "
           >
             <div className="flex-1 flex flex-col gap-2">
               <label
@@ -269,14 +278,18 @@ const SignUpForm = () => {
                 onBlur={() => setMatchFocus(false)}
               />
             </div>
-            <button
-              className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover focus:outline-none"
-              disabled={
-                !validUsername || !validPassword || !validMatch ? true : false
-              }
-            >
-              Zarejestruj się
-            </button>
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : (
+              <button
+                className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover focus:outline-none"
+                disabled={
+                  !validUsername || !validPassword || !validMatch ? true : false
+                }
+              >
+                Zarejestruj się
+              </button>
+            )}
           </form>
         </>
       )}
