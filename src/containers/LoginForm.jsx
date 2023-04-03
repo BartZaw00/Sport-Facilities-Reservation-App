@@ -53,7 +53,7 @@ const LoginForm = () => {
       .then(async (response) => {
         console.log(response);
         const data = await response.json();
-        console.log(data)
+        console.log(data);
         const {
           userId: id,
           photoUrl,
@@ -113,7 +113,6 @@ const LoginForm = () => {
               value={password}
               onChange={handlePasswordChange}
               type="password"
-              isEditMode={true}
             />
             {isLoading ? (
               <LoadingSpinner />

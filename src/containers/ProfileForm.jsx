@@ -9,6 +9,7 @@ import {
 import useAuth from "../hooks/useAuth";
 import { GoX, GoCheck } from "react-icons/go";
 import { FaInfoCircle } from "react-icons/fa";
+import FormPasswordInput from "../components/FormPasswordInput";
 
 const USERNAME_REGEX = /^[a-zA-Z][a-zA-Z0-9_-]{3,29}$/;
 const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -204,91 +205,20 @@ const ProfileForm = () => {
         )}
         <div className="max-w-md flex flex-col gap-4">
           {isEditPasswordMode ? (
-            <>
-              <div className="flex-1 flex flex-col gap-2">
-                <label
-                  htmlFor="password"
-                  className="text-my-gray flex items-center"
-                >
-                  <span>Hasło:</span>
-                  <GoCheck
-                    color="green"
-                    className={validPassword ? "block" : "hidden"}
-                  />
-                  <GoX
-                    color="red"
-                    className={validPassword || !password ? "hidden" : "block"}
-                  />
-                </label>
-                <input
-                  id="password"
-                  type="password"
-                  className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-my-primary"
-                  placeholder="*********"
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  aria-invalid={validPassword ? "false" : "true"}
-                  aria-describedby="passwordnote"
-                  onFocus={() => setPasswordFocus(true)}
-                  onBlur={() => setPasswordFocus(false)}
-                />
-              </div>
-              <p
-                id="passwordnote"
-                className={
-                  passwordFocus && password && !validPassword
-                    ? "relative bg-gray-100 border border-gray-300 text-gray-600 py-2 px-4 rounded mt-2 transition-opacity"
-                    : "hidden"
-                }
-              >
-                <FaInfoCircle className="absolute right-2 top-2" />
-                <span>
-                  Od 8 do 30 znaków.
-                  <br />
-                  Musi zawierać przynajmniej jedną wielką literę, małą literę
-                  oraz cyfrę.
-                  <br />
-                  Musi zawierać przynajmniej jeden z nastepujących znaków
-                  specjalnych:&nbsp;
-                  <span aria-label="exclamantion mark">!</span>&nbsp;
-                  <span aria-label="at symbol">@</span>&nbsp;
-                  <span aria-label="hashtag">#</span>&nbsp;
-                  <span aria-label="dollar sign">$</span>&nbsp;
-                  <span aria-label="percent">%</span>.
-                </span>
-              </p>
-              <div className="flex-1 flex flex-col gap-2">
-                <label
-                  htmlFor="confirm_password"
-                  className="text-my-gray flex items-center"
-                >
-                  <span>Potwierdź Hasło:</span>
-                  <GoCheck
-                    color="green"
-                    className={validMatch && matchPassword ? "block" : "hidden"}
-                  />
-                  <GoX
-                    color="red"
-                    className={
-                      validMatch || !matchPassword ? "hidden" : "block"
-                    }
-                  />
-                </label>
-                <input
-                  id="confirm_password"
-                  className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-my-primary"
-                  type="password"
-                  placeholder="*********"
-                  autoComplete="off"
-                  onChange={(e) => setMatchPassword(e.target.value)}
-                  required
-                  aria-invalid={validMatch ? "false" : "true"}
-                  aria-describedby="confirmnote"
-                  onFocus={() => setMatchFocus(true)}
-                  onBlur={() => setMatchFocus(false)}
-                />
-              </div>
-            </>
+            <FormPasswordInput
+              password={password}
+              setPassword={setPassword}
+              validPassword={validPassword}
+              setValidPassword={setValidPassword}
+              passwordFocus={passwordFocus}
+              setPasswordFocus={setPasswordFocus}
+              matchPassword={matchPassword}
+              setMatchPassword={setMatchPassword}
+              validMatch={validMatch}
+              setValidMatch={setValidMatch}
+              matchFocus={matchFocus}
+              setMatchFocus={setMatchFocus}
+            />
           ) : (
             <>
               <div className="flex flex-wrap gap-4">
@@ -387,18 +317,18 @@ const ProfileForm = () => {
             </div>
           ) : (
             <>
-              <button
-                className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover focus:outline-none"
+              <FormButton
                 onClick={handleEditProfileClick}
+                className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover focus:outline-none"
               >
                 Edytuj Profil
-              </button>
-              <button
-                className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover focus:outline-none"
+              </FormButton>
+              <FormButton
                 onClick={handleChangePasswordClick}
+                className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover focus:outline-none"
               >
                 Zmień Hasło
-              </button>
+              </FormButton>
             </>
           )}
         </div>
