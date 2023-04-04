@@ -24,7 +24,7 @@ function App() {
             element={<HomePage/>}
           />
           <Route
-            path="/sport-facility"
+            path="/sport-facility/:id"
             element={
               <SportFacilityPage/>
             }

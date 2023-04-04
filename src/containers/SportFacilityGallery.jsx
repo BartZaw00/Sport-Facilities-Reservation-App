@@ -6,7 +6,7 @@ import { Modal } from "./index";
 
 import { ModalContext } from "../App";
 
-const ImageGrid = ({ images }) => {
+const SportFacilityGallery = ({ images }) => {
   const { setIsModalOpen, setSelectedOption, setSelectedImages } = useContext(ModalContext);
 
   // Get only the first 5 images from the array
@@ -16,7 +16,7 @@ const ImageGrid = ({ images }) => {
     console.log(`Image clicked: ${index}`);
     setIsModalOpen(true);
     setSelectedOption("image");
-    setSelectedImages(slicedImages[index]);
+    setSelectedImages(slicedImages[index].photoUrl);
   };
 
 
@@ -24,11 +24,11 @@ const ImageGrid = ({ images }) => {
     <div className="relative grid grid-cols-4 grid-rows-2 gap-2 rounded-xl overflow-hidden sm:grid-cols-none sm:w-full sm:overflow-x-auto sm:gap-x-4">
       {slicedImages.map((image, index) => (
         <Image
-          key={index}
+          key={image.photoId}
           className={`relative cursor-pointer ${
             index === 0 ? "col-span-2 row-span-2" : ""
           }`}
-          src={image}
+          src={image.photoUrl}
           onClick={() => handleClick(index)}
         />
       ))}
@@ -47,4 +47,4 @@ const ImageGrid = ({ images }) => {
   );
 };
 
-export default ImageGrid;
+export default SportFacilityGallery;
