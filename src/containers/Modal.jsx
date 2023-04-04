@@ -60,6 +60,7 @@ const Modal = ({ option, images }) => {
             <span className="font-bold">Ustawienia</span>
           )}
           {option === "profile" && <span className="font-bold">Profil</span>}
+          {option === "reservations" && <span className="font-bold">Rezerwacje</span>}
           {option === "image" && <span className="font-bold">Zdjęcie</span>}
           {option === "images" && <span className="font-bold">Zdjęcia</span>}
         </div>

@@ -5,6 +5,7 @@ export { default as FormButton } from "./FormButton";
 export { default as FormInput } from "./FormInput";
 export { default as FormSelect } from "./FormSelect";
 export { default as Image } from "./Image";
+export { default as LoadingSpinner } from "./LoadingSpinner";
 export { default as Logo } from "./Logo";
 export { default as MapButton } from "./MapButton";
 export { default as MenuItem } from "./MenuItem";
@@ -15,3 +16,7 @@ export { default as SportFacilityBox } from "./SportFacilityBox";
 export { default as SportFacilityCalendar } from "./SportFacilityCalendar";
 export { default as SportFacilityDetail } from "./SportFacilityDetail";
 export { default as SportFacilityHeader } from "./SportFacilityHeader";
+
+export { default as SuccessMessage } from "./SuccessMessage";
+export { default as ErrorMessage } from "./ErrorMessage";
+export { default as InfoNote } from "./InfoNote";
