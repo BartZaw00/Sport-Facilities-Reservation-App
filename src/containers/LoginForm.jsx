@@ -113,6 +113,7 @@ const LoginForm = () => {
               value={password}
               onChange={handlePasswordChange}
               type="password"
+              isEditMode={true}
             />
             {isLoading ? (
               <LoadingSpinner />

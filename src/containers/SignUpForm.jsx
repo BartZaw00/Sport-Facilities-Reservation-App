@@ -5,6 +5,7 @@ import {
   ErrorMessage,
   SuccessMessage,
   LoadingSpinner,
+  InfoNote,
 } from "../components";
 import { GoCheck, GoX } from "react-icons/go";
 import { FaInfoCircle } from "react-icons/fa";
