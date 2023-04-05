@@ -1,14 +1,14 @@
 import React, { createContext, useEffect, useState } from "react";
-
-import { MapButton } from "../components";
-
-import { Categories, Map, Navbar, SportFacilities } from "../containers/index";
+import Navbar from "../containers/navbar/Navbar";
+import Categories from "../containers/categories/Categories";
+import Map from "../containers/map/Map";
+import SportFacilities from "../containers/sportFacilities/SportFacilities";
+import MapOpenButton from "../containers/map/mapContent/MapOpenButton";
 
 const HomePage = () => {
   const [showMap, setShowMap] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-
 
   const handleMapButtonClick = () => {
     setShowMap(!showMap);
@@ -17,7 +17,6 @@ const HomePage = () => {
   const handleSearchQueryChange = (e) => {
     setSearchQuery(e.target.value);
   };
-
 
   return (
     <div id="home-page" className="bg-my-primary-bg">
@@ -33,9 +32,12 @@ const HomePage = () => {
       {showMap ? (
         <Map />
       ) : (
-        <SportFacilities selectedCategory={selectedCategory} searchQuery={searchQuery}/>
+        <SportFacilities
+          selectedCategory={selectedCategory}
+          searchQuery={searchQuery}
+        />
       )}
-      <MapButton onClick={handleMapButtonClick} showMap={showMap} />
+      <MapOpenButton onClick={handleMapButtonClick} showMap={showMap} />
     </div>
   );
 };
