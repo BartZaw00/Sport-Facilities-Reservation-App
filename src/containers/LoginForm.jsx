@@ -51,9 +51,7 @@ const LoginForm = () => {
       body: JSON.stringify({ email, password }),
     })
       .then(async (response) => {
-        console.log(response);
         const data = await response.json();
-        console.log(data);
         const {
           userId: id,
           photoUrl,

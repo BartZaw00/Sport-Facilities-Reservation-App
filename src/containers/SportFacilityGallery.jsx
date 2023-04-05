@@ -13,7 +13,6 @@ const SportFacilityGallery = ({ images }) => {
   const slicedImages = images.slice(0, 5);
 
   const handleClick = (index) => {
-    console.log(`Image clicked: ${index}`);
     setIsModalOpen(true);
     setSelectedOption("image");
     setSelectedImages(slicedImages[index].photoUrl);

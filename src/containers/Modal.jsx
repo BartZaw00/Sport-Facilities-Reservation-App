@@ -18,13 +18,11 @@ const Modal = ({ option, images }) => {
 
   const handleCloseModalClick = () => {
     setIsModalOpen(false);
-    //document.body.classList.remove("modal-open");
   };
 
   const handleModalOutsideClick = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       setIsModalOpen(false);
-      //document.body.classList.remove("modal-open");
     }
   };
 
@@ -60,7 +58,9 @@ const Modal = ({ option, images }) => {
             <span className="font-bold">Ustawienia</span>
           )}
           {option === "profile" && <span className="font-bold">Profil</span>}
-          {option === "reservations" && <span className="font-bold">Rezerwacje</span>}
+          {option === "reservations" && (
+            <span className="font-bold">Rezerwacje</span>
+          )}
           {option === "image" && <span className="font-bold">Zdjęcie</span>}
           {option === "images" && <span className="font-bold">Zdjęcia</span>}
         </div>
@@ -70,7 +70,9 @@ const Modal = ({ option, images }) => {
           {option === "filter" && <FilterForm />}
           {option === "settings" && <SettingsForm />}
           {option === "profile" && <ProfileForm />}
-          {(option === "image" || option === "images") && <PhotoForm images={images}/>}
+          {(option === "image" || option === "images") && (
+            <PhotoForm images={images} />
+          )}
         </div>
       </div>
     </div>

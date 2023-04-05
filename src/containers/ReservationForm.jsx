@@ -43,7 +43,7 @@ const ReservationForm = () => {
       setSelectedOption("login");
       // }
       // TODO: Add code to handle reservation
-      console.log("Reservation submitted:", { date, time });
+
     }
   };
 
