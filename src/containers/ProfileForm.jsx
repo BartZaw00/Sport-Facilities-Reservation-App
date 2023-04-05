@@ -2,13 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   ErrorMessage,
   FormButton,
-  FormInput,
   ProfilePicture,
+  ProfilePictureUploader,
   SuccessMessage,
 } from "../components";
 import useAuth from "../hooks/useAuth";
-import { GoX, GoCheck } from "react-icons/go";
-import { FaInfoCircle } from "react-icons/fa";
 import FormPasswordInput from "../components/FormPasswordInput";
 
 const USERNAME_REGEX = /^[a-zA-Z][a-zA-Z0-9_-]{3,29}$/;
@@ -51,7 +49,7 @@ const ProfileForm = () => {
 
   useEffect(() => {
     setErrMsg("");
-  }, [username, name, surname, email, password, matchPassword]);
+  }, [photoUrl, username, name, surname, email, password, matchPassword]);
 
   useEffect(() => {
     setUserId(user.id);
@@ -144,6 +142,12 @@ const ProfileForm = () => {
     setIsEditPasswordMode(true);
   };
 
+  const handleImageChange = (imageLocalUrl) => {
+    // Do something with the file
+    console.log("Selected file:", imageLocalUrl);
+    setPhotoUrl(imageLocalUrl);
+  };
+
   const handleSaveClick = async () => {
     const usr = USERNAME_REGEX.test(username);
     const eml = EMAIL_REGEX.test(email);
@@ -187,21 +191,17 @@ const ProfileForm = () => {
       <SuccessMessage successMsg={successMsg} />
       <ErrorMessage errMsg={errMsg} />
       <div className="flex flex-col gap-5 px-10 pt-6 pb-10">
-        {isEditPasswordMode || (
-          <div className="flex justify-center items-center gap-4">
-            <ProfilePicture src="src\assets\orlik.jpg" alt="Profile picture" />
-            {isEditProfileMode && (
-              <div className="flex flex-col gap-4">
-                <FormButton className="px-4 py-2 bg-my-primary text-my-primary-bg rounded-md hover:bg-my-primary-hover">
-                  Zmień zdjęcie
-                </FormButton>
-                <FormButton className="px-4 py-2 bg-my-primary-bg text-my-primary-text border-2 border-gray-300 rounded-md hover:bg-gray-200">
-                  Usuń zdjęcie
-                </FormButton>
-              </div>
-            )}
-          </div>
-        )}
+        <div className="flex justify-center items-center gap-4">
+          <ProfilePicture src={user.photoUrl} alt="Profile picture" />
+          {isEditProfileMode && (
+            <div className="flex flex-col gap-4">
+              <ProfilePictureUploader onImageChange={handleImageChange} />
+              <FormButton className="px-4 py-2 bg-my-primary-bg text-my-primary-text border-2 border-gray-300 rounded-md hover:bg-gray-200">
+                Usuń zdjęcie
+              </FormButton>
+            </div>
+          )}
+        </div>
         <div className="max-w-md flex flex-col gap-4">
           {isEditPasswordMode ? (
             <FormPasswordInput

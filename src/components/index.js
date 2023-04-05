@@ -20,3 +20,4 @@ export { default as SportFacilityHeader } from "./SportFacilityHeader";
 export { default as SuccessMessage } from "./SuccessMessage";
 export { default as ErrorMessage } from "./ErrorMessage";
 export { default as InfoNote } from "./InfoNote";
+export { default as ProfilePictureUploader } from "./ProfilePictureUploader";
