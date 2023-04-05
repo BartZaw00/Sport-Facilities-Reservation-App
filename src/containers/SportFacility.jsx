@@ -55,7 +55,7 @@ const SportFacility = ({ id }) => {
               />
               <SportFacilityDetail
                 icon={IoMdTime}
-                text={`${sportFacility.openTime} - ${sportFacility.closeTime}`}
+                text={`${sportFacility.openTime.slice(0,-3)} - ${sportFacility.closeTime.slice(0,-3)}`}
               />
             </div>
             <button

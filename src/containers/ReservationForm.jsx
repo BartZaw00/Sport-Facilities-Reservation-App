@@ -43,7 +43,6 @@ const ReservationForm = () => {
       setSelectedOption("login");
       // }
       // TODO: Add code to handle reservation
-
     }
   };
 
@@ -57,6 +56,7 @@ const ReservationForm = () => {
   ];
 
   const isMediumScreen = useMediaQuery("(max-width: 767px)");
+  const isSmallScreen = useMediaQuery("(max-width: 515px)");
 
   return (
     <>
@@ -109,13 +109,17 @@ const ReservationForm = () => {
         <FormSelect
           label={
             isMediumScreen
-              ? "Czas trwania:"
+              ? "Czas:"
               : "Wybierz czas trwania rezerwacji:"
           }
           id="duration"
           options={durationOptions}
-          className="border border-gray-300 rounded-sm px-4 py-2 focus:outline-none focus:ring-2 focus:ring-my-primary"
-          labelClassName="text-lg font-medium md:text-xs"
+          className={`border border-gray-300 rounded-sm px-4 py-2 focus:outline-none focus:ring-2 focus:ring-my-primary ${
+            isMediumScreen ? "text-xs" : "text-lg"
+          } ${isSmallScreen && "w-12 h-10"}`}
+          labelClassName={
+            isMediumScreen ? "text-xs font-medium" : "text-lg font-medium"
+          }
           divClassName="flex flex-col gap-4 md:gap-2"
           onChange={(event) => setDuration(event.target.value)}
           value={duration}
