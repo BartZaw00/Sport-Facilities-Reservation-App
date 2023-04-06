@@ -9,7 +9,7 @@ const FormProfilePictureUploader = ({ onImageChange }) => {
 
   const handleFileInputChange = (event) => {
     const file = event.target.files[0];
-    // const imageUrl = URL.createObjectURL(file);
+    console.log(file)
     onImageChange(file);
   };
 

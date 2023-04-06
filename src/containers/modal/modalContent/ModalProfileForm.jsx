@@ -18,7 +18,7 @@ const PASSWORD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%])[A-Za-z\d!@#$%]{8,30}$/;
 
 const ModalProfileForm = () => {
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
 
   const usernameRef = useRef();
   const errRef = useRef();
@@ -78,7 +78,10 @@ const ModalProfileForm = () => {
   }, [password, matchPassword]);
 
   const updateUserDetails = async () => {
-    fetch(`${import.meta.env.VITE_ACCOUNT_URL}/updateUser/${user.id}`, {
+    const userData = localStorage.getItem("userData");
+    const parsedUserData = JSON.parse(userData);
+    const id = parsedUserData.id;
+    fetch(`${import.meta.env.VITE_ACCOUNT_URL}/updateUser/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -93,8 +96,12 @@ const ModalProfileForm = () => {
     })
       .then(async (response) => {
         const data = await response.json();
+        console.log(response);
+        console.log(user);
 
+        console.log(data);
         if (response.ok) {
+          updateUser(data);
           setSuccessMsg("Pomyślnie udało się zaktualizować profil");
           setIsEditProfileMode(false);
           setTimeout(() => {
@@ -145,10 +152,25 @@ const ModalProfileForm = () => {
     setIsEditPasswordMode(true);
   };
 
-  const handleImageChange = (imageLocalUrl) => {
-    // Do something with the file
-    console.log("Selected file:", imageLocalUrl);
-    setPhotoUrl(imageLocalUrl);
+  const handleImageChange = async (imageFile) => {
+    const formData = new FormData();
+    formData.append("file", imageFile);
+    formData.append("upload_preset", "SportFacilities");
+    try {
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${
+          import.meta.env.VITE_CLOUD_NAME
+        }/image/upload`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      const data = await response.json();
+      setPhotoUrl(data.url);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleSaveClick = async () => {
@@ -186,6 +208,12 @@ const ModalProfileForm = () => {
   const handleCancelClick = () => {
     if (isEditProfileMode) setIsEditProfileMode(false);
     if (isEditPasswordMode) setIsEditPasswordMode(false);
+    setUserId(user.id);
+    setPhotoUrl(user.photoUrl || "");
+    setUsername(user.username);
+    setName(user.name || "");
+    setSurname(user.surname || "");
+    setEmail(user.email);
     setErrMsg("");
   };
 
@@ -195,13 +223,16 @@ const ModalProfileForm = () => {
       <ErrorMessage errMsg={errMsg} />
       <div className="flex flex-col gap-5 px-10 pt-6 pb-10">
         <div className="flex justify-center items-center gap-4">
-          <ProfilePicture src={user.photoUrl} alt="Profile picture" />
+          <ProfilePicture src={photoUrl} alt="Profile picture" navbar={false} />
           {isEditProfileMode && (
             <div className="flex flex-col gap-4">
               <FormProfilePictureUploader onImageChange={handleImageChange} />
-              <FormButton className="px-4 py-2 bg-my-primary-bg text-my-primary-text border-2 border-gray-300 rounded-md hover:bg-gray-200">
+              <button
+                className="px-4 py-2 bg-my-primary-bg text-my-primary-text border-2 border-gray-300 rounded-md hover:bg-gray-200"
+                onClick={() => setPhotoUrl("")}
+              >
                 Usuń zdjęcie
-              </FormButton>
+              </button>
             </div>
           )}
         </div>

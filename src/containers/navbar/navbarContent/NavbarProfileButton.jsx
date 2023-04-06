@@ -4,8 +4,11 @@ import { TfiMenu } from "react-icons/tfi";
 import { CgProfile } from "react-icons/cg";
 
 import NavbarMenu from "./NavbarMenu";
+import useAuth from "../../../hooks/useAuth";
+import { ProfilePicture } from "../../../components/sharedComponents";
 
 const NavbarProfileButton = () => {
+  const { user } = useAuth();
   const [toggleMenu, setToggleMenu] = useState(false);
   const menuRef = useRef(null);
 
@@ -34,7 +37,7 @@ const NavbarProfileButton = () => {
       }}
     >
       <TfiMenu size={15} />
-      <CgProfile size={25} />
+      <ProfilePicture src={user?.photoUrl} alt="Profile picture" navbar={true} />
       {toggleMenu && <NavbarMenu handleOptionClick={handleOptionClick} />}
     </div>
   );

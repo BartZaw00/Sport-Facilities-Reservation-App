@@ -18,15 +18,20 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (userData) => {
-    const { token } = userData;
+    const { token, ...userDataWithoutToken } = userData;
     const decoded = jwt(token);
 
-    setUser(userData);
-    localStorage.setItem("userData", JSON.stringify(userData));
+    setUser(userDataWithoutToken);
+
+    localStorage.setItem("userData", JSON.stringify(userDataWithoutToken));
     cookies.set("jwt_authorization", token, {
       expires: new Date(decoded.exp * 1000),
       httpOnly: true,
     });
+  };
+
+  const updateUser = (updatedUserData) => {
+    setUser(updatedUserData);
   };
 
   const logout = () => {
@@ -35,7 +40,7 @@ export const AuthProvider = ({ children }) => {
     cookies.remove("jwt_authorization");
   };
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, updateUser, logout }}>
       {children}
     </AuthContext.Provider>
   );

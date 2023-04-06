@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { ModalContext } from "../../../App";
 import useAuth from "../../../hooks/useAuth";
 import { ErrorMessage, LoadingSpinner, SuccessMessage } from "../../../components/sharedComponents";
-import { FormInput } from "../../../components/formComponents";
+import { FormButton, FormInput } from "../../../components/formComponents";
 
 const ModalLoginForm = () => {
   const { setIsModalOpen } = useContext(ModalContext);
