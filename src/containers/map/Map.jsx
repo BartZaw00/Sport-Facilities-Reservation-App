@@ -40,7 +40,7 @@ const Map = ({ sportFacilities }) => {
 
   const onMarkerClick = (marker) => {
     setSelectedMarker(marker);
-    setCenter({ lat: marker.lat - 0.02, lng: marker.lng });
+    setCenter({ lat: marker.lat - 0.03, lng: marker.lng });
   };
 
   // const onInfoWindowClose = () => {

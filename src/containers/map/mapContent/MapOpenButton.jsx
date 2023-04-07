@@ -5,7 +5,7 @@ import { FaListUl } from "react-icons/fa";
 const MapOpenButton = ({ onClick, showMap }) => {
   return (
     <div
-      className="fixed left-2/4 bottom-24 -translate-x-2/4 bg-my-primary-text px-5 py-4 rounded-full cursor-pointer duration-200 hover:-translate-y-2 hover:scale-105"
+      className="fixed left-2/4 bottom-24 -translate-x-2/4 md:bottom-12 bg-my-primary-text px-5 py-4 rounded-full cursor-pointer duration-200 hover:-translate-y-2 hover:scale-105"
       onClick={onClick}
     >
       {showMap ? (
