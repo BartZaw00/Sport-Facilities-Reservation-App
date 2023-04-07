@@ -17,11 +17,21 @@ const Map = ({ sportFacilities }) => {
 
   useEffect(() => {
     fetchMarkers();
-  }, [sportFacilities]);
+  }, []);
+
+  useEffect(() => {
+    if (markers.length > 0 && !Array.isArray(sportFacilities)) {
+      setCenter({ lat: markers[0].lat, lng: markers[0].lng });
+    }
+  }, [markers, sportFacilities]);
 
   const fetchMarkers = async () => {
+    let facilities = sportFacilities;
+    if (!Array.isArray(sportFacilities)) {
+      facilities = [sportFacilities];
+    }
     const newMarkers = await Promise.all(
-      sportFacilities.map(async (facility) => {
+      facilities.map(async (facility) => {
         const address = `${facility.address}, ${facility.city}`;
         const response = await fetch(
           `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${
@@ -42,10 +52,6 @@ const Map = ({ sportFacilities }) => {
     setSelectedMarker(marker);
     setCenter({ lat: marker.lat - 0.03, lng: marker.lng });
   };
-
-  // const onInfoWindowClose = () => {
-  //   setSelectedMarker(null);
-  // };
 
   const handleSportFacilityClick = (id) => {
     navigate(`/sport-facility/${id}`);

@@ -81,7 +81,9 @@ const SportFacility = ({ id }) => {
                 <h2 className="mt-4 px-2 text-2xl font-bold">Rezerwacje</h2>
                 <SportFacilityCalendar />
                 <h2 className="mt-4 px-2 text-2xl font-bold">Lokalizacja</h2>
-                {/* <Map sportFacilities={sportFacility} homePage={false} />  */}
+                <div style={{ height: "450px" }}>
+                  <Map sportFacilities={sportFacility} />
+                </div>
               </div>
             </div>
             <div className="col-span-1">
