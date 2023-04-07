@@ -52,7 +52,13 @@ const Map = ({ sportFacilities }) => {
   };
 
   return (
-    <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={12.3}>
+    <GoogleMap
+      mapContainerStyle={containerStyle}
+      center={center}
+      zoom={12.3}
+      onClick={() => setSelectedMarker(null)}
+      onDrag={() => setSelectedMarker(null)}
+    >
       {markers.map((marker) => (
         <MarkerF
           key={marker.id}
@@ -63,7 +69,7 @@ const Map = ({ sportFacilities }) => {
       {selectedMarker && (
         <InfoBox
           position={{ lat: selectedMarker.lat, lng: selectedMarker.lng }}
-          // onCloseClick={() => onInfoWindowClose()}
+          options={{ closeBoxURL: "", enableEventPropagation: true }}
         >
           <MapSportFacilityBox
             sportFacility={sportFacilities.find(
