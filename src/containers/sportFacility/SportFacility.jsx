@@ -11,6 +11,7 @@ import {
   SportFacilityHeader,
   SportFacilityReservationForm,
 } from "./sportFacilityContent";
+import Map from "../map/Map";
 
 const SportFacility = ({ id }) => {
   const [isClicked, setIsClicked] = useState(false);
@@ -75,9 +76,12 @@ const SportFacility = ({ id }) => {
           <div className="mt-12 mb-20 grid grid-cols-3 gap-8 md:grid-cols-1">
             <div className="col-span-2">
               <div className="flex flex-col gap-4">
-                <SportFacilityCalendar />
-                <h2 className="mt-4 px-2 text-2xl font-bold">Opis</h2>
+                <h2 className="px-2 text-2xl font-bold">Opis</h2>
                 <p className="px-2">{sportFacility.description}</p>
+                <h2 className="mt-4 px-2 text-2xl font-bold">Rezerwacje</h2>
+                <SportFacilityCalendar />
+                <h2 className="mt-4 px-2 text-2xl font-bold">Lokalizacja</h2>
+                {/* <Map sportFacilities={sportFacility} homePage={false} />  */}
               </div>
             </div>
             <div className="col-span-1">

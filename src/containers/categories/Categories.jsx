@@ -73,7 +73,7 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
 
   return (
     <div
-      className={`bg-my-primary-bg mt-24 mb-6 sm:mt-20 px-20 2xl:px-10 xl:px-8 lg:px-6 md:px-4 flex items-center ${
+      className={`bg-my-primary-bg mt-24 sm:mt-20 px-20 2xl:px-10 xl:px-8 lg:px-6 md:px-4 flex items-center ${
         isSticky
           ? "sticky top-20 shadow-sm border-solid border-b-2 border-my-divider z-30"
           : ""

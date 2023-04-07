@@ -4,11 +4,31 @@ import Categories from "../containers/categories/Categories";
 import Map from "../containers/map/Map";
 import SportFacilities from "../containers/sportFacilities/SportFacilities";
 import MapOpenButton from "../containers/map/mapContent/MapOpenButton";
+import { useLoadScript } from "@react-google-maps/api";
+import { LoadingSpinner } from "../components/sharedComponents";
 
 const HomePage = () => {
   const [showMap, setShowMap] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
+  const [sportFacilities, setSportFacilities] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+  });
+
+  useEffect(() => {
+    fetchSportFacilitiesByCategory();
+  }, [selectedCategory]);
+
+  useEffect(() => {
+    if (searchQuery === "") {
+      fetchSportFacilitiesByCategory();
+      return;
+    }
+    fetchSportFacilitiesBySearchQuery(searchQuery);
+  }, [searchQuery]);
 
   const handleMapButtonClick = () => {
     setShowMap(!showMap);
@@ -16,6 +36,30 @@ const HomePage = () => {
 
   const handleSearchQueryChange = (e) => {
     setSearchQuery(e.target.value);
+  };
+
+  const fetchSportFacilitiesByCategory = () => {
+    fetch(
+      `${import.meta.env.VITE_HOME_URL}/getBySport?sportID=${selectedCategory}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setSportFacilities(data);
+        setIsLoading(false);
+      })
+      .catch(() => console.log("Wystąpił błąd. Spróbuj ponownie."));
+  };
+
+  const fetchSportFacilitiesBySearchQuery = (query) => {
+    fetch(
+      `${import.meta.env.VITE_HOME_URL}/getBySearchQuery?searchQuery=${query}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setSportFacilities(data);
+        setIsLoading(false);
+      })
+      .catch((error) => console.error(error));
   };
 
   return (
@@ -30,13 +74,20 @@ const HomePage = () => {
         setSelectedCategory={setSelectedCategory}
       />
       {showMap ? (
-        <Map />
+        isLoaded ? (
+          <div style={{ height: "calc(100vh - 163px )" }}>
+            <Map sportFacilities={sportFacilities}/>
+          </div>
+        ) : (
+          <LoadingSpinner />
+        )
       ) : (
         <SportFacilities
-          selectedCategory={selectedCategory}
-          searchQuery={searchQuery}
+          sportFacilities={sportFacilities}
+          isLoading={isLoading}
         />
       )}
+
       <MapOpenButton onClick={handleMapButtonClick} showMap={showMap} />
     </div>
   );
