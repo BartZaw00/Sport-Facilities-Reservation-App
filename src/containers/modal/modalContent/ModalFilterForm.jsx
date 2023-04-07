@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { FormButton, FormDistanceFilter, FormSelect } from "../../../components/formComponents";
+import {
+  FormButton,
+  FormDistanceFilter,
+  FormSelect,
+} from "../../../components/formComponents";
 
 const ModalFilterForm = () => {
   const [distance, setDistance] = useState(10);
@@ -7,13 +11,6 @@ const ModalFilterForm = () => {
   const handleDistanceChange = (e) => {
     setDistance(parseInt(e.target.value, 10));
   };
-
-  const categoryOptions = [
-    { label: "Wybierz kategorię", value: "" },
-    { label: "Sport", value: "sport" },
-    { label: "Kultura", value: "kultura" },
-    { label: "Rozrywka", value: "rozrywka" },
-  ];
 
   const locationOptions = [
     { label: "Wybierz województwo", value: "" },
@@ -35,12 +32,22 @@ const ModalFilterForm = () => {
     { label: "Zachodniopomorskie", value: "zachodniopomorskie" },
   ];
 
+  const surfaceOptions = [
+    { label: "Wybierz nawierzchnię", value: "" },
+    { label: "Naturalna trawa", value: "naturalna trawa" },
+    { label: "Sztuczna trawa", value: "sztuczna trawa" },
+    { label: "Halowa", value: "halowa" },
+    { label: "Tartan", value: "tartan" },
+    { label: "Mączka ceglana", value: "mączka ceglana" },
+    { label: "Inne", value: "inne" },
+  ];
+
   return (
     <div className="flex flex-col gap-5 px-10 pt-6 pb-10">
       <FormSelect
-        label="Kategoria"
-        id="category"
-        options={categoryOptions}
+        label="Nawierzchnia"
+        id="surface"
+        options={surfaceOptions}
         className="px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:border-my-primary"
         divClassName="flex flex-col gap-2"
       />

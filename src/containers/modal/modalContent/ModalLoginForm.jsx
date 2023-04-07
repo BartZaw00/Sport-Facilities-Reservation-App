@@ -2,11 +2,15 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 
 import { ModalContext } from "../../../App";
 import useAuth from "../../../hooks/useAuth";
-import { ErrorMessage, LoadingSpinner, SuccessMessage } from "../../../components/sharedComponents";
+import {
+  ErrorMessage,
+  LoadingSpinner,
+  SuccessMessage,
+} from "../../../components/sharedComponents";
 import { FormButton, FormInput } from "../../../components/formComponents";
 
 const ModalLoginForm = () => {
-  const { setIsModalOpen } = useContext(ModalContext);
+  const { setIsModalOpen, setSelectedOption } = useContext(ModalContext);
   const { login } = useAuth();
 
   const emailRef = useRef();
@@ -120,6 +124,17 @@ const ModalLoginForm = () => {
               </FormButton>
             )}
           </form>
+          <div className="text-center">
+            <p>
+              Nie masz konta?{" "}
+              <span
+                onClick={() => setSelectedOption("signup")}
+                className="text-my-primary hover:text-my-primary-hover cursor-pointer"
+              >
+                Zarejestruj się
+              </span>
+            </p>
+          </div>
         </>
       )}
     </>
