@@ -17,7 +17,7 @@ const Map = ({ sportFacilities }) => {
 
   useEffect(() => {
     fetchMarkers();
-  }, []);
+  }, [sportFacilities]);
 
   useEffect(() => {
     if (markers.length > 0 && !Array.isArray(sportFacilities)) {
