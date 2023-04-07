@@ -3,7 +3,7 @@ import React from "react";
 const MapSportFacilityBox = ({ sportFacility, onClick }) => {
   return (
     <div
-      className="relative w-[250px] flex flex-col gap-1 cursor-pointer bg-white rounded-xl"
+      className="relative w-[250px] md:w-[150px] flex flex-col gap-1 cursor-pointer bg-white rounded-xl"
       onClick={onClick}
     >
       <div className="relative rounded-xl aspect-[643/611] overflow-hidden">
