@@ -49,6 +49,9 @@ const Map = ({ sportFacilities }) => {
   };
 
   const onMarkerClick = (marker) => {
+    if (markers.length > 0 && !Array.isArray(sportFacilities)) {
+      return;
+    }
     setSelectedMarker(marker);
     setCenter({ lat: marker.lat - 0.03, lng: marker.lng });
   };
