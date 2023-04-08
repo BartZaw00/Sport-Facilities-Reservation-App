@@ -268,7 +268,7 @@ const ModalProfileForm = () => {
                       className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-my-primary"
                     />
                   ) : (
-                    <div className="px-4 py-2 border border-gray-300 rounded-md">
+                    <div className="h-10 px-4 py-2 border border-gray-300 rounded-md">
                       {name}
                     </div>
                   )}
@@ -286,7 +286,7 @@ const ModalProfileForm = () => {
                       className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-my-primary"
                     />
                   ) : (
-                    <div className="px-4 py-2 border border-gray-300 rounded-md">
+                    <div className="h-10 px-4 py-2 border border-gray-300 rounded-md">
                       {surname}
                     </div>
                   )}
