@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import { DatePicker, TimePicker } from "antd";
-
 import locale from "antd/es/date-picker/locale/pl_PL";
+import moment from "moment";
 import Cookies from "universal-cookie";
 import useAuth from "../../../hooks/useAuth";
 import { ModalContext } from "../../../App";
@@ -42,7 +42,6 @@ const SportFacilityReservationForm = () => {
     if (!user) {
       setIsModalOpen(true);
       setSelectedOption("login");
-      // }
       // TODO: Add code to handle reservation
     }
   };
@@ -58,6 +57,11 @@ const SportFacilityReservationForm = () => {
 
   const isMediumScreen = useMediaQuery("(max-width: 767px)");
   const isSmallScreen = useMediaQuery("(max-width: 515px)");
+
+  function disabledDate(current) {
+    // Disable dates before yesterday
+    return current && current < moment().subtract(1, 'days').endOf('day');
+  }
 
   return (
     <>
@@ -79,6 +83,7 @@ const SportFacilityReservationForm = () => {
           id="date"
           onChange={(value) => setDate(value)}
           format="DD.MM.YYYY"
+          disabledDate={disabledDate}
           className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-my-primary bg-white text-gray-900 shadow-sm"
         />
       </div>
@@ -103,6 +108,7 @@ const SportFacilityReservationForm = () => {
           minuteStep={30}
           maxTime="22:00"
           minTime="8:00"
+          popupStyle={{backgroundColor:"bg-my-primary"}}
           className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-my-primary bg-white text-gray-900 shadow-sm"
         />
       </div>
