@@ -70,7 +70,7 @@ const SportFacilityReservationForm = ({ sportFacility }) => {
         for (let i = 0; i < 24; i++) {
           if (
             i < parseInt(sportFacility.openTime.slice(0, -6)) ||
-            i > parseInt(sportFacility.closeTime.slice(0, -6))
+            i > parseInt(sportFacility.closeTime.slice(0, -6)) - 1
           ) {
             hours.push(i);
           }
