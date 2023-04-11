@@ -75,9 +75,9 @@ const HomePage = () => {
       />
       {showMap ? (
         isLoaded ? (
-          <div style={{ height: "calc(100vh - 163px )" }}>
+          <section style={{ height: "calc(100vh - 163px )" }}>
             <Map sportFacilities={sportFacilities}/>
-          </div>
+          </section>
         ) : (
           <LoadingSpinner />
         )

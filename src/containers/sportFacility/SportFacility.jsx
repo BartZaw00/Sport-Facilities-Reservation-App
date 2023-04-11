@@ -35,7 +35,7 @@ const SportFacility = ({ id }) => {
   };
 
   return (
-    <div className="mt-28 px-96 2xl:px-60 xl:px-32 lg:px-6 md:px-4 flex flex-col sm:mt-24">
+    <main className="mt-28 px-96 2xl:px-60 xl:px-32 lg:px-6 md:px-4 flex flex-col sm:mt-24">
       {isLoading ? (
         <LoadingSpinner />
       ) : (
@@ -73,28 +73,34 @@ const SportFacility = ({ id }) => {
           <div className="mt-4">
             <SportFacilityGallery images={sportFacility.photos} />
           </div>
-          <div className="mt-12 mb-20 grid grid-cols-3 gap-8 md:grid-cols-1">
+          <section className="mt-12 mb-20 grid grid-cols-3 gap-8 md:grid-cols-1">
             <div className="col-span-2">
               <div className="flex flex-col gap-4">
-                <h2 className="px-2 text-2xl font-bold">Opis</h2>
-                <p className="px-2">{sportFacility.description}</p>
-                <h2 className="mt-4 px-2 text-2xl font-bold">Rezerwacje</h2>
-                <SportFacilityCalendar />
-                <h2 className="mt-4 px-2 text-2xl font-bold">Lokalizacja</h2>
-                <div style={{ height: "450px" }}>
-                  <Map sportFacilities={sportFacility} />
-                </div>
+                <article className="px-2">
+                  <h2 className=" text-2xl font-bold">Opis</h2>
+                  <p className="mt-4">{sportFacility.description}</p>
+                </article>
+                <article className="mt-4">
+                  <h2 className="px-2 text-2xl font-bold">Rezerwacje</h2>
+                  <SportFacilityCalendar />
+                </article>
+                <article className="mt-4">
+                  <h2 className="px-2 text-2xl font-bold">Lokalizacja</h2>
+                  <div style={{ height: "450px" }} className="mt-4">
+                    <Map sportFacilities={sportFacility} />
+                  </div>
+                </article>
               </div>
             </div>
             <div className="col-span-1">
               <div className="sticky top-32 px-8 pt-6 pb-10 flex flex-col rounded-2xl bg-my-primary-bg border border-gray-300 shadow-xl md:fixed md:bottom-0 md:left-0 md:top-auto md:w-full md:flex-row md:items-center md:gap-6 md:px-4 md:py-2 md:rounded-none md:z-50">
-                <SportFacilityReservationForm sportFacility={sportFacility}/>
+                <SportFacilityReservationForm sportFacility={sportFacility} />
               </div>
             </div>
-          </div>
+          </section>
         </>
       )}
-    </div>
+    </main>
   );
 };
 

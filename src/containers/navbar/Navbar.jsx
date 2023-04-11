@@ -3,7 +3,7 @@ import { NavbarLogo, NavbarProfileButton, NavbarSearch } from "./navbarContent";
 
 const Navbar = ({ className, searchQuery, handleSearchQueryChange }) => {
   return (
-    <div className={className}>
+    <header className={className}>
       <div className="flex ">
         <NavbarLogo />
       </div>
@@ -16,7 +16,7 @@ const Navbar = ({ className, searchQuery, handleSearchQueryChange }) => {
       <div className="flex justify-end">
         <NavbarProfileButton />
       </div>
-    </div>
+    </header>
   );
 };
 
