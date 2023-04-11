@@ -87,7 +87,6 @@ const HomePage = () => {
           isLoading={isLoading}
         />
       )}
-
       <MapOpenButton onClick={handleMapButtonClick} showMap={showMap} />
     </div>
   );
