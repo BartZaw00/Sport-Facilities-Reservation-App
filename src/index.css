@@ -10,7 +10,6 @@
   box-sizing: border-box;
 }
 
-
 @keyframes scale-up-center {
   0% {
     transform: scale(0.5);
@@ -23,7 +22,6 @@
 .animate-scale-up-center {
   animation: scale-up-center 0.4s cubic-bezier(0.39, 0.575, 0.565, 1) both;
 }
-
 
 @-webkit-keyframes slide-top {
   0% {
@@ -59,4 +57,140 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 50%;
   background-color: #228b22;
   cursor: pointer;
+}
+
+/* -- Styling the Reservation Form Components -- */
+
+.ant-picker-focused {
+  border-color: #228b22;
+}
+
+.ant-picker:hover {
+  border-color: #228b22;
+}
+
+.ant-picker-cell-in-view.ant-picker-cell-today .ant-picker-cell-inner::before {
+  border: 1px solid #228b22 !important;
+}
+
+.ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-cell-inner {
+  background: #228b22 !important;
+}
+
+.ant-picker-cell:not(.ant-picker-disabled-cell):not(
+    .ant-picker-selected-day
+  ):hover,
+.ant-picker-cell:not(.ant-picker-disabled-cell):not(
+    .ant-picker-selected-day
+  ):active,
+.ant-picker-cell:not(.ant-picker-disabled-cell):not(
+    .ant-picker-selected-day
+  ):focus {
+  color: #228b22;
+}
+
+/* changing the color of the button 'Dzisiaj' */
+.ant-picker-today-btn {
+  color: #228b22 !important;
+}
+
+.ant-picker-today-btn:hover {
+  color: #4caf50 !important;
+}
+
+.ant-btn {
+  background-color: #228b22;
+  border-color: #228b22;
+  color: #ffffff;
+}
+
+.ant-btn:hover {
+  background-color: #4caf50 !important;
+  border-color: #4caf50;
+  color: #ffffff;
+}
+
+.ant-picker-panel-container {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  box-shadow: 0px 8px 12px -6px rgba(0, 0, 0, 0.1),
+    0px 12px 36px 2px rgba(0, 0, 0, 0.05);
+}
+
+.ant-picker-time-panel-cell {
+  height: 42px;
+  line-height: 42px;
+}
+
+.ant-picker-time-panel-cell-inner {
+  font-size: 18px;
+}
+
+.ant-picker-now-btn {
+  color: #228b22;
+}
+
+.ant-picker-now-btn:hover {
+  color: #4caf50;
+}
+
+.ant-picker-time-panel-cell-disabled {
+  display: none;
+}
+
+/* -- Styling the Calendar Component -- */
+
+.rbc-calendar {
+  width: 100%;
+}
+
+.rbc-toolbar {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.rbc-btn-group:first-of-type > button:first-child,
+.rbc-btn-group:last-of-type > button:last-child {
+  display: none;
+}
+
+@media screen and (max-width: 950px) {
+  .rbc-toolbar {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+}
+
+@media screen and (max-width: 1450px) and (min-width: 761px) {
+  .rbc-toolbar {
+    font-size: 13px;
+  }
+}
+
+@media screen and (max-width: 1060px) and (min-width: 761px) {
+  .rbc-btn-group:last-of-type > button:nth-child(2) {
+    display: none;
+  }
+  .rbc-toolbar {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 760px) and (min-width: 566px) {
+  .rbc-toolbar {
+    font-size: 13px;
+  }
+}
+
+@media screen and (max-width: 565px) {
+  .rbc-btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .rbc-toolbar {
+    font-size: 14px;
+  }
 }

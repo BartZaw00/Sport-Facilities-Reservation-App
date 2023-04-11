@@ -63,9 +63,9 @@ const HomePage = () => {
   };
 
   return (
-    <div id="home-page" className="bg-my-primary-bg">
+    <div id="home-page" className="bg-my-primary-bg max-w-[2000px] mx-auto">
       <Navbar
-        className="h-20 bg-my-primary-bg fixed top-0 w-full grid px-20  2xl:px-10 xl:px-8 lg:px-6 md:px-4 grid-cols-3 sm:grid-cols-2 lg:flex lg:justify-between items-center border-solid border-b-2 border-my-divider z-40"
+        className="max-w-[2000px] h-20 bg-my-primary-bg fixed top-0 w-full grid px-20  2xl:px-10 xl:px-8 lg:px-6 md:px-4 grid-cols-3 sm:grid-cols-2 lg:flex lg:justify-between items-center border-solid border-b-2 border-my-divider z-40"
         searchQuery={searchQuery}
         handleSearchQueryChange={handleSearchQueryChange}
       />

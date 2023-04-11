@@ -3,10 +3,10 @@ import React from "react";
 const MapSportFacilityBox = ({ sportFacility, onClick }) => {
   return (
     <div
-      className="relative w-[250px] md:w-[150px] flex flex-col gap-1 cursor-pointer bg-white rounded-xl"
+      className="relative w-[250px] md:w-[150px] flex flex-col gap-1 cursor-pointer bg-white rounded-xl overflow-hidden"
       onClick={onClick}
     >
-      <div className="relative rounded-xl aspect-[643/611] overflow-hidden">
+      <div className="relative aspect-[643/611] overflow-hidden ">
         <div className="absolute top-0 left-0 w-full h-full bg-my-sport-facility-overlay"></div>
         <img
           className="h-full w-full object-cover"

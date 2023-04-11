@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { DatePicker, TimePicker } from "antd";
 import locale from "antd/es/date-picker/locale/pl_PL";
 import moment from "moment";
-import Cookies from "universal-cookie";
+import "moment/locale/pl"
 import useAuth from "../../../hooks/useAuth";
 import { ModalContext } from "../../../App";
 import { FormButton, FormSelect } from "../../../components/formComponents";

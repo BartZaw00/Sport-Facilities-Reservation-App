@@ -1,8 +1,51 @@
 import React, { useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
-// import { pl } from 'date-fns/locale/pl-PL'
 import "react-big-calendar/lib/css/react-big-calendar.css";
+
+moment.updateLocale("pl", {
+  months: [
+    "Styczeń",
+    "Luty",
+    "Marzec",
+    "Kwiecień",
+    "Maj",
+    "Czerwiec",
+    "Lipiec",
+    "Sierpień",
+    "Wrzesień",
+    "Październik",
+    "Listopad",
+    "Grudzień",
+  ],
+  monthsShort: [
+    "Sty",
+    "Lut",
+    "Mar",
+    "Kwi",
+    "Maj",
+    "Cze",
+    "Lip",
+    "Sie",
+    "Wrz",
+    "Paź",
+    "Lis",
+    "Gru",
+  ],
+  weekdays: [
+    "Niedziela",
+    "Poniedziałek",
+    "Wtorek",
+    "Środa",
+    "Czwartek",
+    "Piątek",
+    "Sobota",
+  ],
+  weekdaysShort: ["Nd.", "Pn.", "Wt.", "Śr.", "Czw.", "Pt.", "Sob."],
+  week: {
+    dow: 1,
+  },
+});
 
 const localizer = momentLocalizer(moment);
 
@@ -26,8 +69,6 @@ const SportFacilityCalendar = () => {
     },
   ];
 
-  const daysOfWeek = ["Pon", "Wt", "Śr", "Czw", "Pt", "Sob", "Ndz"];
-
   const messages = {
     allDay: "Cały dzień",
     previous: "Poprzedni",
@@ -41,20 +82,16 @@ const SportFacilityCalendar = () => {
     time: "Czas",
     event: "Wydarzenie",
     noEventsInRange: "Brak wydarzeń do wyświetlenia",
-    dayNamesShort: daysOfWeek,
-    dayNames: daysOfWeek,
-    dayNamesMin: daysOfWeek,
   };
 
-
+  
   return (
     <div className="flex justify-center mt-4">
       <Calendar
         onChange={handleOnChange}
         value={date}
         minDate={new Date()}
-
-        culture={"fr"}
+        messages={messages}
         events={events}
         localizer={localizer}
         style={{ height: 500 }}
