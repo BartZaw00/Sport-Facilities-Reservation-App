@@ -18,6 +18,12 @@ const SportFacility = ({ id }) => {
   const [sportFacility, setSportFacility] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
+  const [reservationData, setReservationData] = useState({
+    date: null,
+    time: null,
+    duration: null,
+  });
+
   useEffect(() => {
     fetch(
       `${import.meta.env.VITE_SPORT_FACILITY_URL}/getById?sportFacilityID=${id}`
@@ -32,6 +38,17 @@ const SportFacility = ({ id }) => {
 
   const handleClick = () => {
     setIsClicked(!isClicked);
+  };
+
+  const submitReservation = async () => {
+    // const response = await fetch('/api/reservations', {
+    //   method: 'POST',
+    //   body: JSON.stringify(reservationData),
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // });
+    // const data = await response.json();
   };
 
   return (
@@ -94,7 +111,10 @@ const SportFacility = ({ id }) => {
             </div>
             <div className="col-span-1">
               <div className="sticky top-32 px-8 pt-6 pb-10 flex flex-col rounded-2xl bg-my-primary-bg border border-gray-300 shadow-xl md:fixed md:bottom-0 md:left-0 md:top-auto md:w-full md:flex-row md:items-center md:gap-6 md:px-4 md:py-2 md:rounded-none md:z-50">
-                <SportFacilityReservationForm sportFacility={sportFacility} />
+                <SportFacilityReservationForm
+                  sportFacility={sportFacility}
+                  onSubmit={(data) => setReservationData(data)}
+                />
               </div>
             </div>
           </section>

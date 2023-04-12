@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { DatePicker, TimePicker } from "antd";
 import locale from "antd/es/date-picker/locale/pl_PL";
 import moment from "moment";
-import "moment/locale/pl"
+import "moment/locale/pl";
 import useAuth from "../../../hooks/useAuth";
 import { ModalContext } from "../../../App";
 import { FormButton, FormSelect } from "../../../components/formComponents";
@@ -29,7 +29,7 @@ const useMediaQuery = (query) => {
   return matches;
 };
 
-const SportFacilityReservationForm = ({ sportFacility }) => {
+const SportFacilityReservationForm = ({ sportFacility, onSubmit }) => {
   const { user } = useAuth();
 
   const { setIsModalOpen, setSelectedOption } = useContext(ModalContext);
@@ -42,8 +42,14 @@ const SportFacilityReservationForm = ({ sportFacility }) => {
     if (!user) {
       setIsModalOpen(true);
       setSelectedOption("login");
-      // TODO: Add code to handle reservation
+      return;
     }
+
+    onSubmit({
+      date,
+      time,
+      duration,
+    });
   };
 
   const durationOptions = [

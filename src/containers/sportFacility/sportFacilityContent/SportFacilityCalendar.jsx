@@ -95,6 +95,9 @@ const SportFacilityCalendar = () => {
         events={events}
         localizer={localizer}
         style={{ height: 500 }}
+        formats={{
+          timeGutterFormat: "H:mm",
+        }}
       />
     </div>
   );
