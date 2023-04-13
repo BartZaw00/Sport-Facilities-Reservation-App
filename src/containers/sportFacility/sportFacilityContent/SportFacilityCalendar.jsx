@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -49,25 +49,13 @@ moment.updateLocale("pl", {
 
 const localizer = momentLocalizer(moment);
 
-const SportFacilityCalendar = () => {
+const SportFacilityCalendar = ({ id }) => {
   const [date, setDate] = useState(new Date());
+  const [reservations, setReservations] = useState([]);
 
   const handleOnChange = (date) => {
     setDate(date);
   };
-
-  const events = [
-    {
-      start: new Date(2023, 2, 25, 10, 0),
-      end: new Date(2023, 2, 25, 11, 0),
-      title: "Rezerwacja kortu tenisowego",
-    },
-    {
-      start: new Date(2023, 2, 24, 16, 0),
-      end: new Date(2023, 2, 24, 18, 0),
-      title: "Rezerwacja boiska do piłki nożnej",
-    },
-  ];
 
   const messages = {
     allDay: "Cały dzień",
@@ -84,7 +72,33 @@ const SportFacilityCalendar = () => {
     noEventsInRange: "Brak wydarzeń do wyświetlenia",
   };
 
-  
+  useEffect(() => {
+    fetchReservationsBySportFacility();
+    setTimeout(() => {
+      console.log(reservations);
+    }, 2000);
+  }, [id]);
+
+  const fetchReservationsBySportFacility = async () => {
+    fetch(
+      `${
+        import.meta.env.VITE_RESERVATION_URL
+      }/getBySportFacility?sportFacilityID=${id}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        const events = data.map((reservation) => {
+          return {
+            start: new Date(reservation.startTime),
+            end: new Date(reservation.endTime),
+            title: `Rezerwujący: ${reservation.user.username}`,
+          };
+        });
+        setReservations(events);
+      })
+      .catch((error) => console.error(error));
+  };
+
   return (
     <div className="flex justify-center mt-4">
       <Calendar
@@ -92,11 +106,16 @@ const SportFacilityCalendar = () => {
         value={date}
         minDate={new Date()}
         messages={messages}
-        events={events}
+        events={reservations}
         localizer={localizer}
         style={{ height: 500 }}
         formats={{
           timeGutterFormat: "H:mm",
+          eventTimeRangeFormat: ({ start, end }, culture, localizer) => {
+            const formattedStart = localizer.format(start, "H:mm", culture);
+            const formattedEnd = localizer.format(end, "H:mm", culture);
+            return `${formattedStart} - ${formattedEnd}`;
+          },
         }}
       />
     </div>

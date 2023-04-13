@@ -38,7 +38,7 @@ const HomePage = () => {
     setSearchQuery(e.target.value);
   };
 
-  const fetchSportFacilitiesByCategory = () => {
+  const fetchSportFacilitiesByCategory = async () => {
     fetch(
       `${import.meta.env.VITE_HOME_URL}/getBySport?sportID=${selectedCategory}`
     )
@@ -50,7 +50,7 @@ const HomePage = () => {
       .catch(() => console.log("Wystąpił błąd. Spróbuj ponownie."));
   };
 
-  const fetchSportFacilitiesBySearchQuery = (query) => {
+  const fetchSportFacilitiesBySearchQuery = async (query) => {
     fetch(
       `${import.meta.env.VITE_HOME_URL}/getBySearchQuery?searchQuery=${query}`
     )

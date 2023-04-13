@@ -155,6 +155,15 @@ input[type="range"]::-webkit-slider-thumb {
   display: none;
 }
 
+.rbc-event, .rbc-event.rbc-selected {
+  background-color: #4caf50;
+  border: none !important;
+}
+
+.rbc-day-slot .rbc-event {
+  border: 1px solid #4caf50;
+}
+
 @media screen and (max-width: 950px) {
   .rbc-toolbar {
     display: flex;

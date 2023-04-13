@@ -6,7 +6,10 @@ import moment from "moment";
 import "moment/locale/pl";
 import useAuth from "../../../hooks/useAuth";
 import { ModalContext } from "../../../App";
-import { FormButton, FormSelect } from "../../../components/formComponents";
+import {
+  FormButton,
+  FormSelectReservation,
+} from "../../../components/formComponents";
 
 const useMediaQuery = (query) => {
   const [matches, setMatches] = useState(false);
@@ -29,27 +32,50 @@ const useMediaQuery = (query) => {
   return matches;
 };
 
-const SportFacilityReservationForm = ({ sportFacility, onSubmit }) => {
+const SportFacilityReservationForm = ({
+  sportFacility,
+  setReservationData,
+}) => {
   const { user } = useAuth();
 
   const { setIsModalOpen, setSelectedOption } = useContext(ModalContext);
 
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-  const [duration, setDuration] = useState("");
+  const [duration, setDuration] = useState("30");
 
-  const handleReservation = () => {
+  const handleReservation = (e) => {
+    e.preventDefault();
+
     if (!user) {
       setIsModalOpen(true);
       setSelectedOption("login");
       return;
     }
 
-    onSubmit({
+    // const response = await fetch('/api/reservations', {
+    //   method: 'POST',
+    //   body: JSON.stringify(reservationData),
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // });
+    // const data = await response.json();
+
+    setReservationData({
       date,
       time,
       duration,
     });
+
+    const reservationDate = new Date(date + " " + time);
+    console.log(date.toString())
+    console.log(time.toString())
+    console.log(reservationDate)
+    reservationDate.setMinutes(
+      reservationDate.getMinutes() + parseInt(duration)
+    );
+    console.log(reservationDate)
   };
 
   const durationOptions = [
@@ -88,7 +114,7 @@ const SportFacilityReservationForm = ({ sportFacility, onSubmit }) => {
 
   return (
     <>
-      <div className="flex flex-col gap-4 md:gap-2">
+      <form className="flex flex-col gap-4 md:gap-2">
         <label
           className="text-lg font-medium md:text-xs hidden md:block"
           htmlFor="date"
@@ -109,7 +135,7 @@ const SportFacilityReservationForm = ({ sportFacility, onSubmit }) => {
           disabledDate={disabledDate}
           className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-my-primary bg-white text-gray-900 shadow-sm"
         />
-      </div>
+      </form>
       <div className="flex flex-col gap-4 mt-6 md:mt-0 md:gap-2">
         <label
           className="text-lg font-medium md:text-xs hidden md:block"
@@ -134,19 +160,12 @@ const SportFacilityReservationForm = ({ sportFacility, onSubmit }) => {
         />
       </div>
       <div className="mt-6 md:mt-0">
-        <FormSelect
+        <FormSelectReservation
           label={isMediumScreen ? "Czas:" : "Wybierz czas trwania rezerwacji:"}
-          id="duration"
           options={durationOptions}
-          className={`border border-gray-300 rounded-sm px-4 py-2 focus:outline-none focus:ring-2 focus:ring-my-primary ${
-            isMediumScreen ? "text-xs" : "text-lg"
-          } ${isSmallScreen && "w-12 h-10"}`}
-          labelClassName={
-            isMediumScreen ? "text-xs font-medium" : "text-lg font-medium"
-          }
-          divClassName="flex flex-col gap-4 md:gap-2"
           onChange={(event) => setDuration(event.target.value)}
           value={duration}
+          useMediaQuery={useMediaQuery}
         />
       </div>
       <div className="mt-8  md:mt-0">

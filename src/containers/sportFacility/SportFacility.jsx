@@ -38,17 +38,7 @@ const SportFacility = ({ id }) => {
 
   const handleClick = () => {
     setIsClicked(!isClicked);
-  };
-
-  const submitReservation = async () => {
-    // const response = await fetch('/api/reservations', {
-    //   method: 'POST',
-    //   body: JSON.stringify(reservationData),
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // });
-    // const data = await response.json();
+    console.log(reservationData)
   };
 
   return (
@@ -99,7 +89,7 @@ const SportFacility = ({ id }) => {
                 </article>
                 <article className="mt-4">
                   <h2 className="px-2 text-2xl font-bold">Rezerwacje</h2>
-                  <SportFacilityCalendar />
+                  <SportFacilityCalendar id={id} />
                 </article>
                 <article className="mt-4">
                   <h2 className="px-2 text-2xl font-bold">Lokalizacja</h2>
@@ -113,7 +103,7 @@ const SportFacility = ({ id }) => {
               <div className="sticky top-32 px-8 pt-6 pb-10 flex flex-col rounded-2xl bg-my-primary-bg border border-gray-300 shadow-xl md:fixed md:bottom-0 md:left-0 md:top-auto md:w-full md:flex-row md:items-center md:gap-6 md:px-4 md:py-2 md:rounded-none md:z-50">
                 <SportFacilityReservationForm
                   sportFacility={sportFacility}
-                  onSubmit={(data) => setReservationData(data)}
+                  setReservationData={setReservationData}
                 />
               </div>
             </div>
