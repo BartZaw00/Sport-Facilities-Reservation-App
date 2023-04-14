@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -49,7 +49,11 @@ moment.updateLocale("pl", {
 
 const localizer = momentLocalizer(moment);
 
-const SportFacilityCalendar = ({ id }) => {
+const SportFacilityCalendar = ({
+  id,
+  shouldUpdateCalendar,
+  setShouldUpdateCalendar,
+}) => {
   const [date, setDate] = useState(new Date());
   const [reservations, setReservations] = useState([]);
 
@@ -74,10 +78,14 @@ const SportFacilityCalendar = ({ id }) => {
 
   useEffect(() => {
     fetchReservationsBySportFacility();
-    setTimeout(() => {
-      console.log(reservations);
-    }, 2000);
   }, [id]);
+
+  useEffect(() => {
+    if (shouldUpdateCalendar) {
+      fetchReservationsBySportFacility();
+      setShouldUpdateCalendar(false);
+    }
+  }, [shouldUpdateCalendar]);
 
   const fetchReservationsBySportFacility = async () => {
     fetch(

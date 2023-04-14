@@ -10,6 +10,10 @@ import {
   FormButton,
   FormSelectReservation,
 } from "../../../components/formComponents";
+import {
+  ErrorMessage,
+  SuccessMessage,
+} from "../../../components/sharedComponents";
 
 const useMediaQuery = (query) => {
   const [matches, setMatches] = useState(false);
@@ -34,7 +38,8 @@ const useMediaQuery = (query) => {
 
 const SportFacilityReservationForm = ({
   sportFacility,
-  setReservationData,
+  reservationData,
+  setShouldUpdateCalendar,
 }) => {
   const { user } = useAuth();
 
@@ -43,40 +48,8 @@ const SportFacilityReservationForm = ({
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [duration, setDuration] = useState("30");
-
-  const handleReservation = (e) => {
-    e.preventDefault();
-
-    if (!user) {
-      setIsModalOpen(true);
-      setSelectedOption("login");
-      return;
-    }
-
-    // const response = await fetch('/api/reservations', {
-    //   method: 'POST',
-    //   body: JSON.stringify(reservationData),
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // });
-    // const data = await response.json();
-
-    setReservationData({
-      date,
-      time,
-      duration,
-    });
-
-    const reservationDate = new Date(date + " " + time);
-    console.log(date.toString())
-    console.log(time.toString())
-    console.log(reservationDate)
-    reservationDate.setMinutes(
-      reservationDate.getMinutes() + parseInt(duration)
-    );
-    console.log(reservationDate)
-  };
+  const [success, setSuccess] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
 
   const durationOptions = [
     { label: "30 minut", value: "30" },
@@ -90,12 +63,70 @@ const SportFacilityReservationForm = ({
   const isMediumScreen = useMediaQuery("(max-width: 767px)");
   const isSmallScreen = useMediaQuery("(max-width: 515px)");
 
+  useEffect(() => {
+    setErrMsg("");
+  }, [date, time, duration]);
+
+  const handleReservation = async (e) => {
+    e.preventDefault();
+
+    if (!user) {
+      setIsModalOpen(true);
+      setSelectedOption("login");
+      return;
+    }
+
+    const dateString = date.$d.toISOString().substring(0, 10);
+    const timeString = time.$d.toString().substring(16, 25);
+    const reservationStartTime = new Date(
+      dateString + " " + timeString + "+0000"
+    );
+    const reservationEndTime = new Date(reservationStartTime.getTime());
+    reservationEndTime.setMinutes(
+      reservationStartTime.getMinutes() + parseInt(duration)
+    );
+    const { sportFacilityID, userID } = reservationData;
+    createReservation(
+      sportFacilityID,
+      userID,
+      reservationStartTime.toISOString().slice(0, -1),
+      reservationEndTime.toISOString().slice(0, -1)
+    );
+  };
+
+  const createReservation = (sportFacilityID, userID, startTime, endTime) => {
+    fetch(`${import.meta.env.VITE_RESERVATION_URL}/addReservation`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sportFacilityID,
+        userID,
+        startTime,
+        endTime,
+      }),
+    })
+      .then(async (response) => {
+        if (response?.status === 200) {
+          setSuccess(true);
+          setTimeout(() => setSuccess(false), 3000);
+          setShouldUpdateCalendar(true);
+        }
+        console.log(response)
+      })
+      .catch((error) => {
+        console.log(error);
+        setErrMsg("Rezerwacja się nie powiodła. Spróbuj ponownie.");
+      });
+  };
+
   const disabledDate = (current) => {
     // Disable dates before yesterday
     return current && current < moment().subtract(1, "days").endOf("day");
   };
 
-  const disabledTime = (now) => {
+  const disabledTime = () => {
     return {
       disabledHours: () => {
         const hours = [];
@@ -114,7 +145,14 @@ const SportFacilityReservationForm = ({
 
   return (
     <>
-      <form className="flex flex-col gap-4 md:gap-2">
+      {success && (
+        <SuccessMessage successMsg="Pomyślnie udało się dodać rezerwację!" />
+      )}
+      <ErrorMessage errMsg={errMsg} />
+      <form
+        className="flex flex-col gap-4 md:gap-2"
+        onSubmit={handleReservation}
+      >
         <label
           className="text-lg font-medium md:text-xs hidden md:block"
           htmlFor="date"
@@ -135,47 +173,47 @@ const SportFacilityReservationForm = ({
           disabledDate={disabledDate}
           className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-my-primary bg-white text-gray-900 shadow-sm"
         />
+
+        <div className="flex flex-col gap-4 mt-6 md:mt-0 md:gap-2">
+          <label
+            className="text-lg font-medium md:text-xs hidden md:block"
+            htmlFor="time"
+          >
+            Godzina:
+          </label>
+          <label
+            className="text-lg font-medium md:text-xs md:hidden"
+            htmlFor="time"
+          >
+            Wybierz godzinę rezerwacji:
+          </label>
+          <TimePicker
+            locale={locale}
+            id="time"
+            format="HH:mm"
+            disabledTime={disabledTime}
+            onChange={(value) => setTime(value)}
+            minuteStep={30}
+            className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-my-primary bg-white text-gray-900 shadow-sm"
+          />
+        </div>
+        <div className="mt-6 md:mt-0">
+          <FormSelectReservation
+            label={
+              isMediumScreen ? "Czas:" : "Wybierz czas trwania rezerwacji:"
+            }
+            options={durationOptions}
+            onChange={(event) => setDuration(event.target.value)}
+            value={duration}
+            useMediaQuery={useMediaQuery}
+          />
+        </div>
+        <div className="mt-8  md:mt-0">
+          <button className="w-full px-4 py-4 bg-my-primary text-white font-bold rounded-lg hover:bg-my-primary-hover focus:outline-none md:py-3 md:px-6">
+            Rezerwuj
+          </button>
+        </div>
       </form>
-      <div className="flex flex-col gap-4 mt-6 md:mt-0 md:gap-2">
-        <label
-          className="text-lg font-medium md:text-xs hidden md:block"
-          htmlFor="time"
-        >
-          Godzina:
-        </label>
-        <label
-          className="text-lg font-medium md:text-xs md:hidden"
-          htmlFor="time"
-        >
-          Wybierz godzinę rezerwacji:
-        </label>
-        <TimePicker
-          locale={locale}
-          id="time"
-          format="HH:mm"
-          disabledTime={disabledTime}
-          onChange={(value) => setTime(value)}
-          minuteStep={30}
-          className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-my-primary bg-white text-gray-900 shadow-sm"
-        />
-      </div>
-      <div className="mt-6 md:mt-0">
-        <FormSelectReservation
-          label={isMediumScreen ? "Czas:" : "Wybierz czas trwania rezerwacji:"}
-          options={durationOptions}
-          onChange={(event) => setDuration(event.target.value)}
-          value={duration}
-          useMediaQuery={useMediaQuery}
-        />
-      </div>
-      <div className="mt-8  md:mt-0">
-        <FormButton
-          onClick={handleReservation}
-          className="w-full px-4 py-4 bg-my-primary text-white font-bold rounded-lg hover:bg-my-primary-hover focus:outline-none md:py-3 md:px-6"
-        >
-          Rezerwuj
-        </FormButton>
-      </div>
     </>
   );
 };

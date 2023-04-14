@@ -12,17 +12,35 @@ import {
   SportFacilityReservationForm,
 } from "./sportFacilityContent";
 import Map from "../map/Map";
+import useAuth from "../../hooks/useAuth";
 
 const SportFacility = ({ id }) => {
+  const { user } = useAuth();
+
   const [isClicked, setIsClicked] = useState(false);
   const [sportFacility, setSportFacility] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   const [reservationData, setReservationData] = useState({
-    date: null,
-    time: null,
-    duration: null,
+    sportFacilityID: id,
+    userID: user?.id,
   });
+
+  const [shouldUpdateCalendar, setShouldUpdateCalendar] = useState(false);
+
+  useEffect(() => {
+    setReservationData((prevData) => ({
+      ...prevData,
+      sportFacilityID: id,
+    }));
+  }, [id]);
+
+  useEffect(() => {
+    setReservationData((prevData) => ({
+      ...prevData,
+      userID: user?.id,
+    }));
+  }, [user?.id]);
 
   useEffect(() => {
     fetch(
@@ -34,11 +52,10 @@ const SportFacility = ({ id }) => {
         setIsLoading(false);
       })
       .catch((error) => console.error(error));
-  }, [id]);
+  }, [reservationData]);
 
   const handleClick = () => {
     setIsClicked(!isClicked);
-    console.log(reservationData)
   };
 
   return (
@@ -89,7 +106,11 @@ const SportFacility = ({ id }) => {
                 </article>
                 <article className="mt-4">
                   <h2 className="px-2 text-2xl font-bold">Rezerwacje</h2>
-                  <SportFacilityCalendar id={id} />
+                  <SportFacilityCalendar
+                    id={id}
+                    shouldUpdateCalendar={shouldUpdateCalendar}
+                    setShouldUpdateCalendar={setShouldUpdateCalendar}
+                  />
                 </article>
                 <article className="mt-4">
                   <h2 className="px-2 text-2xl font-bold">Lokalizacja</h2>
@@ -103,7 +124,8 @@ const SportFacility = ({ id }) => {
               <div className="sticky top-32 px-8 pt-6 pb-10 flex flex-col rounded-2xl bg-my-primary-bg border border-gray-300 shadow-xl md:fixed md:bottom-0 md:left-0 md:top-auto md:w-full md:flex-row md:items-center md:gap-6 md:px-4 md:py-2 md:rounded-none md:z-50">
                 <SportFacilityReservationForm
                   sportFacility={sportFacility}
-                  setReservationData={setReservationData}
+                  reservationData={reservationData}
+                  setShouldUpdateCalendar={setShouldUpdateCalendar}
                 />
               </div>
             </div>
