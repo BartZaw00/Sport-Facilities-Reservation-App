@@ -1,10 +1,20 @@
 import React from "react";
 
 const MapSportFacilityBox = ({ sportFacility, onClick }) => {
+  const handleTouchEnd = (e) => {
+    onClick();
+  };
+
+  const handleTouchMove = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div
       className="relative w-[250px] md:w-[150px] flex flex-col gap-1 cursor-pointer bg-white rounded-xl overflow-hidden"
       onClick={onClick}
+      onTouchEnd={handleTouchEnd}
+      onTouchMove={handleTouchMove}
     >
       <div className="relative aspect-[643/611] overflow-hidden ">
         <div className="absolute top-0 left-0 w-full h-full bg-my-sport-facility-overlay"></div>
