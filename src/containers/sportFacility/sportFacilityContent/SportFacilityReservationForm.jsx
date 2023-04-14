@@ -113,7 +113,7 @@ const SportFacilityReservationForm = ({
           setTimeout(() => setSuccess(false), 3000);
           setShouldUpdateCalendar(true);
         }
-        console.log(response)
+        console.log(response);
       })
       .catch((error) => {
         console.log(error);
@@ -150,30 +150,31 @@ const SportFacilityReservationForm = ({
       )}
       <ErrorMessage errMsg={errMsg} />
       <form
-        className="flex flex-col gap-4 md:gap-2"
+        className="flex flex-col gap-4 md:flex-row md:items-center md:gap-2"
         onSubmit={handleReservation}
       >
-        <label
-          className="text-lg font-medium md:text-xs hidden md:block"
-          htmlFor="date"
-        >
-          Data:
-        </label>
-        <label
-          className="text-lg font-medium md:text-xs md:hidden"
-          htmlFor="date"
-        >
-          Wybierz datę:
-        </label>
-        <DatePicker
-          locale={locale}
-          id="date"
-          onChange={(value) => setDate(value)}
-          format="DD.MM.YYYY"
-          disabledDate={disabledDate}
-          className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-my-primary bg-white text-gray-900 shadow-sm"
-        />
-
+        <div className="flex flex-col gap-4 mt-6 md:mt-0 md:gap-2">
+          <label
+            className="text-lg font-medium md:text-xs hidden md:block"
+            htmlFor="date"
+          >
+            Data:
+          </label>
+          <label
+            className="text-lg font-medium md:text-xs md:hidden"
+            htmlFor="date"
+          >
+            Wybierz datę:
+          </label>
+          <DatePicker
+            locale={locale}
+            id="date"
+            onChange={(value) => setDate(value)}
+            format="DD.MM.YYYY"
+            disabledDate={disabledDate}
+            className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-my-primary bg-white text-gray-900 shadow-sm"
+          />
+        </div>
         <div className="flex flex-col gap-4 mt-6 md:mt-0 md:gap-2">
           <label
             className="text-lg font-medium md:text-xs hidden md:block"
@@ -205,10 +206,11 @@ const SportFacilityReservationForm = ({
             options={durationOptions}
             onChange={(event) => setDuration(event.target.value)}
             value={duration}
-            useMediaQuery={useMediaQuery}
+            isMediumScreen={isMediumScreen}
+            isSmallScreen={isSmallScreen}
           />
         </div>
-        <div className="mt-8  md:mt-0">
+        <div className="mt-8 md:mt-0 md:mx-4">
           <button className="w-full px-4 py-4 bg-my-primary text-white font-bold rounded-lg hover:bg-my-primary-hover focus:outline-none md:py-3 md:px-6">
             Rezerwuj
           </button>
