@@ -13,6 +13,7 @@ import {
 } from "../../../components/formComponents";
 import {
   ErrorMessage,
+  LoadingSpinner,
   SuccessMessage,
 } from "../../../components/sharedComponents";
 
@@ -51,6 +52,7 @@ const SportFacilityReservationForm = ({
   const [duration, setDuration] = useState("30");
   const [success, setSuccess] = useState(false);
   const [errMsg, setErrMsg] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const durationOptions = [
     { label: "30 minut", value: "30" },
@@ -70,6 +72,7 @@ const SportFacilityReservationForm = ({
 
   const handleReservation = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
     if (!user) {
       setIsModalOpen(true);
@@ -119,6 +122,9 @@ const SportFacilityReservationForm = ({
       .catch((error) => {
         console.log(error);
         setErrMsg("Rezerwacja się nie powiodła. Spróbuj ponownie.");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -146,7 +152,7 @@ const SportFacilityReservationForm = ({
 
   return (
     <>
-      {success && (
+      {success && !isMediumScreen && (
         <SuccessMessage successMsg="Pomyślnie udało się dodać rezerwację!" />
       )}
       <ErrorMessage errMsg={errMsg} />
@@ -212,9 +218,13 @@ const SportFacilityReservationForm = ({
           />
         </div>
         <div className="mt-8 md:mt-0 md:mr-4">
-          <button className="w-full px-4 py-4 bg-my-primary text-white font-bold rounded-lg hover:bg-my-primary-hover focus:outline-none md:py-3 md:px-6">
-            Rezerwuj
-          </button>
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : (
+            <button className="w-full px-4 py-4 bg-my-primary text-white font-bold rounded-lg hover:bg-my-primary-hover focus:outline-none md:py-3 md:px-6">
+              Rezerwuj
+            </button>
+          )}
         </div>
       </form>
     </>
