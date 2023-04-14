@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useState, useEffect } from "react";
 import { DatePicker, TimePicker } from "antd";
+import Select from "react-select";
 import locale from "antd/es/date-picker/locale/pl_PL";
 import moment from "moment";
 import "moment/locale/pl";
@@ -150,7 +151,7 @@ const SportFacilityReservationForm = ({
       )}
       <ErrorMessage errMsg={errMsg} />
       <form
-        className="flex flex-col gap-4 md:flex-row md:items-center md:gap-2"
+        className="flex flex-col gap-4 md:w-full md:flex-row md:justify-between md:items-center md:gap-2"
         onSubmit={handleReservation}
       >
         <div className="flex flex-col gap-4 mt-6 md:mt-0 md:gap-2">
@@ -204,13 +205,13 @@ const SportFacilityReservationForm = ({
               isMediumScreen ? "Czas:" : "Wybierz czas trwania rezerwacji:"
             }
             options={durationOptions}
-            onChange={(event) => setDuration(event.target.value)}
+            onChange={(value) => setDuration(value)}
             value={duration}
             isMediumScreen={isMediumScreen}
             isSmallScreen={isSmallScreen}
           />
         </div>
-        <div className="mt-8 md:mt-0 md:mx-4">
+        <div className="mt-8 md:mt-0 md:mr-4">
           <button className="w-full px-4 py-4 bg-my-primary text-white font-bold rounded-lg hover:bg-my-primary-hover focus:outline-none md:py-3 md:px-6">
             Rezerwuj
           </button>

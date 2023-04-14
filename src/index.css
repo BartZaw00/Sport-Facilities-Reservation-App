@@ -139,6 +139,13 @@ input[type="range"]::-webkit-slider-thumb {
   display: none;
 }
 
+/* -- Styling the Select Component -- */
+
+.ant-select-selector:hover,
+.ant-select-selector:focus {
+  border-color: #228b22 !important;
+}
+
 /* -- Styling the Calendar Component -- */
 
 .rbc-calendar {
@@ -155,7 +162,8 @@ input[type="range"]::-webkit-slider-thumb {
   display: none;
 }
 
-.rbc-event, .rbc-event.rbc-selected {
+.rbc-event,
+.rbc-event.rbc-selected {
   background-color: #4caf50;
   border: none !important;
 }

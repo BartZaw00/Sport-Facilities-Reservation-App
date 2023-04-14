@@ -1,4 +1,7 @@
 import React from "react";
+import { Select } from "antd";
+
+const { Option } = Select;
 
 const FormSelectReservation = ({
   label,
@@ -16,20 +19,29 @@ const FormSelectReservation = ({
       >
         {label}
       </label>
-      <select
+      <Select
         id="duration"
-        className={`border border-gray-300 rounded-lg px-4 py-2 focus:outline-none ring-1 hover:ring-my-primary focus:ring-my-primary ${
-          isMediumScreen ? "text-xs  h-10" : "text-lg"
-        } ${isSmallScreen && "w-12 h-10"}`}
+        size="large"
         value={value}
         onChange={onChange}
+        className={`relative rounded-lg focus:outline-none hover:ring-1 focus:ring-my-primary ${
+          isMediumScreen ? "text-xs  h-10" : "text-lg"
+        } ${isSmallScreen && "w-[55px]"}`}
+        dropdownStyle={
+          isMediumScreen && {
+            position: "fixed",
+            top: "calc(100% - 280px)",
+            width: "100%",
+            minWidth: "160px"
+          }
+        }
       >
         {options.map((option) => (
-          <option key={option.value} value={option.value}>
+          <Option key={option.value} value={option.value}>
             {option.label}
-          </option>
+          </Option>
         ))}
-      </select>
+      </Select>
     </div>
   );
 };
