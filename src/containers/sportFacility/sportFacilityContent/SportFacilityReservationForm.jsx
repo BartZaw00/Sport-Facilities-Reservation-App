@@ -180,7 +180,7 @@ const SportFacilityReservationForm = ({
             onChange={(value) => setDate(value)}
             format="DD.MM.YYYY"
             disabledDate={disabledDate}
-            readOnly={true}
+            inputReadOnly={true}
             className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-my-primary bg-white text-gray-900 shadow-sm"
           />
         </div>
@@ -204,7 +204,7 @@ const SportFacilityReservationForm = ({
             disabledTime={disabledTime}
             onChange={(value) => setTime(value)}
             minuteStep={30}
-            readOnly={true}
+            inputReadOnly={true}
             className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-my-primary bg-white text-gray-900 shadow-sm"
           />
         </div>
