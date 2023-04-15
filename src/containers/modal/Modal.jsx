@@ -5,6 +5,7 @@ import { ModalContext } from "../../App";
 import {
   ModalFilterForm,
   ModalLoginForm,
+  ModalMyReservations,
   ModalPhotosContent,
   ModalProfileForm,
   ModalSettingsForm,
@@ -58,7 +59,7 @@ const Modal = ({ option, images }) => {
           )}
           {option === "profile" && <span className="font-bold">Profil</span>}
           {option === "reservations" && (
-            <span className="font-bold">Rezerwacje</span>
+            <span className="font-bold">Moje Rezerwacje</span>
           )}
           {option === "image" && <span className="font-bold">Zdjęcie</span>}
           {option === "images" && <span className="font-bold">Zdjęcia</span>}
@@ -69,6 +70,7 @@ const Modal = ({ option, images }) => {
           {option === "filter" && <ModalFilterForm />}
           {option === "settings" && <ModalSettingsForm />}
           {option === "profile" && <ModalProfileForm />}
+          {option === "reservations" && <ModalMyReservations />}
           {(option === "image" || option === "images") && (
             <ModalPhotosContent images={images} />
           )}

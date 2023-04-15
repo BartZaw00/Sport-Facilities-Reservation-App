@@ -31,6 +31,7 @@ module.exports = {
       colors: {
         "my-primary": "#228B22",
         "my-primary-hover": "#1E7B1E",
+        "my-primary-active": "#135913",
         "my-primary-bg": "#FFFFFF",
         "my-primary-text": "#000000",
         "my-divider": "#EEE",

@@ -27,8 +27,10 @@ function App() {
           <Route path="/sport-facility/:id" element={<SportFacilityPage />} />
           <Route path="/*" element={<ErrorPage />} />
         </Routes>
+        {isModalOpen && (
+          <Modal option={selectedOption} images={selectedImages} />
+        )}
       </BrowserRouter>
-      {isModalOpen && <Modal option={selectedOption} images={selectedImages} />}
     </ModalContext.Provider>
   );
 }

@@ -72,13 +72,14 @@ const SportFacilityReservationForm = ({
 
   const handleReservation = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
 
     if (!user) {
       setIsModalOpen(true);
       setSelectedOption("login");
       return;
     }
+
+    setIsLoading(true);
 
     const dateString = date.$d.toISOString().substring(0, 10);
     const timeString = time.$d.toString().substring(16, 25);
