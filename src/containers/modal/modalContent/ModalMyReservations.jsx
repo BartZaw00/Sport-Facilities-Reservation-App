@@ -36,9 +36,10 @@ const ReservationCard = ({ reservation, onEdit, onDelete }) => {
   };
 
   return (
-    <div className="flex items-center bg-white rounded-lg shadow-md p-4 mb-4">
-      <div className="mx-5 flex items-center justify-around gap-16">
-        <div className="w-[150px] min-w-[150px] aspect-[3/2] overflow-hidden">
+    <div className="flex items-center bg-white rounded-lg shadow-md p-4 mb-4 sm:px-0">
+      <div className="mx-5 flex items-center justify-around gap-16 xl:flex-col xl:items-stretch xl:gap-4">
+        {/* <div className="flex  xl:flex xl:flex-col xl:items-center xl:gap-4"> */}
+        <div className="w-[150px] min-w-[150px] xl:w-full sm:min-w-[100px] aspect-[3/2] overflow-hidden">
           <img
             className="w-full h-full rounded-lg cursor-pointer"
             src={sportFacility.photos[0].photoUrl}
@@ -48,27 +49,30 @@ const ReservationCard = ({ reservation, onEdit, onDelete }) => {
             }
           />
         </div>
-        <div className="flex justify-around gap-16">
-          <div className="min-w-[100px]">
-            <div className="text-lg text-my-gray mb-1">Data:</div>
-            <div className="text-xs font-bold">{formattedDate}</div>
-            <div className="text-xs font-bold">
+        <div className="flex justify-around gap-16 xl:justify-between xl:gap-4">
+          <div className="min-w-[100px] xl:flex-1 xl:text-center">
+            <div className="text-lg text-my-gray mb-1 sm:text-base">Data:</div>
+            <span className="text-xs font-bold">{formattedDate}</span>
+            <br />
+            <span className="text-xs font-bold">
               {formattedStartTime} - {formattedEndTime}
-            </div>
+            </span>
           </div>
-          <div className="min-w-[105px]">
-            <div className="text-lg text-my-gray mb-1">Adres:</div>
-            <div className="text-xs font-bold">{sportFacility.address}</div>
-            <div className="text-xs font-bold">{sportFacility.city}</div>
+          <div className="min-w-[105px] xl:flex-1 xl:text-center">
+            <div className="text-lg text-my-gray mb-1 sm:text-base">Adres:</div>
+            <span className="text-xs font-bold">{sportFacility.address}</span>
+            <br />
+            <span className="text-xs font-bold">{sportFacility.city}</span>
           </div>
-          <div className="">
+          <div className="xl:flex-1 xl:text-center sm:hidden">
             <div className="text-lg text-my-gray mb-1">Obiekt:</div>
-            <div className="text-xs font-bold">{sportFacility.type.name}</div>
+            <span className="text-xs font-bold">{sportFacility.type.name}</span>
           </div>
         </div>
+        {/* </div> */}
         {isDeleting ? (
-          <div className="flex flex-col items-center gap-3">
-            <div className="text-center">
+          <div className="flex flex-col items-center gap-3 xl:min-h-[80px]">
+            <div className="text-center sm:text-sm">
               Czy na pewno chcesz usunąć rezerwację?
             </div>
             <div className="flex gap-3">
@@ -89,7 +93,7 @@ const ReservationCard = ({ reservation, onEdit, onDelete }) => {
             </div>
           </div>
         ) : (
-          <div className="flex gap-3">
+          <div className="flex gap-3 xl:flex-col">
             <button
               type="button"
               className="px-4 py-2 bg-my-primary border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-my-primary-hover active:bg-my-primary-active"
@@ -143,7 +147,7 @@ const ModalMyReservations = () => {
       {isLoading ? (
         <LoadingSpinner />
       ) : reservations.length > 0 ? (
-        <div className="p-6 w-full sm:w-5/6 md:w-3/4 lg:w-1/2">
+        <div className="p-6 w-full sm:p-2">
           {reservations.map((reservation) => (
             <ReservationCard
               key={reservation.reservationId}
