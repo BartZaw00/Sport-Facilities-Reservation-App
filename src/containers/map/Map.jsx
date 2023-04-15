@@ -2,8 +2,12 @@ import React, { useEffect, useState } from "react";
 import { GoogleMap, MarkerF, InfoBox } from "@react-google-maps/api";
 import MapSportFacilityBox from "./mapContent/MapSportFacilityBox";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import { CgProfile } from "react-icons/cg";
 
-const Map = ({ sportFacilities }) => {
+const Map = ({ sportFacilities, location }) => {
+  const { user } = useAuth();
+
   const navigate = useNavigate();
 
   const [markers, setMarkers] = useState([]);
@@ -60,6 +64,15 @@ const Map = ({ sportFacilities }) => {
       onClick={() => setSelectedMarker(null)}
       onDrag={() => setSelectedMarker(null)}
     >
+      {location && (
+        <MarkerF
+          position={{ lat: location.latitude, lng: location.longitude }}
+          icon={{
+            url: user?.photoUrl,
+            scaledSize: new window.google.maps.Size(40, 40),
+          }}
+        />
+      )}
       {markers.map((marker) => (
         <MarkerF
           key={marker.id}
@@ -76,6 +89,8 @@ const Map = ({ sportFacilities }) => {
             sportFacility={sportFacilities.find(
               (facility) => facility.sportFacilityId === selectedMarker.id
             )}
+            location={location}
+            selectedMarker={selectedMarker}
             onClick={() => handleSportFacilityClick(selectedMarker.id)}
           />
         </InfoBox>

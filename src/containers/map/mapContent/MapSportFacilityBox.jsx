@@ -1,6 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import L from "leaflet";
 
-const MapSportFacilityBox = ({ sportFacility, onClick }) => {
+const MapSportFacilityBox = ({
+  sportFacility,
+  onClick,
+  location,
+  selectedMarker,
+}) => {
+  const [distance, setDistance] = useState(-1);
+
+  useEffect(() => {
+    const userLocation = L.latLng(location?.latitude, location?.longitude);
+    const sportFacilityLocation = L.latLng(
+      location?.latitude,
+      sportFacility?.longitude
+    );
+
+    if (location !== null) {
+      const distanceInMeters = userLocation.distanceTo(sportFacilityLocation);
+      const distanceInKilometers = distanceInMeters / 1000;
+      setDistance(distanceInKilometers);
+    }
+  }, [location, selectedMarker]);
+
   const handleTouchEnd = (e) => {
     onClick();
   };
@@ -27,9 +49,11 @@ const MapSportFacilityBox = ({ sportFacility, onClick }) => {
       <div className="flex flex-col gap-px p-1">
         <div className="flex justify-between">
           <span className="font-semibold text-sm">{`${sportFacility.address}, ${sportFacility.city}`}</span>
-          <span className="text-sm">
-            {(Math.random() * 4.9 + 0.1).toFixed(1)} km
-          </span>
+          {distance >= 0 ? (
+            <span className="text-sm">{distance.toFixed(2)} km</span>
+          ) : (
+            <span className="text-sm">??? km</span>
+          )}
         </div>
         <span className="font-light text-sm">{sportFacility.type.name}</span>
       </div>
