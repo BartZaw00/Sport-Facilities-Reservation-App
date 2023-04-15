@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { LoadingSpinner } from "../../components/sharedComponents";
 import SportFacilityBox from "./sportFacilitiesContent/SportFacilityBox";
 
-const SportFacilities = ({ sportFacilities, isLoading }) => {
+const SportFacilities = ({ sportFacilities, isLoading, location }) => {
   const navigate = useNavigate();
   
   const handleSportFacilityClick = (id) => {
@@ -19,6 +19,7 @@ const SportFacilities = ({ sportFacilities, isLoading }) => {
           <SportFacilityBox
             key={sportFacility.sportFacilityId}
             sportFacility={sportFacility}
+            location={location}
             onClick={() =>
               handleSportFacilityClick(sportFacility.sportFacilityId)
             }

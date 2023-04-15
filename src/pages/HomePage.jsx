@@ -9,6 +9,7 @@ import { LoadingSpinner } from "../components/sharedComponents";
 
 const HomePage = () => {
   const [showMap, setShowMap] = useState(false);
+  const [location, setLocation] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [sportFacilities, setSportFacilities] = useState([]);
@@ -17,6 +18,10 @@ const HomePage = () => {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   });
+
+  useEffect(() => {
+    getLocation();
+  }, []);
 
   useEffect(() => {
     fetchSportFacilitiesByCategory();
@@ -29,6 +34,23 @@ const HomePage = () => {
     }
     fetchSportFacilitiesBySearchQuery(searchQuery);
   }, [searchQuery]);
+
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          setLocation({ latitude, longitude });
+        },
+        (error) => {
+          console.error(error);
+        }
+      );
+    } else {
+      console.error("Geolocation not supported");
+    }
+  };
 
   const handleMapButtonClick = () => {
     setShowMap(!showMap);
@@ -76,7 +98,7 @@ const HomePage = () => {
       {showMap ? (
         isLoaded ? (
           <section style={{ height: "calc(100vh - 163px )" }}>
-            <Map sportFacilities={sportFacilities}/>
+            <Map sportFacilities={sportFacilities} location={location} />
           </section>
         ) : (
           <LoadingSpinner />
@@ -85,6 +107,7 @@ const HomePage = () => {
         <SportFacilities
           sportFacilities={sportFacilities}
           isLoading={isLoading}
+          location={location}
         />
       )}
       <MapOpenButton onClick={handleMapButtonClick} showMap={showMap} />

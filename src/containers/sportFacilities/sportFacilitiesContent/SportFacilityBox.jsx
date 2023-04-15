@@ -1,8 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsSuitHeartFill, BsSuitHeart } from "react-icons/bs";
+import L from "leaflet";
 
-const SportFacilityBox = ({ sportFacility, onClick }) => {
+const SportFacilityBox = ({ sportFacility, location, onClick }) => {
   const [isClicked, setIsClicked] = useState(false);
+  const [distance, setDistance] = useState(-1);
+
+  useEffect(() => {
+    const userLocation = L.latLng(location?.latitude, location?.longitude);
+    const sportFacilityLocation = L.latLng(
+      location?.latitude,
+      sportFacility?.longitude
+    );
+
+    if (location !== null) {
+      const distanceInMeters = userLocation.distanceTo(sportFacilityLocation);
+      const distanceInKilometers = distanceInMeters / 1000;
+      setDistance(distanceInKilometers);
+    }
+  }, [location]);
 
   const handleClick = (e) => {
     e.stopPropagation();
@@ -25,7 +41,11 @@ const SportFacilityBox = ({ sportFacility, onClick }) => {
       <div className="flex flex-col gap-px">
         <div className="flex justify-between">
           <span className="font-semibold">{`${sportFacility.address}, ${sportFacility.city}`}</span>
-          <span>{(Math.random() * 4.9 + 0.1).toFixed(1)} km</span>
+          {distance >= 0 ? (
+            <span>{distance.toFixed(2)} km</span>
+          ) : (
+            <span>??? km</span>
+          )}
         </div>
         <span className="font-light">{sportFacility.type.name}</span>
       </div>
