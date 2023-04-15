@@ -16,7 +16,7 @@ const Map = ({ sportFacilities }) => {
   };
 
   useEffect(() => {
-    fetchMarkers();
+    createMarkers();
   }, [sportFacilities]);
 
   useEffect(() => {
@@ -25,26 +25,18 @@ const Map = ({ sportFacilities }) => {
     }
   }, [markers, sportFacilities]);
 
-  const fetchMarkers = async () => {
+  const createMarkers = () => {
     let facilities = sportFacilities;
     if (!Array.isArray(sportFacilities)) {
       facilities = [sportFacilities];
     }
-    const newMarkers = await Promise.all(
-      facilities.map(async (facility) => {
-        const address = `${facility.address}, ${facility.city}`;
-        const response = await fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${
-            import.meta.env.VITE_GOOGLE_MAPS_API_KEY
-          }`
-        );
-        const data = await response.json();
-        const { lat, lng } = data.results[0].geometry.location;
-        const id = facility.sportFacilityId;
-        const name = facility.address;
-        return { id, lat, lng, name };
-      })
-    );
+    const newMarkers = facilities.map((facility) => {
+      const id = facility.sportFacilityId;
+      const lat = facility.latitude;
+      const lng = facility.longitude;
+      const name = facility.address;
+      return { id, lat, lng, name };
+    });
     setMarkers(newMarkers);
   };
 
