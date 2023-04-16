@@ -9,7 +9,7 @@ const SportFacilityBox = ({ sportFacility, location, onClick }) => {
   useEffect(() => {
     const userLocation = L.latLng(location?.latitude, location?.longitude);
     const sportFacilityLocation = L.latLng(
-      location?.latitude,
+      sportFacility?.latitude,
       sportFacility?.longitude
     );
 
