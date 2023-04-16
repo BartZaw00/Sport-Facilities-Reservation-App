@@ -1,11 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
 import moment from "moment";
-import { LoadingSpinner } from "../../../components/sharedComponents";
+import {
+  LoadingSpinner,
+  SuccessMessage,
+} from "../../../components/sharedComponents";
 import useAuth from "../../../hooks/useAuth";
 import { ModalContext } from "../../../App";
 import { useNavigate } from "react-router-dom";
 
-const ReservationCard = ({ reservation, onEdit, onDelete }) => {
+const ReservationCard = ({
+  reservation,
+  setIsSuccess,
+  setIsLoading,
+  fetchReservationsByUser,
+}) => {
   const { startTime, endTime, sportFacility } = reservation;
   const formattedDate = moment(startTime).format("D MMMM YYYY");
   const formattedStartTime = moment(startTime).format("HH:mm");
@@ -17,6 +25,26 @@ const ReservationCard = ({ reservation, onEdit, onDelete }) => {
 
   const navigate = useNavigate();
 
+  const deleteReservation = () => {
+    fetch(
+      `${
+        import.meta.env.VITE_RESERVATION_URL
+      }/deleteUserReservation?reservationID=${reservation.reservationId}`,
+      {
+        method: "DELETE",
+      }
+    )
+      .then((response) => {
+        if (response?.status === 200) {
+          setIsLoading(true);
+          setTimeout(() => fetchReservationsByUser(), 800);
+          setIsSuccess(true);
+          setTimeout(() => setIsSuccess(false), 2000);
+        }
+      })
+      .catch((error) => console.error(error));
+  };
+
   const handleDeleteConfirmation = () => {
     setIsDeleting(true);
   };
@@ -26,8 +54,8 @@ const ReservationCard = ({ reservation, onEdit, onDelete }) => {
   };
 
   const handleDelete = () => {
-    onDelete();
     setIsDeleting(false);
+    deleteReservation();
   };
 
   const handleSportFacilityClick = (id) => {
@@ -38,7 +66,6 @@ const ReservationCard = ({ reservation, onEdit, onDelete }) => {
   return (
     <div className="flex items-center bg-white rounded-lg shadow-md p-4 mb-4 sm:px-0">
       <div className="mx-5 flex items-center justify-around gap-16 xl:flex-col xl:items-stretch xl:gap-4">
-        {/* <div className="flex  xl:flex xl:flex-col xl:items-center xl:gap-4"> */}
         <div className="w-[150px] min-w-[150px] xl:w-full sm:min-w-[100px] aspect-[3/2] overflow-hidden">
           <img
             className="w-full h-full rounded-lg cursor-pointer"
@@ -69,7 +96,6 @@ const ReservationCard = ({ reservation, onEdit, onDelete }) => {
             <span className="text-xs font-bold">{sportFacility.type.name}</span>
           </div>
         </div>
-        {/* </div> */}
         {isDeleting ? (
           <div className="flex flex-col items-center gap-3 xl:min-h-[80px]">
             <div className="text-center sm:text-sm">
@@ -97,7 +123,6 @@ const ReservationCard = ({ reservation, onEdit, onDelete }) => {
             <button
               type="button"
               className="px-4 py-2 bg-my-primary border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-my-primary-hover active:bg-my-primary-active"
-              onClick={onEdit}
             >
               Edytuj
             </button>
@@ -120,6 +145,7 @@ const ModalMyReservations = () => {
 
   const [reservations, setReservations] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -127,6 +153,10 @@ const ModalMyReservations = () => {
       setTimeout(() => fetchReservationsByUser(), 800);
     }
   }, [user?.id]);
+
+  useEffect(() => {
+    console.log(reservations);
+  }, [reservations]);
 
   const fetchReservationsByUser = async () => {
     setIsLoading(true);
@@ -148,10 +178,16 @@ const ModalMyReservations = () => {
         <LoadingSpinner />
       ) : reservations.length > 0 ? (
         <div className="p-6 w-full sm:p-2">
+          {isSuccess && (
+            <SuccessMessage successMsg="Operacja zakończona pomyślnie!" />
+          )}
           {reservations.map((reservation) => (
             <ReservationCard
               key={reservation.reservationId}
               reservation={reservation}
+              setIsSuccess={setIsSuccess}
+              setIsLoading={setIsLoading}
+              fetchReservationsByUser={fetchReservationsByUser}
             />
           ))}
         </div>
