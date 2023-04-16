@@ -3,7 +3,6 @@ import { GoogleMap, MarkerF, InfoBox } from "@react-google-maps/api";
 import MapSportFacilityBox from "./mapContent/MapSportFacilityBox";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-import { CgProfile } from "react-icons/cg";
 
 const Map = ({ sportFacilities, location }) => {
   const { user } = useAuth();
@@ -68,7 +67,9 @@ const Map = ({ sportFacilities, location }) => {
         <MarkerF
           position={{ lat: location.latitude, lng: location.longitude }}
           icon={{
-            url: user?.photoUrl,
+            url:
+              user?.photoUrl ||
+              "https://res.cloudinary.com/dbkm7uvzx/image/upload/v1681637945/abstract-user-flat-1_dzkydg.svg",
             scaledSize: new window.google.maps.Size(40, 40),
           }}
         />
