@@ -1,12 +1,11 @@
 import React, { useContext } from "react";
-
 import { FaFilter } from "react-icons/fa";
-
 import { ModalContext } from "../../../App";
 
 const CategoriesFilterButton = () => {
   const { setIsModalOpen, setSelectedOption } = useContext(ModalContext);
 
+  // Clicking on Filter Button opens modal with filter content
   const handleFilterClick = () => {
     setIsModalOpen(true);
     setSelectedOption("filter");

@@ -18,6 +18,7 @@ const Map = ({ sportFacilities, location }) => {
     height: "100%",
   };
 
+  // When Sport Facilities change -> update the markers
   useEffect(() => {
     createMarkers();
   }, [sportFacilities]);

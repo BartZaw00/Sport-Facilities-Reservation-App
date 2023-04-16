@@ -1,8 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
-
-// import { Category, FilterButton } from "../../components/index";
-
 import { categories } from "../../utils/data";
 import {
   CategoriesCategory,
@@ -11,18 +8,16 @@ import {
 
 const Categories = ({ selectedCategory, setSelectedCategory }) => {
   const [isSticky, setIsSticky] = useState(false);
-  const categoriesRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
+  const categoriesRef = useRef(null);
 
+  // Updating the sticky state based on window scroll position
   useEffect(() => {
     const handleScrollY = () => {
       const offset = window.scrollY;
-      if (offset > 5) {
-        setIsSticky(true);
-      } else {
-        setIsSticky(false);
-      }
+      if (offset > 5) setIsSticky(true);
+      else setIsSticky(false);
     };
 
     window.addEventListener("scroll", handleScrollY);
@@ -32,6 +27,7 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
     };
   }, []);
 
+  // Updating arrow visibility based on the scroll position of the categories container
   useEffect(() => {
     const categoriesDiv = categoriesRef.current;
     const handleScrollX = () => {
@@ -40,6 +36,7 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
       } else {
         setShowLeftArrow(false);
       }
+
       if (
         categoriesDiv.scrollWidth - categoriesDiv.scrollLeft <=
         categoriesDiv.clientWidth
@@ -51,8 +48,9 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
     };
     categoriesDiv.addEventListener("scroll", handleScrollX);
     return () => categoriesDiv.removeEventListener("scroll", handleScrollX);
-  }, [categoriesRef]);
+  }, []);
 
+  // Swipe Left when left arrow button clicked
   const handleLeftArrowClick = () => {
     const categoriesDiv = categoriesRef.current;
     const scrollDistance = categoriesDiv.scrollWidth * 0.2;
@@ -62,6 +60,7 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
     });
   };
 
+  // Swipe Right when left arrow button clicked
   const handleRightArrowClick = () => {
     const categoriesDiv = categoriesRef.current;
     const scrollDistance = categoriesDiv.scrollWidth * 0.2;
@@ -72,7 +71,7 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
   };
 
   return (
-    <nav
+    <aside
       className={`max-w-[2000px] bg-my-primary-bg mt-24 sm:mt-20 px-20 2xl:px-10 xl:px-8 lg:px-6 md:px-4 flex items-center ${
         isSticky
           ? "sticky top-20 shadow-sm border-solid border-b-2 border-my-divider z-30"
@@ -96,9 +95,7 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
             key={item.id}
             category={item}
             selectedCategory={selectedCategory}
-            onClick={(newCategory) => {
-              setSelectedCategory(newCategory);
-            }}
+            onClick={(newCategory) => setSelectedCategory(newCategory)}
           />
         ))}
       </div>
@@ -113,7 +110,7 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
       <div className="ml-auto">
         <CategoriesFilterButton />
       </div>
-    </nav>
+    </aside>
   );
 };
 

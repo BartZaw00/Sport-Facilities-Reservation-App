@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../containers/navbar/Navbar";
 import Categories from "../containers/categories/Categories";
 import Map from "../containers/map/Map";
@@ -15,18 +15,22 @@ const HomePage = () => {
   const [sportFacilities, setSportFacilities] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Initializing the Google Maps API using the useLoadScript hook
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   });
 
+  // Executing the getLocation function on initial render
   useEffect(() => {
     getLocation();
   }, []);
 
+  // Fetching Sport Facilities based on the selected category
   useEffect(() => {
     fetchSportFacilitiesByCategory();
   }, [selectedCategory]);
 
+  // Fetching Sport Facilities based on the search query
   useEffect(() => {
     if (searchQuery === "") {
       fetchSportFacilitiesByCategory();
@@ -35,27 +39,31 @@ const HomePage = () => {
     fetchSportFacilitiesBySearchQuery(searchQuery);
   }, [searchQuery]);
 
+  // Defining a function to get the user's current location
   const getLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-          setLocation({ latitude, longitude });
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
-    } else {
-      console.error("Geolocation not supported");
+    if (!navigator.geolocation) {
+      // A message to the user when the geolocation API is not supported in the browser
+      alert("Twoja przeglądarka nie obsługuje geolokalizacji.");
     }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        setLocation({ latitude, longitude });
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   };
 
+  // Toggling the showMap state variable when the map button is clicked
   const handleMapButtonClick = () => {
     setShowMap(!showMap);
   };
 
+  // Updating the search query state variable when the user types in the search bar
   const handleSearchQueryChange = (e) => {
     setSearchQuery(e.target.value);
   };
@@ -69,7 +77,7 @@ const HomePage = () => {
         setSportFacilities(data);
         setIsLoading(false);
       })
-      .catch(() => console.log("Wystąpił błąd. Spróbuj ponownie."));
+      .catch(() => console.error(error));
   };
 
   const fetchSportFacilitiesBySearchQuery = async (query) => {
