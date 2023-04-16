@@ -1,16 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import moment from "moment";
-import {
-  LoadingSpinner,
-  SuccessMessage,
-} from "../../../components/sharedComponents";
+import { LoadingSpinner } from "../../../components/sharedComponents";
 import useAuth from "../../../hooks/useAuth";
 import { ModalContext } from "../../../App";
 import { useNavigate } from "react-router-dom";
 
 const ReservationCard = ({
   reservation,
-  setIsSuccess,
   setIsLoading,
   fetchReservationsByUser,
 }) => {
@@ -38,8 +34,6 @@ const ReservationCard = ({
         if (response?.status === 200) {
           setIsLoading(true);
           setTimeout(() => fetchReservationsByUser(), 800);
-          setIsSuccess(true);
-          setTimeout(() => setIsSuccess(false), 2000);
         }
       })
       .catch((error) => console.error(error));
@@ -145,7 +139,6 @@ const ModalMyReservations = () => {
 
   const [reservations, setReservations] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -178,14 +171,10 @@ const ModalMyReservations = () => {
         <LoadingSpinner />
       ) : reservations.length > 0 ? (
         <div className="p-6 w-full sm:p-2">
-          {isSuccess && (
-            <SuccessMessage successMsg="Operacja zakończona pomyślnie!" />
-          )}
           {reservations.map((reservation) => (
             <ReservationCard
               key={reservation.reservationId}
               reservation={reservation}
-              setIsSuccess={setIsSuccess}
               setIsLoading={setIsLoading}
               fetchReservationsByUser={fetchReservationsByUser}
             />
