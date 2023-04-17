@@ -4,6 +4,7 @@
 <ul>
   <li>React</li>
   <li>JavaScript</li>
+  <li>HTML</li>
   <li>Tailwind</li>
   <li>REST API</li>
 </ul>
