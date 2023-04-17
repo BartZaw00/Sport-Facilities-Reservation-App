@@ -79,6 +79,45 @@ const ModalLoginForm = () => {
       });
   };
 
+  const handleTestAccountLogin = async (e) => {
+    setIsLoading(true);
+
+    fetch(`${import.meta.env.VITE_ACCOUNT_URL}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: "test@test.com", password: "Test1234!" }),
+    })
+      .then(async (response) => {
+        const data = await response.json();
+        const {
+          userId: id,
+          photoUrl,
+          username,
+          name,
+          surname,
+          email,
+          roleId: role,
+          token,
+        } = data;
+        if (response?.status === 200) {
+          login({ id, photoUrl, username, name, surname, email, role, token });
+          setSuccess(true);
+          setTimeout(() => {
+            setIsModalOpen(false);
+          }, 2000);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        setErrMsg("Podany Email lub Hasło są błędne. Spróbuj ponownie.");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
   return (
     <>
       {success ? (
@@ -116,10 +155,7 @@ const ModalLoginForm = () => {
             {isLoading ? (
               <LoadingSpinner />
             ) : (
-              <FormButton
-                onClick={handleLogin}
-                className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover focus:outline-none"
-              >
+              <FormButton className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover focus:outline-none">
                 Zaloguj się
               </FormButton>
             )}
@@ -132,6 +168,18 @@ const ModalLoginForm = () => {
                 className="text-my-primary hover:text-my-primary-hover cursor-pointer"
               >
                 Zarejestruj się
+              </span>
+            </p>
+          </div>
+          <div className="text-center mt-6">
+            <p>
+              Nie chcesz rejestrować konta?
+              <br />
+              <span
+                onClick={handleTestAccountLogin}
+                className="text-my-primary hover:text-my-primary-hover cursor-pointer"
+              >
+                Skorzystaj z konta testowego
               </span>
             </p>
           </div>

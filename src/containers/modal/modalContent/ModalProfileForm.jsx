@@ -356,12 +356,15 @@ const ModalProfileForm = () => {
               >
                 Edytuj Profil
               </FormButton>
-              <FormButton
-                onClick={handleChangePasswordClick}
-                className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover focus:outline-none"
-              >
-                Zmień Hasło
-              </FormButton>
+              { /* test user id */}
+              {user?.id !== 6 && (
+                <FormButton
+                  onClick={handleChangePasswordClick}
+                  className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover focus:outline-none"
+                >
+                  Zmień Hasło
+                </FormButton>
+              )}
             </>
           )}
         </div>
