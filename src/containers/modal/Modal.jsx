@@ -22,7 +22,10 @@ const Modal = ({ option, images }) => {
 
   const handleModalOutsideClick = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
-      setIsModalOpen(false);
+      // Checking whether the click was on the element with the class .ant-select-dropdown
+      if (!event.target.closest(".ant-select-dropdown")) {
+        setIsModalOpen(false);
+      }
     }
   };
 

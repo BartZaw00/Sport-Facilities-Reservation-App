@@ -4,16 +4,19 @@ import {
   FormDistanceFilter,
   FormSelect,
 } from "../../../components/formComponents";
+import { Select } from "antd";
 
 const ModalFilterForm = () => {
   const [distance, setDistance] = useState(10);
+  const [surface, setSurface] = useState("");
+  const [location, setLocation] = useState("");
 
   const handleDistanceChange = (e) => {
     setDistance(parseInt(e.target.value, 10));
   };
 
   const locationOptions = [
-    { label: "Wybierz województwo", value: "" },
+    { label: "Dowolne", value: "" },
     { label: "Dolnośląskie", value: "dolnoslaskie" },
     { label: "Kujawsko-Pomorskie", value: "kujawsko-pomorskie" },
     { label: "Lubelskie", value: "lubelskie" },
@@ -33,7 +36,7 @@ const ModalFilterForm = () => {
   ];
 
   const surfaceOptions = [
-    { label: "Wybierz nawierzchnię", value: "" },
+    { label: "Dowolna", value: "" },
     { label: "Naturalna trawa", value: "naturalna trawa" },
     { label: "Sztuczna trawa", value: "sztuczna trawa" },
     { label: "Halowa", value: "halowa" },
@@ -44,24 +47,42 @@ const ModalFilterForm = () => {
 
   return (
     <div className="flex flex-col gap-5 px-10 pt-6 pb-10">
-      <FormSelect
-        label="Nawierzchnia"
-        id="surface"
-        options={surfaceOptions}
-        className="px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:border-my-primary"
-        divClassName="flex flex-col gap-2"
-      />
+      <div className="flex flex-col gap-2">
+        <label htmlFor="surface">Nawierzchnia</label>
+        <Select
+          id="surface"
+          size="large"
+          value={surface}
+          onChange={(value) => setSurface(value)}
+          className={`relative rounded-lg focus:outline-none hover:ring-1 focus:ring-my-primary`}
+        >
+          {surfaceOptions.map((option) => (
+            <Select.Option key={option.value} value={option.value}>
+              {option.label}
+            </Select.Option>
+          ))}
+        </Select>
+      </div>
       <FormDistanceFilter
         distance={distance}
         handleDistanceChange={handleDistanceChange}
       />
-      <FormSelect
-        label="Lokalizacja"
-        id="location"
-        options={locationOptions}
-        className="px-4 py-2 border border-gray-300 rounded-sm focus:outline-none focus:border-my-primary"
-        divClassName="flex flex-col gap-2"
-      />
+      <div className="flex flex-col gap-2">
+        <label htmlFor="surface">Województwo</label>
+        <Select
+          id="location"
+          size="large"
+          value={location}
+          onChange={(value) => setLocation(value)}
+          className={`relative rounded-lg focus:outline-none hover:ring-1 focus:ring-my-primary`}
+        >
+          {locationOptions.map((option) => (
+            <Select.Option key={option.value} value={option.value}>
+              {option.label}
+            </Select.Option>
+          ))}
+        </Select>
+      </div>
       <FormButton className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover focus:outline-none">
         Filtruj
       </FormButton>
