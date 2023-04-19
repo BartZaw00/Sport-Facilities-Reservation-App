@@ -8,7 +8,7 @@ const ModalSettingsForm = () => {
 
   const themeOptions = [
     { value: "light", label: "Jasny" },
-    { value: "dark", label: "Ciemny" },
+    // { value: "dark", label: "Ciemny" },
   ];
 
   const languageOptions = [{ value: "polish", label: "Polski" }];

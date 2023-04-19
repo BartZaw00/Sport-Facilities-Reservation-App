@@ -3,7 +3,7 @@ import { BsSuitHeartFill, BsSuitHeart } from "react-icons/bs";
 import L from "leaflet";
 import { Tooltip } from "../../../components/sharedComponents";
 
-const SportFacilityBox = ({ sportFacility, location, onClick }) => {
+const SportFacilityBox = ({sportFacility, location, onClick }) => {
   const [isClicked, setIsClicked] = useState(false);
   const [distance, setDistance] = useState(-1);
   const [showTooltip, setShowTooltip] = useState(false);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Navbar from "../containers/navbar/Navbar";
 import Categories from "../containers/categories/Categories";
 import Map from "../containers/map/Map";
@@ -6,14 +6,27 @@ import SportFacilities from "../containers/sportFacilities/SportFacilities";
 import MapOpenButton from "../containers/map/mapContent/MapOpenButton";
 import { useLoadScript } from "@react-google-maps/api";
 import { LoadingSpinner } from "../components/sharedComponents";
+import {
+  fetchSportFacilitiesByCategory,
+  fetchSportFacilitiesBySearchQuery,
+} from "../services/SportFacilityService";
 
-const HomePage = () => {
+const HomePage = ({
+  sportFacilities,
+  setSportFacilities,
+  filters,
+  isLoading,
+  setIsLoading,
+}) => {
   const [showMap, setShowMap] = useState(false);
   const [location, setLocation] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [sportFacilities, setSportFacilities] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState(1);
+
+  const { filteredSurface, filteredDistance, filteredProvince } = filters;
+  const [surface, setSurface] = filteredSurface;
+  const [distance, setDistance] = filteredDistance;
+  const [province, setProvince] = filteredProvince;
 
   // Initializing the Google Maps API using the useLoadScript hook
   const { isLoaded } = useLoadScript({
@@ -27,16 +40,40 @@ const HomePage = () => {
 
   // Fetching Sport Facilities based on the selected category
   useEffect(() => {
-    fetchSportFacilitiesByCategory();
-  }, [selectedCategory]);
+    const fetchSportFacilities = async () => {
+      const data = await fetchSportFacilitiesByCategory(selectedCategory);
+
+      let filteredFacilities = data.filter((facility) => {
+        if (province && province !== "" && facility.province !== province) {
+          return false;
+        }
+        if (surface && surface !== "" && facility.type.surface !== surface) {
+          return false;
+        }
+        return true;
+      });
+
+      setSportFacilities(filteredFacilities);
+      setIsLoading(false);
+    };
+    fetchSportFacilities();
+  }, [selectedCategory, surface, distance, province]);
 
   // Fetching Sport Facilities based on the search query
   useEffect(() => {
-    if (searchQuery === "") {
-      fetchSportFacilitiesByCategory();
-      return;
-    }
-    fetchSportFacilitiesBySearchQuery(searchQuery);
+    const fetchSportFacilities = async () => {
+      if (searchQuery === "") {
+        const data = await fetchSportFacilitiesByCategory(selectedCategory);
+        
+        setSportFacilities(data);
+        setIsLoading(false);
+        return;
+      }
+      const data = await fetchSportFacilitiesBySearchQuery(searchQuery);
+      setSportFacilities(data);
+      setIsLoading(false);
+    };
+    fetchSportFacilities();
   }, [searchQuery]);
 
   // Defining a function to get the user's current location
@@ -66,30 +103,6 @@ const HomePage = () => {
   // Updating the search query state variable when the user types in the search bar
   const handleSearchQueryChange = (e) => {
     setSearchQuery(e.target.value);
-  };
-
-  const fetchSportFacilitiesByCategory = async () => {
-    fetch(
-      `${import.meta.env.VITE_HOME_URL}/getBySport?sportID=${selectedCategory}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setSportFacilities(data);
-        setIsLoading(false);
-      })
-      .catch(() => console.error(error));
-  };
-
-  const fetchSportFacilitiesBySearchQuery = async (query) => {
-    fetch(
-      `${import.meta.env.VITE_HOME_URL}/getBySearchQuery?searchQuery=${query}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setSportFacilities(data);
-        setIsLoading(false);
-      })
-      .catch((error) => console.error(error));
   };
 
   return (

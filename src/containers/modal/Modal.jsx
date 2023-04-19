@@ -12,7 +12,7 @@ import {
   ModalSignUpForm,
 } from "./modalContent";
 
-const Modal = ({ option, images }) => {
+const Modal = ({ option, images, filters, setIsLoading }) => {
   const { isModalOpen, setIsModalOpen } = useContext(ModalContext);
   const modalRef = useRef(null);
 
@@ -53,30 +53,22 @@ const Modal = ({ option, images }) => {
             <IoMdClose size={20} />
           </div>
           {option === "login" && <span className="font-bold">Logowanie</span>}
-          {option === "signup" && (
-            <span className="font-bold">Rejestracja</span>
-          )}
+          {option === "signup" && <span className="font-bold">Rejestracja</span>}
           {option === "filter" && <span className="font-bold">Filtruj</span>}
-          {option === "settings" && (
-            <span className="font-bold">Ustawienia</span>
-          )}
+          {option === "settings" && <span className="font-bold">Ustawienia</span>}
           {option === "profile" && <span className="font-bold">Profil</span>}
-          {option === "reservations" && (
-            <span className="font-bold">Moje Rezerwacje</span>
-          )}
+          {option === "reservations" && <span className="font-bold">Moje Rezerwacje</span>}
           {option === "image" && <span className="font-bold">Zdjęcie</span>}
           {option === "images" && <span className="font-bold">Zdjęcia</span>}
         </div>
         <div className="px-6 py-5 overflow-y-auto">
           {option === "login" && <ModalLoginForm />}
           {option === "signup" && <ModalSignUpForm />}
-          {option === "filter" && <ModalFilterForm />}
+          {option === "filter" && <ModalFilterForm filters={filters} setIsLoading={setIsLoading} />}
           {option === "settings" && <ModalSettingsForm />}
           {option === "profile" && <ModalProfileForm />}
           {option === "reservations" && <ModalMyReservations />}
-          {(option === "image" || option === "images") && (
-            <ModalPhotosContent images={images} />
-          )}
+          {(option === "image" || option === "images") && <ModalPhotosContent images={images} />}
         </div>
       </div>
     </div>

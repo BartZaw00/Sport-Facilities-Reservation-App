@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Modal from "./containers/modal/Modal";
 
 import { HomePage, SportFacilityPage, ErrorPage } from "./pages/index";
@@ -10,6 +10,18 @@ function App() {
   const [selectedOption, setSelectedOption] = useState("");
   const [selectedImages, setSelectedImages] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [sportFacilities, setSportFacilities] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [surface, setSurface] = useState("");
+  const [distance, setDistance] = useState(10);
+  const [province, setProvince] = useState("");
+
+  const filters = {
+    filteredSurface: [surface, setSurface],
+    filteredDistance: [distance, setDistance],
+    filteredProvince: [province, setProvince],
+  };
 
   return (
     <ModalContext.Provider
@@ -23,12 +35,29 @@ function App() {
     >
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={<HomePage />} />
+          <Route
+            exact
+            path="/"
+            element={
+              <HomePage
+                sportFacilities={sportFacilities}
+                setSportFacilities={setSportFacilities}
+                filters={filters}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+              />
+            }
+          />
           <Route path="/sport-facility/:id" element={<SportFacilityPage />} />
           <Route path="/*" element={<ErrorPage />} />
         </Routes>
         {isModalOpen && (
-          <Modal option={selectedOption} images={selectedImages} />
+          <Modal
+            option={selectedOption}
+            images={selectedImages}
+            filters={filters}
+            setIsLoading={setIsLoading}
+          />
         )}
       </BrowserRouter>
     </ModalContext.Provider>
