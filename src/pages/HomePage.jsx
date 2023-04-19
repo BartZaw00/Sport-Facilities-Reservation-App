@@ -38,10 +38,48 @@ const HomePage = ({
     getLocation();
   }, []);
 
-  // Fetching Sport Facilities based on the selected category
+  // // Fetching Sport Facilities based on the selected category
+  // useEffect(() => {
+  //   const fetchSportFacilities = async () => {
+  //     const data = await fetchSportFacilitiesByCategory(selectedCategory);
+
+  //     let filteredFacilities = data.filter((facility) => {
+  //       if (province && province !== "" && facility.province !== province) {
+  //         return false;
+  //       }
+  //       if (surface && surface !== "" && facility.type.surface !== surface) {
+  //         return false;
+  //       }
+  //       return true;
+  //     });
+
+  //     setSportFacilities(filteredFacilities);
+  //     setIsLoading(false);
+  //   };
+  //   fetchSportFacilities();
+  // }, [selectedCategory, surface, distance, province]);
+
+  // Fetching Sport Facilities based on the search query
   useEffect(() => {
     const fetchSportFacilities = async () => {
-      const data = await fetchSportFacilitiesByCategory(selectedCategory);
+      if (searchQuery === "") {
+        const data = await fetchSportFacilitiesByCategory(selectedCategory);
+
+        let filteredFacilities = data.filter((facility) => {
+          if (province && province !== "" && facility.province !== province) {
+            return false;
+          }
+          if (surface && surface !== "" && facility.type.surface !== surface) {
+            return false;
+          }
+          return true;
+        });
+
+        setSportFacilities(filteredFacilities);
+        setIsLoading(false);
+        return;
+      }
+      const data = await fetchSportFacilitiesBySearchQuery(searchQuery);
 
       let filteredFacilities = data.filter((facility) => {
         if (province && province !== "" && facility.province !== province) {
@@ -57,24 +95,7 @@ const HomePage = ({
       setIsLoading(false);
     };
     fetchSportFacilities();
-  }, [selectedCategory, surface, distance, province]);
-
-  // Fetching Sport Facilities based on the search query
-  useEffect(() => {
-    const fetchSportFacilities = async () => {
-      if (searchQuery === "") {
-        const data = await fetchSportFacilitiesByCategory(selectedCategory);
-        
-        setSportFacilities(data);
-        setIsLoading(false);
-        return;
-      }
-      const data = await fetchSportFacilitiesBySearchQuery(searchQuery);
-      setSportFacilities(data);
-      setIsLoading(false);
-    };
-    fetchSportFacilities();
-  }, [searchQuery]);
+  }, [selectedCategory, searchQuery, surface, distance, province]);
 
   // Defining a function to get the user's current location
   const getLocation = () => {
