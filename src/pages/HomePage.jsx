@@ -79,7 +79,7 @@ const HomePage = ({
         setIsLoading(false);
         return;
       }
-      const data = await fetchSportFacilitiesBySearchQuery(searchQuery);
+      const data = await fetchSportFacilitiesBySearchQuery(searchQuery, selectedCategory);
 
       let filteredFacilities = data.filter((facility) => {
         if (province && province !== "" && facility.province !== province) {

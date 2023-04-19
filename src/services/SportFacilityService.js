@@ -11,9 +11,9 @@ const fetchSportFacilitiesByCategory = async (selectedCategory) => {
     });
 };
 
-const fetchSportFacilitiesBySearchQuery = async (query) => {
+const fetchSportFacilitiesBySearchQuery = async (query, selectedCategory) => {
   return fetch(
-    `${import.meta.env.VITE_HOME_URL}/getBySearchQuery?searchQuery=${query}`
+    `${import.meta.env.VITE_HOME_URL}/getBySearchQuery?searchQuery=${query}&sportID=${selectedCategory}`
   )
     .then((response) => response.json())
     .then((data) => {
