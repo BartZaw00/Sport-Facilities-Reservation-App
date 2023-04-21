@@ -3,35 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { LoadingSpinner } from "../../components/sharedComponents";
 import SportFacilityBox from "./sportFacilitiesContent/SportFacilityBox";
 
-const SportFacilities = ({
-  sportFacilities,
-  setSportFacilities,
-  isLoading,
-  location,
-}) => {
+const SportFacilities = ({ sportFacilities, isLoading }) => {
   const navigate = useNavigate();
 
   const handleSportFacilityClick = (id) => {
     navigate(`/sport-facility/${id}`);
   };
-
-  // useEffect(() => {
-  //   if (location !== null) {
-  //     const updatedSportFacilities = updateSportFacilities();
-  //     setSportFacilities(updatedSportFacilities);
-  //   }
-  // }, []);
-
-  // const updateSportFacilities = () => {
-  //   const updatedSportFacilities = sportFacilities.map((facility) => {
-  //     const userLocation = L.latLng(location?.latitude, location?.longitude);
-  //     const sportFacilityLocation = L.latLng(facility.latitude, facility.longitude);
-  //     const distanceInMeters = userLocation.distanceTo(sportFacilityLocation);
-  //     const distanceInKilometers = distanceInMeters / 1000;
-  //     return { ...facility, distance: distanceInKilometers.toFixed(2) };
-  //   });
-  //   return updatedSportFacilities;
-  // };
 
   return (
     <main className="mt-6 mb-12 px-20 2xl:px-10 xl:px-8 lg:px-6 md:px-4 grid grid-cols-7 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 3xl:grid-cols-5 4xl:grid-cols-6 gap-x-6 gap-y-8">

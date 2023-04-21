@@ -14,7 +14,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   const [surface, setSurface] = useState("");
-  const [distance, setDistance] = useState(10);
+  const [distance, setDistance] = useState(15);
   const [province, setProvince] = useState("");
 
   const filters = {

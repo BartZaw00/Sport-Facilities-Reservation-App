@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FormButton, FormSelect } from "../../../components/formComponents";
 import { Select } from "antd";
+import { ModalContext } from "../../../App";
 
 const ModalSettingsForm = () => {
+  const { setIsModalOpen } = useContext(ModalContext);
+
   const [theme, setTheme] = useState("light");
   const [language, setLanguage] = useState("polish");
 
@@ -13,8 +16,12 @@ const ModalSettingsForm = () => {
 
   const languageOptions = [{ value: "polish", label: "Polski" }];
 
+  const handleSubmit = () => {
+    setIsModalOpen(false);
+  }
+
   return (
-    <div className="flex flex-col gap-4 pb-4">
+    <form className="flex flex-col gap-4 pb-4" onSubmit={handleSubmit}>
       <div className="flex flex-col gap-2">
         <label htmlFor="surface">Motyw</label>
         <Select
@@ -50,7 +57,7 @@ const ModalSettingsForm = () => {
       <FormButton className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover focus:outline-none">
         Zapisz
       </FormButton>
-    </div>
+    </form>
   );
 };
 
