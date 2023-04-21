@@ -87,7 +87,7 @@ const SportFacility = ({ id }) => {
               />
             </div>
             <button
-              className="px-3 py-2 bg-slate-200 flex items-center gap-2 rounded-full hover:bg-slate-300 md:text-sm sm:hidden"
+              className="px-3 py-2 bg-slate-200 flex items-center gap-2 rounded-full hover:bg-slate-300 active:bg-slate-400 md:text-sm sm:hidden"
               onClick={handleClick}
             >
               Dodaj do ulubionych{" "}

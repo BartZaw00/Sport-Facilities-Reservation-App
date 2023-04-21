@@ -79,6 +79,10 @@ const SportFacilityReservationForm = ({
       return;
     }
 
+    if(date === "" || time === "") {
+      return;
+    }
+
     setIsLoading(true);
 
     const dateString = date.$d.toISOString().substring(0, 10);
@@ -224,7 +228,7 @@ const SportFacilityReservationForm = ({
           {isLoading ? (
             <LoadingSpinner />
           ) : (
-            <button className="w-full px-4 py-4 bg-my-primary text-white font-bold rounded-lg hover:bg-my-primary-hover focus:outline-none md:py-3 md:px-6">
+            <button className="w-full px-4 py-4 bg-my-primary text-white font-bold rounded-lg hover:bg-my-primary-hover active:bg-my-primary-active md:py-3 md:px-6">
               Rezerwuj
             </button>
           )}

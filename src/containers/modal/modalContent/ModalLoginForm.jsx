@@ -155,7 +155,7 @@ const ModalLoginForm = () => {
             {isLoading ? (
               <LoadingSpinner />
             ) : (
-              <FormButton className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover focus:outline-none">
+              <FormButton className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover active:bg-my-primary-active focus:outline-none">
                 Zaloguj się
               </FormButton>
             )}

@@ -35,6 +35,7 @@ module.exports = {
         "my-primary-bg": "#FFFFFF",
         "my-primary-text": "#000000",
         "my-divider": "#EEE",
+        "my-divider-active": "#DDD",
         "my-scrollbar-btn": "#AAA",
         "my-sport-facility-overlay": "rgba(0,0,0,0.05)",
         "my-sport-facility-hover": "rgba(0,0,0,0.1)",

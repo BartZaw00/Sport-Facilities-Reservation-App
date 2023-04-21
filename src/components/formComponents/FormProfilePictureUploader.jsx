@@ -16,7 +16,7 @@ const FormProfilePictureUploader = ({ onImageChange }) => {
   return (
     <>
       <div
-        className="px-4 py-2 bg-my-primary text-my-primary-bg rounded-md cursor-pointer hover:bg-my-primary-hover"
+        className="px-4 py-2 bg-my-primary text-my-primary-bg rounded-md cursor-pointer hover:bg-my-primary-hover active:bg-my-primary-active"
         onClick={handleButtonClick}
       >
         Zmień zdjęcie

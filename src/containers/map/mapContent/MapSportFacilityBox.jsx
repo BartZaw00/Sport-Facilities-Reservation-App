@@ -50,7 +50,7 @@ const MapSportFacilityBox = ({
         <div className="flex justify-between">
           <span className="font-semibold text-sm">{`${sportFacility.address}, ${sportFacility.city}`}</span>
           {distance >= 0 ? (
-            <span className="text-sm">{distance.toFixed(2)} km</span>
+            <span className="text-sm">{sportFacility.distance} km</span>
           ) : (
             <span className="text-sm">??? km</span>
           )}

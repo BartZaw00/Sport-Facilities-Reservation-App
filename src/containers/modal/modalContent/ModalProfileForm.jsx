@@ -228,7 +228,7 @@ const ModalProfileForm = () => {
             <div className="flex flex-col gap-4">
               <FormProfilePictureUploader onImageChange={handleImageChange} />
               <button
-                className="px-4 py-2 bg-my-primary-bg text-my-primary-text border-2 border-gray-300 rounded-md hover:bg-gray-200"
+                className="px-4 py-2 bg-my-primary-bg text-my-primary-text border-2 border-gray-300 rounded-md hover:bg-gray-200 active:bg-gray-300"
                 onClick={() => setPhotoUrl("")}
               >
                 Usuń zdjęcie
@@ -336,13 +336,13 @@ const ModalProfileForm = () => {
               <div className="flex gap-4">
                 <FormButton
                   onClick={handleSaveClick}
-                  className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover focus:outline-none"
+                  className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover active:bg-my-primary-active"
                 >
                   Zapisz
                 </FormButton>
                 <FormButton
                   onClick={handleCancelClick}
-                  className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-400 focus:outline-none"
+                  className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 active:bg-gray-700"
                 >
                   Anuluj
                 </FormButton>
@@ -352,7 +352,7 @@ const ModalProfileForm = () => {
             <>
               <FormButton
                 onClick={handleEditProfileClick}
-                className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover focus:outline-none"
+                className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover active:bg-my-primary-active"
               >
                 Edytuj Profil
               </FormButton>
@@ -360,7 +360,7 @@ const ModalProfileForm = () => {
               {user?.id !== 6 && (
                 <FormButton
                   onClick={handleChangePasswordClick}
-                  className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover focus:outline-none"
+                  className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover active:bg-my-primary-active"
                 >
                   Zmień Hasło
                 </FormButton>
