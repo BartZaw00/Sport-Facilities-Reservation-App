@@ -3,24 +3,13 @@ import { BsSuitHeartFill, BsSuitHeart } from "react-icons/bs";
 import L from "leaflet";
 import { Tooltip } from "../../../components/sharedComponents";
 
-const SportFacilityBox = ({sportFacility, location, onClick }) => {
+const SportFacilityBox = ({
+  sportFacility,
+  distance,
+  onClick,
+}) => {
   const [isClicked, setIsClicked] = useState(false);
-  const [distance, setDistance] = useState(-1);
   const [showTooltip, setShowTooltip] = useState(false);
-
-  useEffect(() => {
-    const userLocation = L.latLng(location?.latitude, location?.longitude);
-    const sportFacilityLocation = L.latLng(
-      sportFacility?.latitude,
-      sportFacility?.longitude
-    );
-
-    if (location !== null) {
-      const distanceInMeters = userLocation.distanceTo(sportFacilityLocation);
-      const distanceInKilometers = distanceInMeters / 1000;
-      setDistance(distanceInKilometers);
-    }
-  }, [location]);
 
   const handleClick = (e) => {
     e.stopPropagation();
@@ -44,7 +33,7 @@ const SportFacilityBox = ({sportFacility, location, onClick }) => {
         <div className="flex justify-between">
           <span className="font-semibold">{`${sportFacility.address}, ${sportFacility.city}`}</span>
           {distance >= 0 ? (
-            <span>{distance.toFixed(2)} km</span>
+            <span>{distance} km</span>
           ) : (
             <span
               className="relative"

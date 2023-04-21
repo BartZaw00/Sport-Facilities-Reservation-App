@@ -38,64 +38,58 @@ const HomePage = ({
     getLocation();
   }, []);
 
-  // // Fetching Sport Facilities based on the selected category
-  // useEffect(() => {
-  //   const fetchSportFacilities = async () => {
-  //     const data = await fetchSportFacilitiesByCategory(selectedCategory);
-
-  //     let filteredFacilities = data.filter((facility) => {
-  //       if (province && province !== "" && facility.province !== province) {
-  //         return false;
-  //       }
-  //       if (surface && surface !== "" && facility.type.surface !== surface) {
-  //         return false;
-  //       }
-  //       return true;
-  //     });
-
-  //     setSportFacilities(filteredFacilities);
-  //     setIsLoading(false);
-  //   };
-  //   fetchSportFacilities();
-  // }, [selectedCategory, surface, distance, province]);
-
   // Fetching Sport Facilities based on the search query
   useEffect(() => {
-    const fetchSportFacilities = async () => {
-      if (searchQuery === "") {
-        const data = await fetchSportFacilitiesByCategory(selectedCategory);
-
-        let filteredFacilities = data.filter((facility) => {
-          if (province && province !== "" && facility.province !== province) {
-            return false;
-          }
-          if (surface && surface !== "" && facility.type.surface !== surface) {
-            return false;
-          }
-          return true;
-        });
-
-        setSportFacilities(filteredFacilities);
-        setIsLoading(false);
-        return;
-      }
-      const data = await fetchSportFacilitiesBySearchQuery(searchQuery, selectedCategory);
-
-      let filteredFacilities = data.filter((facility) => {
-        if (province && province !== "" && facility.province !== province) {
-          return false;
-        }
-        if (surface && surface !== "" && facility.type.surface !== surface) {
-          return false;
-        }
-        return true;
-      });
-
-      setSportFacilities(filteredFacilities);
-      setIsLoading(false);
-    };
     fetchSportFacilities();
-  }, [selectedCategory, searchQuery, surface, distance, province]);
+  }, [selectedCategory, searchQuery, location, surface, distance, province]);
+
+  const fetchSportFacilities = async () => {
+    let data;
+    if (searchQuery === "") {
+      data = await fetchSportFacilitiesByCategory(selectedCategory);
+    } else {
+      data = await fetchSportFacilitiesBySearchQuery(
+        searchQuery,
+        selectedCategory
+      );
+    }
+
+    const facilitiesWithDistance = addDistanceToFacilities(data);
+    console.log(facilitiesWithDistance);
+
+    let filteredFacilities = facilitiesWithDistance.filter((facility) => {
+      if (surface && surface !== "" && facility.type.surface !== surface) {
+        return false;
+      }
+      if (distance && distance !== 0 && facility.distance > distance) {
+        return false;
+      }
+      if (province && province !== "" && facility.province !== province) {
+        return false;
+      }
+      return true;
+    });
+
+    setSportFacilities(filteredFacilities);
+    setIsLoading(false);
+  };
+
+  const addDistanceToFacilities = (facilities) => {
+    if (!location) {
+      return facilities; // return the original facilities if location is not available yet
+    }
+    const facilitiesWithDistance = facilities.map((facility) => {
+      const userLocation = L.latLng(location.latitude, location.longitude);
+      const sportFacilityLocation = L.latLng(
+        facility.latitude,
+        facility.longitude
+      );
+      const distanceInMeters = userLocation.distanceTo(sportFacilityLocation);
+      const distanceInKilometers = distanceInMeters / 1000;
+      return { ...facility, distance: distanceInKilometers.toFixed(2) };
+    });
+    return facilitiesWithDistance;
+  };
 
   // Defining a function to get the user's current location
   const getLocation = () => {
@@ -148,6 +142,7 @@ const HomePage = ({
       ) : (
         <SportFacilities
           sportFacilities={sportFacilities}
+          setSportFacilities={setSportFacilities}
           isLoading={isLoading}
           location={location}
         />
