@@ -55,7 +55,12 @@ const ModalFilterForm = ({ filters, setIsLoading }) => {
   const handleFilter = (e) => {
     e.preventDefault();
 
-    setSurface(surfaceValue); 
+    if (surface === surfaceValue && distance === distanceValue && province === provinceValue) {
+      setIsModalOpen(false);
+      return;
+    }
+
+    setSurface(surfaceValue);
     setDistance(distanceValue);
     setProvince(provinceValue);
 
