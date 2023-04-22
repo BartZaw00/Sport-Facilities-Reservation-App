@@ -8,29 +8,29 @@ const NavbarMenuItem = ({ menuOption }) => {
   const { setIsModalOpen, setSelectedOption } = useContext(ModalContext);
 
   const handleMenuItemClick = () => {
-    if (menuOption !== "Wyloguj się") {
-      setIsModalOpen(true);
-      switch (menuOption) {
-        case "Zarejestruj się":
-          setSelectedOption("signup");
-          break;
-        case "Zaloguj się":
-          setSelectedOption("login");
-          break;
-        case "Ustawienia":
-          setSelectedOption("settings");
-          break;
-        case "Profil":
-          setSelectedOption("profile");
-          break;
-        case "Rezerwacje":
-          setSelectedOption("reservations");
-          break;
-        default:
-          setSelectedOption("");
-      }
-    } else {
+    if (menuOption === "Wyloguj się") {
       logout();
+      return;
+    }
+
+    setIsModalOpen(true);
+    setSelectedOption(getSelectedOption(menuOption));
+  };
+
+  const getSelectedOption = (menuOption) => {
+    switch (menuOption) {
+      case "Zarejestruj się":
+        return "signup";
+      case "Zaloguj się":
+        return "login";
+      case "Ustawienia":
+        return "settings";
+      case "Profil":
+        return "profile";
+      case "Rezerwacje":
+        return "reservations";
+      default:
+        return "";
     }
   };
 

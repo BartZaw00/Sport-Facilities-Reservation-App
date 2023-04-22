@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { MdLocationOn } from "react-icons/md";
 import { IoMdTime } from "react-icons/io";
-import { GiTennisCourt, GiGrass } from "react-icons/gi";
+import { GiGrass } from "react-icons/gi";
 import { BsSuitHeartFill, BsSuitHeart } from "react-icons/bs";
 import { LoadingSpinner } from "../../components/sharedComponents";
 import {
@@ -17,17 +17,25 @@ import useAuth from "../../hooks/useAuth";
 const SportFacility = ({ id }) => {
   const { user } = useAuth();
 
+  // State to determine if sport facility is clicked
   const [isClicked, setIsClicked] = useState(false);
+
+  // State to store sport facility data
   const [sportFacility, setSportFacility] = useState("");
+
+  // State to determine if data is being fetched
   const [isLoading, setIsLoading] = useState(true);
 
+  // State to store reservation data
   const [reservationData, setReservationData] = useState({
     sportFacilityID: id,
     userID: user?.id,
   });
 
+  // State to determine if the calendar needs to be updated
   const [shouldUpdateCalendar, setShouldUpdateCalendar] = useState(false);
 
+  // Update reservationData whenever the SportFacilityID changes
   useEffect(() => {
     setReservationData((prevData) => ({
       ...prevData,
@@ -35,6 +43,7 @@ const SportFacility = ({ id }) => {
     }));
   }, [id]);
 
+  // Update reservationData whenever the UserID changes
   useEffect(() => {
     setReservationData((prevData) => ({
       ...prevData,
@@ -42,10 +51,9 @@ const SportFacility = ({ id }) => {
     }));
   }, [user?.id]);
 
+  // Fetch sportFacilityData when reservationData changes
   useEffect(() => {
-    fetch(
-      `${import.meta.env.VITE_SPORT_FACILITY_URL}/getById?sportFacilityID=${id}`
-    )
+    fetch(`${import.meta.env.VITE_SPORT_FACILITY_URL}/getById?sportFacilityID=${id}`)
       .then((response) => response.json())
       .then((data) => {
         setSportFacility(data);
@@ -54,6 +62,7 @@ const SportFacility = ({ id }) => {
       .catch((error) => console.error(error));
   }, [reservationData]);
 
+  // Toggle isClicked when Sport Facility is clicked
   const handleClick = () => {
     setIsClicked(!isClicked);
   };
@@ -80,10 +89,7 @@ const SportFacility = ({ id }) => {
               />
               <SportFacilityDetail
                 icon={IoMdTime}
-                text={`${sportFacility.openTime.slice(
-                  0,
-                  -3
-                )} - ${sportFacility.closeTime.slice(0, -3)}`}
+                text={`${sportFacility.openTime.slice(0, -3)} - ${sportFacility.closeTime.slice(0, -3)}`}
               />
             </div>
             <button
