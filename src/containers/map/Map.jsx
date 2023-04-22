@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { GoogleMap, MarkerF, InfoBox } from "@react-google-maps/api";
+import { GoogleMap, MarkerF, InfoBox, useLoadScript } from "@react-google-maps/api";
 import MapSportFacilityBox from "./mapContent/MapSportFacilityBox";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import { LoadingSpinner } from "../../components/sharedComponents";
 
 const Map = ({ sportFacilities, location }) => {
   const { user } = useAuth();
 
   const navigate = useNavigate();
+
+  // Initializing the Google Maps API using the useLoadScript hook
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+  });
 
   const [markers, setMarkers] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState(null);
@@ -56,7 +62,7 @@ const Map = ({ sportFacilities, location }) => {
     navigate(`/sport-facility/${id}`);
   };
 
-  return (
+  return isLoaded ? (
     <GoogleMap
       mapContainerStyle={containerStyle}
       center={center}
@@ -98,6 +104,8 @@ const Map = ({ sportFacilities, location }) => {
         </InfoBox>
       )}
     </GoogleMap>
+  ) : (
+    <LoadingSpinner />
   );
 };
 

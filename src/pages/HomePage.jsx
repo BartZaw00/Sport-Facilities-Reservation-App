@@ -4,8 +4,7 @@ import Categories from "../containers/categories/Categories";
 import Map from "../containers/map/Map";
 import SportFacilities from "../containers/sportFacilities/SportFacilities";
 import MapOpenButton from "../containers/map/mapContent/MapOpenButton";
-import { useLoadScript } from "@react-google-maps/api";
-import { LoadingSpinner } from "../components/sharedComponents";
+
 import {
   fetchSportFacilitiesByCategory,
   fetchSportFacilitiesBySearchQuery,
@@ -27,11 +26,6 @@ const HomePage = ({
   const [surface, setSurface] = filteredSurface;
   const [distance, setDistance] = filteredDistance;
   const [province, setProvince] = filteredProvince;
-
-  // Initializing the Google Maps API using the useLoadScript hook
-  const { isLoaded } = useLoadScript({
-    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-  });
 
   // Executing the getLocation function on initial render
   useEffect(() => {
@@ -55,7 +49,6 @@ const HomePage = ({
     }
 
     const facilitiesWithDistance = addDistanceToFacilities(data);
-    console.log(facilitiesWithDistance);
 
     let filteredFacilities = facilitiesWithDistance.filter((facility) => {
       if (surface && surface !== "" && facility.type.surface !== surface) {
@@ -132,13 +125,9 @@ const HomePage = ({
         setSelectedCategory={setSelectedCategory}
       />
       {showMap ? (
-        isLoaded ? (
-          <section style={{ height: "calc(100vh - 163px )" }}>
-            <Map sportFacilities={sportFacilities} location={location} />
-          </section>
-        ) : (
-          <LoadingSpinner />
-        )
+        <section style={{ height: "calc(100vh - 163px )" }}>
+          <Map sportFacilities={sportFacilities} location={location} />
+        </section>
       ) : (
         <SportFacilities
           sportFacilities={sportFacilities}
