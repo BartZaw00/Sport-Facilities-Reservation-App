@@ -5,31 +5,41 @@ import { deleteReservation } from "../../../services/ReservationService";
 import moment from "moment";
 
 const ReservationCard = ({ reservation, setIsLoading, user, fetchReservationsByUser, setReservations }) => {
-
+  // Extract reservation data
   const { startTime, endTime, sportFacility } = reservation;
+
+  // Format date and time using moment.js library
   const formattedDate = moment(startTime).format("D MMMM YYYY");
   const formattedStartTime = moment(startTime).format("HH:mm");
   const formattedEndTime = moment(endTime).format("HH:mm");
 
+  // Access setIsModalOpen function from ModalContext to close the modal
   const { setIsModalOpen } = useContext(ModalContext);
 
+  // State to track if reservation is currently being deleted
   const [isDeleting, setIsDeleting] = useState(false);
 
+  // Access navigate function from the useNavigate hook to navigate to a different page
   const navigate = useNavigate();
 
+  // Function to show the delete confirmation
   const handleDeleteConfirmation = () => {
     setIsDeleting(true);
   };
 
+  // Function to cancel the delete operation and hide the delete confirmation
   const handleDeleteCancel = () => {
     setIsDeleting(false);
   };
 
+  // Function to delete the reservation and fetch updated reservations data
   const handleDelete = () => {
     setIsDeleting(false);
 
+    // Call the deleteReservation function to delete the reservation
     deleteReservation(reservation.reservationId)
       .then(() => {
+        // Set isLoading to true and fetch updated reservation data
         setIsLoading(true);
         setTimeout(() => fetchReservationsByUser(user.id).then((data) => {
             setReservations(data);
@@ -40,8 +50,11 @@ const ReservationCard = ({ reservation, setIsLoading, user, fetchReservationsByU
       .finally(() => setIsDeleting(false));
   };
 
+  // Function to handle when the sport facility photo is clicked
   const handleSportFacilityClick = (id) => {
+    // Close the modal
     setIsModalOpen(false);
+    // Navigate to the sport facility page using the navigate function
     navigate(`/sport-facility/${id}`);
   };
 

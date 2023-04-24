@@ -13,6 +13,7 @@ const ModalMyReservations = () => {
   // State to track if reservations are currently being fetched
   const [isLoading, setIsLoading] = useState(false);
 
+  // Fetch reservations by user when the user id changes
   useEffect(() => {
     if (user) {
       setIsLoading(true);
