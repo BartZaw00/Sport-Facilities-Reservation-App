@@ -1,6 +1,5 @@
 import React, { useContext, useRef, useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
-
 import { ModalContext } from "../../App";
 import {
   ModalFilterForm,
@@ -13,29 +12,61 @@ import {
 } from "./modalContent";
 
 const Modal = ({ option, images, filters, setIsLoading }) => {
+  // Get the state and setState function for the modal from the ModalContext
   const { isModalOpen, setIsModalOpen } = useContext(ModalContext);
+
+  // Create a ref to the modal element to check if a click happened inside or outside the modal
   const modalRef = useRef(null);
 
+  // Function to get the modal title based on the type of modal being rendered
+  const getModalTitle = (option) => {
+    switch (option) {
+      case "login":
+        return "Logowanie";
+      case "signup":
+        return "Rejestracja";
+      case "filter":
+        return "Filtruj";
+      case "settings":
+        return "Ustawienia";
+      case "profile":
+        return "Profil";
+      case "reservations":
+        return "Moje Rezerwacje";
+      case "image":
+        return "Zdjęcie";
+      case "images":
+        return "Zdjęcia";
+      default:
+        return "";
+    }
+  };
+
+  // Add event listener to handle clicks outside the modal
+  useEffect(() => {
+    document.addEventListener("mousedown", handleModalOutsideClick);
+
+    // Clean up event listener when component unmounts
+    return () => {
+      document.removeEventListener("mousedown", handleModalOutsideClick);
+    };
+  }, []);
+
+  // Function to handle closing the modal when the close button is clicked
   const handleCloseModalClick = () => {
     setIsModalOpen(false);
   };
 
+  // Function to handle closing the modal when a click happens outside the modal element
   const handleModalOutsideClick = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       // Checking whether the click was on the element with the class .ant-select-dropdown
+      // If it is not a click on this element, then close the modal
       if (!event.target.closest(".ant-select-dropdown")) {
         setIsModalOpen(false);
       }
     }
   };
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleModalOutsideClick);
-
-    return () => {
-      document.removeEventListener("mousedown", handleModalOutsideClick);
-    };
-  }, []);
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-my-modal-overlay z-50">
@@ -52,14 +83,7 @@ const Modal = ({ option, images, filters, setIsLoading }) => {
           >
             <IoMdClose size={20} />
           </div>
-          {option === "login" && <span className="font-bold">Logowanie</span>}
-          {option === "signup" && <span className="font-bold">Rejestracja</span>}
-          {option === "filter" && <span className="font-bold">Filtruj</span>}
-          {option === "settings" && <span className="font-bold">Ustawienia</span>}
-          {option === "profile" && <span className="font-bold">Profil</span>}
-          {option === "reservations" && <span className="font-bold">Moje Rezerwacje</span>}
-          {option === "image" && <span className="font-bold">Zdjęcie</span>}
-          {option === "images" && <span className="font-bold">Zdjęcia</span>}
+          <span className="font-bold">{getModalTitle(option)}</span>
         </div>
         <div className="px-6 py-5 overflow-y-auto">
           {option === "login" && <ModalLoginForm />}

@@ -6,8 +6,10 @@ import useAuth from "../../hooks/useAuth";
 import { LoadingSpinner } from "../../components/sharedComponents";
 
 const Map = ({ sportFacilities, location }) => {
+  // Accessing user object from the useAuth hook
   const { user } = useAuth();
 
+  // Using the useNavigate hook to navigate to different pages
   const navigate = useNavigate();
 
   // Initializing the Google Maps API using the useLoadScript hook
@@ -15,10 +17,12 @@ const Map = ({ sportFacilities, location }) => {
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   });
 
+  // Initializing state variables for markers, selected marker and center of the map
   const [markers, setMarkers] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [center, setCenter] = useState({ lat: 51.763, lng: 19.457 });
 
+  // Setting the container style for the Google Maps API
   const containerStyle = {
     width: "100%",
     height: "100%",
@@ -29,12 +33,14 @@ const Map = ({ sportFacilities, location }) => {
     createMarkers();
   }, [sportFacilities]);
 
+  // Setting the center of the map to the marker when the there is only one marker
   useEffect(() => {
     if (markers.length > 0 && !Array.isArray(sportFacilities)) {
       setCenter({ lat: markers[0].lat, lng: markers[0].lng });
     }
   }, [markers, sportFacilities]);
 
+  // Function to create markers from the list of Sport Facilities
   const createMarkers = () => {
     let facilities = sportFacilities;
     if (!Array.isArray(sportFacilities)) {
@@ -50,6 +56,7 @@ const Map = ({ sportFacilities, location }) => {
     setMarkers(newMarkers);
   };
 
+  // Function to handle clicking on a marker
   const onMarkerClick = (marker) => {
     if (markers.length > 0 && !Array.isArray(sportFacilities)) {
       return;
@@ -58,6 +65,7 @@ const Map = ({ sportFacilities, location }) => {
     setCenter({ lat: marker.lat - 0.03, lng: marker.lng });
   };
 
+  // Function to handle clicking on a Sport Facility in the InfoBox
   const handleSportFacilityClick = (id) => {
     navigate(`/sport-facility/${id}`);
   };
@@ -99,7 +107,7 @@ const Map = ({ sportFacilities, location }) => {
             )}
             location={location}
             selectedMarker={selectedMarker}
-            onClick={() => handleSportFacilityClick(selectedMarker.id)}
+            handleSportFacilityClick={() => handleSportFacilityClick(selectedMarker.id)}
           />
         </InfoBox>
       )}

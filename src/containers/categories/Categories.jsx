@@ -1,15 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { categories } from "../../utils/data";
-import {
-  CategoriesCategory,
-  CategoriesFilterButton,
-} from "./categoriesContent";
+import { CategoriesCategory, CategoriesFilterButton} from "./categoriesContent";
 
 const Categories = ({ selectedCategory, setSelectedCategory }) => {
   const [isSticky, setIsSticky] = useState(false);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
+
   const categoriesRef = useRef(null);
 
   // Updating the sticky state based on window scroll position
@@ -70,6 +68,10 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
     });
   };
 
+  const handleCategoryChange = (newCategory) => {
+    setSelectedCategory(newCategory);
+  }
+
   return (
     <aside
       className={`max-w-[2000px] bg-my-primary-bg mt-24 sm:mt-20 px-20 2xl:px-10 xl:px-8 lg:px-6 md:px-4 flex items-center ${
@@ -95,7 +97,7 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
             key={item.id}
             category={item}
             selectedCategory={selectedCategory}
-            onClick={(newCategory) => setSelectedCategory(newCategory)}
+            handleCategoryChange={(newCategory) => handleCategoryChange(newCategory)}
           />
         ))}
       </div>

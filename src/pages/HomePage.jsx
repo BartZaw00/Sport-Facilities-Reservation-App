@@ -133,7 +133,7 @@ const HomePage = ({ sportFacilities, setSportFacilities, filters, isLoading, set
           location={location}
         />
       )}
-      <MapOpenButton onClick={handleMapButtonClick} showMap={showMap} />
+      <MapOpenButton handleMapButtonClick={handleMapButtonClick} showMap={showMap} />
     </div>
   );
 };

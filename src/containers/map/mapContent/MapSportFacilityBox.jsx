@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from "react";
 import L from "leaflet";
 
-const MapSportFacilityBox = ({
-  sportFacility,
-  onClick,
-  location,
-  selectedMarker,
-}) => {
+const MapSportFacilityBox = ({ sportFacility, handleSportFacilityClick, location, selectedMarker }) => {
+  // distance state for displaying distance between user and sport facility
   const [distance, setDistance] = useState(-1);
 
+  // calculate distance between user and sport facility when location or selected marker change
   useEffect(() => {
     const userLocation = L.latLng(location?.latitude, location?.longitude);
-    const sportFacilityLocation = L.latLng(
-      location?.latitude,
-      sportFacility?.longitude
-    );
+    const sportFacilityLocation = L.latLng(location?.latitude, sportFacility?.longitude);
 
     if (location !== null) {
       const distanceInMeters = userLocation.distanceTo(sportFacilityLocation);
@@ -23,8 +17,8 @@ const MapSportFacilityBox = ({
     }
   }, [location, selectedMarker]);
 
-  const handleTouchEnd = (e) => {
-    onClick();
+  const handleTouchEnd = () => {
+    handleSportFacilityClick();
   };
 
   const handleTouchMove = (e) => {
@@ -34,7 +28,7 @@ const MapSportFacilityBox = ({
   return (
     <div
       className="relative w-[250px] md:w-[150px] flex flex-col gap-1 cursor-pointer bg-white rounded-xl overflow-hidden"
-      onClick={onClick}
+      onClick={handleSportFacilityClick}
       onTouchEnd={handleTouchEnd}
       onTouchMove={handleTouchMove}
     >

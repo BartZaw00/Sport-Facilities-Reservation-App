@@ -103,3 +103,33 @@ export const categories = [
     icon: horseriding_icon,
   },
 ];
+
+export const surfaceOptions = [
+  { label: "Dowolna", value: "" },
+  { label: "Naturalna trawa", value: "naturalna trawa" },
+  { label: "Sztuczna trawa", value: "Sztuczna trawa" },
+  { label: "Halowa", value: "halowa" },
+  { label: "Tartan", value: "tartan" },
+  { label: "Mączka ceglana", value: "mączka ceglana" },
+  { label: "Inne", value: "inne" },
+];
+
+export const provinceOptions = [
+  { label: "Dowolne", value: "" },
+  { label: "Dolnośląskie", value: "dolnoslaskie" },
+  { label: "Kujawsko-Pomorskie", value: "kujawsko-pomorskie" },
+  { label: "Lubelskie", value: "lubelskie" },
+  { label: "Lubuskie", value: "lubuskie" },
+  { label: "Łódzkie", value: "Łódzkie" },
+  { label: "Małopolskie", value: "malopolskie" },
+  { label: "Mazowieckie", value: "mazowieckie" },
+  { label: "Opolskie", value: "opolskie" },
+  { label: "Podkarpackie", value: "podkarpackie" },
+  { label: "Podlaskie", value: "podlaskie" },
+  { label: "Pomorskie", value: "pomorskie" },
+  { label: "Śląskie", value: "slaskie" },
+  { label: "Świętokrzyskie", value: "swietokrzyskie" },
+  { label: "Warmińsko-Mazurskie", value: "warminsko-mazurskie" },
+  { label: "Wielkopolskie", value: "wielkopolskie" },
+  { label: "Zachodniopomorskie", value: "zachodniopomorskie" },
+];
