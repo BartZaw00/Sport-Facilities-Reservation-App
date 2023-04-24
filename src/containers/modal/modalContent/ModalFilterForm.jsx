@@ -1,8 +1,5 @@
 import React, { useContext, useState } from "react";
-import {
-  FormButton,
-  FormDistanceFilter,
-} from "../../../components/formComponents";
+import { FormButton, FormDistanceFilter } from "../../../components/formComponents";
 import { Select } from "antd";
 import { ModalContext } from "../../../App";
 import { surfaceOptions, provinceOptions } from "../../../utils/data";

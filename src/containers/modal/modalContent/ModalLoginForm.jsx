@@ -1,121 +1,106 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-
 import { ModalContext } from "../../../App";
 import useAuth from "../../../hooks/useAuth";
-import {
-  ErrorMessage,
-  LoadingSpinner,
-  SuccessMessage,
-} from "../../../components/sharedComponents";
+import { ErrorMessage, LoadingSpinner, SuccessMessage } from "../../../components/sharedComponents";
 import { FormButton, FormInput } from "../../../components/formComponents";
+import { loginUser } from "../../../services/AccountService";
 
 const ModalLoginForm = () => {
+  // Destructure setIsModalOpen and setSelectedOption from the ModalContext
   const { setIsModalOpen, setSelectedOption } = useContext(ModalContext);
+
+  // Get the login function from the useAuth hook
   const { login } = useAuth();
 
+  // Create ref variable for email input
   const emailRef = useRef();
-  const errRef = useRef();
 
+   // Declare state variables for email, password, success, error message, and loading status
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [success, setSuccess] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  // Use useEffect to focus on email input when the component mounts
   useEffect(() => {
     emailRef.current.focus();
   }, []);
 
+  // Use useEffect to reset error message when email or password changes
   useEffect(() => {
     setErrMsg("");
   }, [email, password]);
 
+  // Handle change of email input
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
 
+  // Handle change of password input
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
 
+  // Handle login form submission
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+  
+    try {
+      // Call loginUser function with email and password
+      const userData = await loginUser(email, password);
 
-    fetch(`${import.meta.env.VITE_ACCOUNT_URL}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    })
-      .then(async (response) => {
-        const data = await response.json();
-        const {
-          userId: id,
-          photoUrl,
-          username,
-          name,
-          surname,
-          email,
-          roleId: role,
-          token,
-        } = data;
-        if (response?.status === 200) {
-          login({ id, photoUrl, username, name, surname, email, role, token });
-          setSuccess(true);
-          setTimeout(() => {
-            setIsModalOpen(false);
-          }, 2000);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        setErrMsg("Podany Email lub Hasło są błędne. Spróbuj ponownie.");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      // Call login function with user data
+      login(userData);
+
+      // Set success state to true
+      setSuccess(true);
+
+      // Close modal after 2 seconds
+      setTimeout(() => {
+        setIsModalOpen(false);
+      }, 2000);
+
+      // Clear timeout to prevent any potential memory leaks
+      return () => clearTimeout(modalTimeout);
+    } catch {
+      // Set error message for invalid email or password
+      setErrMsg("Podany Email lub Hasło są błędne. Spróbuj ponownie.");
+    } finally {
+      // Set isLoading state to false
+      setIsLoading(false);
+    }
   };
 
+  // Handle test account login button click
   const handleTestAccountLogin = async (e) => {
     setIsLoading(true);
+  
+    try {
+      // Call loginUser function with test account email and password
+      const userData = await loginUser("test@test.com", "Test1234!");
 
-    fetch(`${import.meta.env.VITE_ACCOUNT_URL}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: "test@test.com", password: "Test1234!" }),
-    })
-      .then(async (response) => {
-        const data = await response.json();
-        const {
-          userId: id,
-          photoUrl,
-          username,
-          name,
-          surname,
-          email,
-          roleId: role,
-          token,
-        } = data;
-        if (response?.status === 200) {
-          login({ id, photoUrl, username, name, surname, email, role, token });
-          setSuccess(true);
-          setTimeout(() => {
-            setIsModalOpen(false);
-          }, 2000);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        setErrMsg("Podany Email lub Hasło są błędne. Spróbuj ponownie.");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      // Call login function with user data
+      login(userData);
+
+      // Set success state to true
+      setSuccess(true);
+
+      // Close modal after 2 seconds
+      setTimeout(() => {
+        setIsModalOpen(false);
+      }, 2000);
+
+      // Clear timeout to prevent any potential memory leaks
+      return () => clearTimeout(modalTimeout);
+    } catch {
+      // Set error message for invalid email or password
+      setErrMsg("Podany Email lub Hasło są błędne. Spróbuj ponownie.");
+    } finally {
+      // Set isLoading state to false
+      setIsLoading(false);
+    }
   };
 
   return (

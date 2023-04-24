@@ -6,3 +6,4 @@ export { default as ModalPhotosContent } from "./ModalPhotosContent";
 export { default as ModalProfileForm } from "./ModalProfileForm";
 export { default as ModalSettingsForm } from "./ModalSettingsForm";
 export { default as ModalSignUpForm } from "./ModalSignUpForm";
+export { default as ReservationCard } from "./ReservationCard";
