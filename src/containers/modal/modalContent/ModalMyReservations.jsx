@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { LoadingSpinner } from "../../../components/sharedComponents";
 import useAuth from "../../../hooks/useAuth";
-import ReservationCard from "./ReservationCard";
+import ReservationCard from "./ModalReservationCard";
 import { fetchReservationsByUser } from "../../../services/ReservationService";
 
 const ModalMyReservations = () => {

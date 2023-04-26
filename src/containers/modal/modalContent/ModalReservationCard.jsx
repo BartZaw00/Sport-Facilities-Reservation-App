@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteReservation } from "../../../services/ReservationService";
 import moment from "moment";
 
-const ReservationCard = ({ reservation, setIsLoading, user, fetchReservationsByUser, setReservations }) => {
+const ModalReservationCard = ({ reservation, setIsLoading, user, fetchReservationsByUser, setReservations }) => {
   // Extract reservation data
   const { startTime, endTime, sportFacility } = reservation;
 
@@ -135,4 +135,4 @@ const ReservationCard = ({ reservation, setIsLoading, user, fetchReservationsByU
   );
 };
 
-export default ReservationCard;
+export default ModalReservationCard;
