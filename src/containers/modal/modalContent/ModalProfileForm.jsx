@@ -1,16 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-
 import useAuth from "../../../hooks/useAuth";
-import {
-  ErrorMessage,
-  ProfilePicture,
-  SuccessMessage,
-} from "../../../components/sharedComponents";
-import {
-  FormButton,
-  FormPasswordInput,
-  FormProfilePictureUploader,
-} from "../../../components/formComponents";
+import { ErrorMessage, ProfilePicture, SuccessMessage } from "../../../components/sharedComponents";
+import { FormButton, FormPasswordInput, FormProfilePictureUploader } from "../../../components/formComponents";
+import { updateUserDetails, updateUserPassword, uploadImage } from "../../../services/AccountService";
 
 const USERNAME_REGEX = /^[a-zA-Z][a-zA-Z0-9_-]{3,29}$/;
 const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -18,8 +10,10 @@ const PASSWORD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%])[A-Za-z\d!@#$%]{8,30}$/;
 
 const ModalProfileForm = () => {
+  // Using custom hook to get the authenticated user data and update it
   const { user, updateUser } = useAuth();
 
+  // Creating references to the username input and the error message element
   const usernameRef = useRef();
   const errRef = useRef();
 
@@ -44,16 +38,34 @@ const ModalProfileForm = () => {
   const [successMsg, setSuccessMsg] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
+  const passwordInputProps = {
+    password: password,
+    setPassword: setPassword,
+    validPassword: validPassword,
+    setValidPassword: setValidPassword,
+    passwordFocus: passwordFocus,
+    setPasswordFocus: setPasswordFocus,
+    matchPassword: matchPassword,
+    setMatchPassword: setMatchPassword,
+    validMatch: validMatch,
+    setValidMatch: setValidMatch,
+    matchFocus: matchFocus,
+    setMatchFocus: setMatchFocus,
+  };
+
+  // Setting focus to the username input when edit profile mode is activated
   useEffect(() => {
     if (isEditProfileMode) {
       usernameRef.current.focus();
     }
   }, [isEditProfileMode]);
 
+  // Clearing error message when any input field is changed
   useEffect(() => {
     setErrMsg("");
   }, [photoUrl, username, name, surname, email, password, matchPassword]);
 
+  // Updating state variables with the user data when the component is first mounted
   useEffect(() => {
     setUserId(user.id);
     setPhotoUrl(user.photoUrl || "");
@@ -61,15 +73,9 @@ const ModalProfileForm = () => {
     setName(user.name || "");
     setSurname(user.surname || "");
     setEmail(user.email);
-  }, [
-    user.id,
-    user.photoUrl,
-    user.username,
-    user.name,
-    user.surname,
-    user.email,
-  ]);
+  }, [ user.id, user.photoUrl, user.username, user.name, user.surname, user.email ]);
 
+  // Validating the password and the match password when either of them is changed
   useEffect(() => {
     const result = PASSWORD_REGEX.test(password);
     setValidPassword(result);
@@ -77,102 +83,65 @@ const ModalProfileForm = () => {
     setValidMatch(match);
   }, [password, matchPassword]);
 
-  const updateUserDetails = async () => {
-    const userData = localStorage.getItem("userData");
-    const parsedUserData = JSON.parse(userData);
-    const id = parsedUserData.id;
-    fetch(`${import.meta.env.VITE_ACCOUNT_URL}/updateUser/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
+  // Updating user details and displaying a success message when the form is submitted
+  const handleUpdateUserDetails = async () => {
+    try {
+      const data = await updateUserDetails(
         photoUrl,
         username,
         name,
         surname,
-        email,
-      }),
-    })
-      .then(async (response) => {
-        const data = await response.json();
-        console.log(response);
-        console.log(user);
-
-        console.log(data);
-        if (response.ok) {
-          updateUser(data);
-          setSuccessMsg("Pomyślnie udało się zaktualizować profil");
-          setIsEditProfileMode(false);
-          setTimeout(() => {
-            setSuccessMsg("");
-          }, 5000);
-        }
-      })
-      .catch((error) => {
-        setErrMsg(
-          "Podana Nazwa Użytkownika lub Email jest już zajęty. Spróbuj ponownie."
-        );
-      });
+        email
+      );
+      updateUser(data);
+      setSuccessMsg("Pomyślnie udało się zaktualizować profil");
+      setIsEditProfileMode(false);
+      setTimeout(() => {
+        setSuccessMsg("");
+      }, 5000);
+    } catch (error) {
+      setErrMsg(
+        "Podana Nazwa Użytkownika lub Email jest już zajęty. Spróbuj ponownie."
+      );
+    }
   };
 
-  const updateUserPassword = async () => {
-    fetch(`${import.meta.env.VITE_ACCOUNT_URL}/updateUserPassword/${user.id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        password,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          setErrMsg("Nie udało się zaktualizować hasła. Spróbuj ponownie");
-          return;
-        }
-
-        setSuccessMsg("Pomyślnie udało się zaktualizować profil");
-        setIsEditPasswordMode(false);
-        setTimeout(() => {
-          setSuccessMsg("");
-        }, 5000);
-      })
-
-      .catch(() => {
-        setErrMsg("Wystąpił błąd. Spróbuj ponownie.");
-      });
+  // Updating user password and displaying a success message when the form is submitted
+  const handleUpdateUserPassword = async () => {
+    try {
+      // TO FIX
+      await updateUserPassword(password);
+      setSuccessMsg("Pomyślnie udało się zaktualizować hasło");
+      setIsEditPasswordMode(false);
+      setTimeout(() => {
+        setSuccessMsg("");
+      }, 5000);
+    } catch (error) {
+      setErrMsg("Nie udało się zaktualizować hasła. Spróbuj ponownie");
+    }
   };
 
+  // Switch to edit profile mode
   const handleEditProfileClick = () => {
     setIsEditProfileMode(true);
   };
 
+  // Switch to change password mode
   const handleChangePasswordClick = () => {
     setIsEditPasswordMode(true);
   };
 
+  // Upload user's image
   const handleImageChange = async (imageFile) => {
-    const formData = new FormData();
-    formData.append("file", imageFile);
-    formData.append("upload_preset", "SportFacilities");
     try {
-      const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${
-          import.meta.env.VITE_CLOUD_NAME
-        }/image/upload`,
-        {
-          method: "POST",
-          body: formData,
-        }
-      );
-      const data = await response.json();
-      setPhotoUrl(data.url);
+      const photoUrl = await uploadImage(imageFile);
+      setPhotoUrl(photoUrl);
     } catch (error) {
       console.error(error);
     }
   };
 
+  // Save user's profile or password changes
   const handleSaveClick = async () => {
     const usr = USERNAME_REGEX.test(username);
     const eml = EMAIL_REGEX.test(email);
@@ -192,7 +161,7 @@ const ModalProfileForm = () => {
         return;
       }
 
-      await updateUserDetails();
+      await handleUpdateUserDetails();
     }
 
     if (isEditPasswordMode) {
@@ -201,10 +170,11 @@ const ModalProfileForm = () => {
         return;
       }
 
-      await updateUserPassword();
+      await handleUpdateUserPassword();
     }
   };
 
+  // Cancel user's profile or password changes and reset the form fields
   const handleCancelClick = () => {
     if (isEditProfileMode) setIsEditProfileMode(false);
     if (isEditPasswordMode) setIsEditPasswordMode(false);
@@ -238,20 +208,7 @@ const ModalProfileForm = () => {
         </div>
         <div className="max-w-md flex flex-col gap-4">
           {isEditPasswordMode ? (
-            <FormPasswordInput
-              password={password}
-              setPassword={setPassword}
-              validPassword={validPassword}
-              setValidPassword={setValidPassword}
-              passwordFocus={passwordFocus}
-              setPasswordFocus={setPasswordFocus}
-              matchPassword={matchPassword}
-              setMatchPassword={setMatchPassword}
-              validMatch={validMatch}
-              setValidMatch={setValidMatch}
-              matchFocus={matchFocus}
-              setMatchFocus={setMatchFocus}
-            />
+            <FormPasswordInput {...passwordInputProps} />
           ) : (
             <>
               <div className="flex flex-wrap gap-4">
@@ -356,7 +313,7 @@ const ModalProfileForm = () => {
               >
                 Edytuj Profil
               </FormButton>
-              { /* test user id */}
+              {/* test user id */}
               {user?.id !== 6 && (
                 <FormButton
                   onClick={handleChangePasswordClick}

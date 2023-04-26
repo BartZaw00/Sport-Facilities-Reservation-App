@@ -13,12 +13,11 @@ const ModalSettingsForm = () => {
     { value: "light", label: "Jasny" },
     // { value: "dark", label: "Ciemny" },
   ];
-
   const languageOptions = [{ value: "polish", label: "Polski" }];
 
   const handleSubmit = () => {
     setIsModalOpen(false);
-  }
+  };
 
   return (
     <form className="flex flex-col gap-4 pb-4" onSubmit={handleSubmit}>

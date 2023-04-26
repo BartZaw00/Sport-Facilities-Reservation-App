@@ -19,7 +19,7 @@ const FormPasswordInput = ({
   setMatchFocus,
 }) => {
   return (
-    <form>
+    <div>
       <div className="flex-1 flex flex-col gap-2">
         <label htmlFor="password" className="text-my-gray flex items-center">
           <span>Hasło:</span>
@@ -96,7 +96,7 @@ const FormPasswordInput = ({
           onBlur={() => setMatchFocus(false)}
         />
       </div>
-    </form>
+    </div>
   );
 };
 
