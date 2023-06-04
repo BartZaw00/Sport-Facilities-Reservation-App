@@ -14,7 +14,7 @@ const FormSelectReservation = ({
     <div className="flex flex-col gap-4 md:gap-2">
       <label
         htmlFor="duration"
-        className={`${isMediumScreen ? "text-xs" : "text-lg"} ${addSportFacility ? 'font-base text-[16px]' : 'font-medium'}`}
+        className={`${isMediumScreen ? "text-xs" : "text-lg"} ${addSportFacility ? 'font-base text-base' : 'font-medium'}`}
       >
         {label}
       </label>

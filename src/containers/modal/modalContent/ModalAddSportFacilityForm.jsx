@@ -90,7 +90,7 @@ const ModalAddSportFacilityForm = () => {
         </div>
         <div className="flex flex-col gap-2">
           <FormSelectReservation
-            label="Type"
+            label="Typ"
             options={typeOptions}
             onChange={(value) => setType(value)}
             value={type}
