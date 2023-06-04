@@ -4,16 +4,23 @@ import {
   ProfilePicture,
   SuccessMessage,
 } from "../../../components/sharedComponents";
-import { FormButton, FormProfilePictureUploader } from "../../../components/formComponents";
+import { FormButton, FormProfilePictureUploader, FormSelectReservation } from "../../../components/formComponents";
 
 const ModalSportFacilityForm = () => {
-  const [name, setName] = useState("");
+  const [type, setType] = useState("1");
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [images, setImages] = useState([]);
 
   const [successMsg, setSuccessMsg] = useState("");
   const [errMsg, setErrMsg] = useState("");
+
+  const typeOptions = [
+    { label: "Orlik", value: "1" },
+    { label: "Hala Sportowa", value: "2" },
+    { label: "Boisko Piłkarskie", value: "3" },
+    { label: "Boisko Tartanowe", value: "5" },
+  ];
 
   const handleSaveClick = () => {
     // Perform form validation
@@ -47,12 +54,12 @@ const ModalSportFacilityForm = () => {
             <FormProfilePictureUploader  />
         </div>
         <div className="flex flex-col gap-2">
-          <label htmlFor="name">Nazwa</label>
-          <input
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-my-primary"
+          <FormSelectReservation
+            label="Type"
+            options={typeOptions}
+            onChange={(value) => setType(value)}
+            value={type}
+            addSportFacility={true}
           />
         </div>
         <div className="flex flex-col gap-2">
