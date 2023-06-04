@@ -15,12 +15,12 @@ function App() {
 
   const [surface, setSurface] = useState("");
   const [distance, setDistance] = useState(15);
-  const [province, setProvince] = useState("");
+  const [city, setCity] = useState("");
 
   const filters = {
     filteredSurface: [surface, setSurface],
     filteredDistance: [distance, setDistance],
-    filteredProvince: [province, setProvince],
+    filteredCity: [city, setCity],
   };
 
   return (

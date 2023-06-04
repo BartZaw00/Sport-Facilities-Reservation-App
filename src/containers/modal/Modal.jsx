@@ -9,7 +9,9 @@ import {
   ModalProfileForm,
   ModalSettingsForm,
   ModalSignUpForm,
+  ModalSportFacilityForm,
 } from "./modalContent";
+import ModalAddSportFacilityForm from "./modalContent/ModalAddSportFacilityForm";
 
 const Modal = ({ option, images, filters, setIsLoading }) => {
   // Get the state and setState function for the modal from the ModalContext
@@ -37,6 +39,10 @@ const Modal = ({ option, images, filters, setIsLoading }) => {
         return "Zdjęcie";
       case "images":
         return "Zdjęcia";
+      case "sportFacility":
+        return "Edytuj Obiekt";
+      case "addSportFacility":
+        return "Dodaj Obiekt";
       default:
         return "";
     }
@@ -88,11 +94,17 @@ const Modal = ({ option, images, filters, setIsLoading }) => {
         <div className="px-6 py-5 overflow-y-auto">
           {option === "login" && <ModalLoginForm />}
           {option === "signup" && <ModalSignUpForm />}
-          {option === "filter" && <ModalFilterForm filters={filters} setIsLoading={setIsLoading} />}
+          {option === "filter" && (
+            <ModalFilterForm filters={filters} setIsLoading={setIsLoading} />
+          )}
           {option === "settings" && <ModalSettingsForm />}
           {option === "profile" && <ModalProfileForm />}
           {option === "reservations" && <ModalMyReservations />}
-          {(option === "image" || option === "images") && <ModalPhotosContent images={images} />}
+          {(option === "image" || option === "images") && (
+            <ModalPhotosContent images={images} />
+          )}
+          {option === "sportFacility" && <ModalSportFacilityForm />}
+          {option === "addSportFacility" && <ModalAddSportFacilityForm />}
         </div>
       </div>
     </div>

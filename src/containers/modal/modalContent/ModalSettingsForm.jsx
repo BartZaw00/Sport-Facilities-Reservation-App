@@ -37,7 +37,7 @@ const ModalSettingsForm = () => {
           ))}
         </Select>
       </div>
-      <div className="flex flex-col gap-2">
+      {/* <div className="flex flex-col gap-2">
         <label htmlFor="surface">Język</label>
         <Select
           id="language"
@@ -52,7 +52,7 @@ const ModalSettingsForm = () => {
             </Select.Option>
           ))}
         </Select>
-      </div>
+      </div> */}
       <FormButton className="px-4 py-2 bg-my-primary text-white rounded-md hover:bg-my-primary-hover active:bg-my-primary-active">
         Zapisz
       </FormButton>

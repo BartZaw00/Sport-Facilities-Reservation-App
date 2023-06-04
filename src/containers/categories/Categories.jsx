@@ -1,9 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { categories } from "../../utils/data";
-import { CategoriesCategory, CategoriesFilterButton} from "./categoriesContent";
+import {
+  CategoriesCategory,
+  CategoriesFilterButton,
+} from "./categoriesContent";
+import { NavbarSearch } from "../navbar/navbarContent";
 
-const Categories = ({ selectedCategory, setSelectedCategory }) => {
+const Categories = ({ selectedCategory, setSelectedCategory, searchQuery, handleSearchQueryChange }) => {
   const [isSticky, setIsSticky] = useState(false);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
@@ -18,11 +22,11 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
       else setIsSticky(false);
     };
 
-    window.addEventListener("scroll", handleScrollY);
+    // window.addEventListener("scroll", handleScrollY);
 
-    return () => {
-      window.removeEventListener("scroll", handleScrollY);
-    };
+    // return () => {
+    //   window.removeEventListener("scroll", handleScrollY);
+    // };
   }, []);
 
   // Updating arrow visibility based on the scroll position of the categories container
@@ -44,8 +48,8 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
         setShowRightArrow(true);
       }
     };
-    categoriesDiv.addEventListener("scroll", handleScrollX);
-    return () => categoriesDiv.removeEventListener("scroll", handleScrollX);
+    // categoriesDiv.addEventListener("scroll", handleScrollX);
+    // return () => categoriesDiv.removeEventListener("scroll", handleScrollX);
   }, []);
 
   // Swipe Left when left arrow button clicked
@@ -70,25 +74,21 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
 
   const handleCategoryChange = (newCategory) => {
     setSelectedCategory(newCategory);
-  }
+  };
 
   return (
     <aside
-      className={`max-w-[2000px] bg-my-primary-bg mt-24 sm:mt-20 px-20 2xl:px-10 xl:px-8 lg:px-6 md:px-4 flex items-center ${
-        isSticky
-          ? "sticky top-20 shadow-sm border-solid border-b-2 border-my-divider z-30"
-          : ""
-      }`}
+      className={`max-w-[2000px] bg-my-primary-bg mt-24 sm:mt-20 px-20 2xl:px-10 xl:px-8 lg:px-6 md:px-4 flex items-center `}
     >
-      {showLeftArrow && (
+      {/* {showLeftArrow && (
         <div
           className="p-1 border border-my-scrollbar-btn rounded-full cursor-pointer hover:shadow-lg hover:scale-105"
           onClick={handleLeftArrowClick}
         >
           <AiOutlineLeft />
         </div>
-      )}
-      <div
+      )} */}
+      {/* <div
         ref={categoriesRef}
         className="flex gap-14 sm:gap-8 whitespace-nowrap overflow-x-auto overflow-y-hidden scrollbar-hide"
       >
@@ -100,16 +100,16 @@ const Categories = ({ selectedCategory, setSelectedCategory }) => {
             handleCategoryChange={(newCategory) => handleCategoryChange(newCategory)}
           />
         ))}
-      </div>
-      <div
+      </div> */}
+      {/* <div
         className={`${
           showRightArrow ? "block" : "invisible"
         } p-1 border border-my-scrollbar-btn rounded-full mr-8 cursor-pointer hover:shadow-lg hover:scale-105`}
         onClick={handleRightArrowClick}
       >
         <AiOutlineRight />
-      </div>
-      <div className="ml-auto">
+      </div> */}
+      <div className="ml-auto mb-4">
         <CategoriesFilterButton />
       </div>
     </aside>

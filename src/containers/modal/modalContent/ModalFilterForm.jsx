@@ -2,22 +2,22 @@ import React, { useContext, useState } from "react";
 import { FormButton, FormDistanceFilter } from "../../../components/formComponents";
 import { Select } from "antd";
 import { ModalContext } from "../../../App";
-import { surfaceOptions, provinceOptions } from "../../../utils/data";
+import { surfaceOptions, cityOptions } from "../../../utils/data";
 
 const ModalFilterForm = ({ filters, setIsLoading }) => {
   // Get the setIsModalOpen function from the ModalContext
   const { setIsModalOpen } = useContext(ModalContext);
 
   // Extract the filtered values from the filters object
-  const { filteredSurface, filteredDistance, filteredProvince } = filters;
+  const { filteredSurface, filteredDistance, filteredCity } = filters;
   const [surface, setSurface] = filteredSurface;
   const [distance, setDistance] = filteredDistance;
-  const [province, setProvince] = filteredProvince;
+  const [city, setCity] = filteredCity;
 
   // Create state variables to hold the values of the form inputs
   const [surfaceValue, setSurfaceValue] = useState(surface);
   const [distanceValue, setDistanceValue] = useState(distance);
-  const [provinceValue, setProvinceValue] = useState(province);
+  const [cityValue, setCityValue] = useState(city);
 
   // Handle change of surface input
   const handleSurfaceChange = (value) => {
@@ -29,9 +29,9 @@ const ModalFilterForm = ({ filters, setIsLoading }) => {
     setDistanceValue(parseInt(e.target.value, 10));
   };
 
-  // Handle change of province input
-  const handleProvinceChange = (value) => {
-    setProvinceValue(value);
+  // Handle change of city input
+  const handleCityChange = (value) => {
+    setCityValue(value);
   };
 
   // Handle filter form submission
@@ -42,7 +42,7 @@ const ModalFilterForm = ({ filters, setIsLoading }) => {
     if (
       surface === surfaceValue &&
       distance === distanceValue &&
-      province === provinceValue
+      city === cityValue
     ) {
       setIsModalOpen(false);
       return;
@@ -51,7 +51,7 @@ const ModalFilterForm = ({ filters, setIsLoading }) => {
     // Update the filtered values with the new values
     setSurface(surfaceValue);
     setDistance(distanceValue);
-    setProvince(provinceValue);
+    setCity(cityValue);
 
     // Set loading state and close the modal
     setIsLoading(true);
@@ -84,15 +84,15 @@ const ModalFilterForm = ({ filters, setIsLoading }) => {
         handleDistanceChange={handleDistanceChange}
       />
       <div className="flex flex-col gap-2">
-        <label htmlFor="surface">Województwo</label>
+        <label htmlFor="city">Miasto</label>
         <Select
-          id="province"
+          id="city"
           size="large"
-          value={provinceValue}
-          onChange={(value) => handleProvinceChange(value)}
+          value={cityValue}
+          onChange={(value) => handleCityChange(value)}
           className={`relative rounded-lg focus:outline-none hover:ring-1 focus:ring-my-primary`}
         >
-          {provinceOptions.map((option) => (
+          {cityOptions.map((option) => (
             <Select.Option key={option.value} value={option.value}>
               {option.label}
             </Select.Option>

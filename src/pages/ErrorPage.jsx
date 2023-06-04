@@ -13,6 +13,9 @@ const ErrorPage = () => {
       <p className="text-lg text-my-primary-text text-center mb-4">
         Podana strona nie istnieje. Spróbuj ponownie później.
       </p>
+      <footer className="bg-gray-800 py-4 text-center text-white">
+        <p>&copy; {new Date().getFullYear()} Bartosz Zawadka</p>
+      </footer>
     </div>
   );
 };

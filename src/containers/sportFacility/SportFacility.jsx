@@ -14,7 +14,7 @@ import {
 import Map from "../map/Map";
 import useAuth from "../../hooks/useAuth";
 
-const SportFacility = ({ id }) => {
+const SportFacility = ({ id, isLoading, setIsLoading }) => {
   const { user } = useAuth();
 
   // State to determine if sport facility is clicked
@@ -22,9 +22,6 @@ const SportFacility = ({ id }) => {
 
   // State to store sport facility data
   const [sportFacility, setSportFacility] = useState("");
-
-  // State to determine if data is being fetched
-  const [isLoading, setIsLoading] = useState(true);
 
   // State to store reservation data
   const [reservationData, setReservationData] = useState({
@@ -53,7 +50,9 @@ const SportFacility = ({ id }) => {
 
   // Fetch sportFacilityData when reservationData changes
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_SPORT_FACILITY_URL}/getById?sportFacilityID=${id}`)
+    fetch(
+      `${import.meta.env.VITE_SPORT_FACILITY_URL}/getById?sportFacilityID=${id}`
+    )
       .then((response) => response.json())
       .then((data) => {
         setSportFacility(data);
@@ -89,16 +88,19 @@ const SportFacility = ({ id }) => {
               />
               <SportFacilityDetail
                 icon={IoMdTime}
-                text={`${sportFacility.openTime.slice(0, -3)} - ${sportFacility.closeTime.slice(0, -3)}`}
+                text={`${sportFacility.openTime.slice(
+                  0,
+                  -3
+                )} - ${sportFacility.closeTime.slice(0, -3)}`}
               />
             </div>
-            <button
+            {/* <button
               className="px-3 py-2 bg-slate-200 flex items-center gap-2 rounded-full hover:bg-slate-300 active:bg-slate-400 md:text-sm sm:hidden"
               onClick={handleClick}
             >
               Dodaj do ulubionych{" "}
               {isClicked ? <BsSuitHeartFill color="red" /> : <BsSuitHeart />}
-            </button>
+            </button> */}
           </div>
           <div className="mt-4">
             <SportFacilityGallery images={sportFacility.photos} />

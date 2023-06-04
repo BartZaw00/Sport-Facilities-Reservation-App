@@ -5,16 +5,16 @@ import { FaListUl } from "react-icons/fa";
 const MapOpenButton = ({ handleMapButtonClick, showMap }) => {
   return (
     <div
-      className="fixed left-2/4 bottom-24 -translate-x-2/4 md:bottom-12 bg-my-primary-text px-5 py-4 rounded-full cursor-pointer duration-200 hover:-translate-y-2 hover:scale-105"
+      className=" bg-my-primary shadow-lg px-4 py-3 rounded-full cursor-pointer duration-200 hover:-translate-y-1 hover:scale-105"
       onClick={handleMapButtonClick}
     >
       {showMap ? (
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-4">
           <span className="text-white font-bold">Lista</span>
           <FaListUl color="white" />
         </div>
       ) : (
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-4">
           <span className="text-white font-bold">Mapa</span>
           <BsMap color="white" />
         </div>

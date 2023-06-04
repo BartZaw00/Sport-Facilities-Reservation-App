@@ -114,22 +114,10 @@ export const surfaceOptions = [
   { label: "Inne", value: "inne" },
 ];
 
-export const provinceOptions = [
+export const cityOptions = [
   { label: "Dowolne", value: "" },
-  { label: "Dolnośląskie", value: "dolnoslaskie" },
-  { label: "Kujawsko-Pomorskie", value: "kujawsko-pomorskie" },
-  { label: "Lubelskie", value: "lubelskie" },
-  { label: "Lubuskie", value: "lubuskie" },
-  { label: "Łódzkie", value: "Łódzkie" },
-  { label: "Małopolskie", value: "malopolskie" },
-  { label: "Mazowieckie", value: "mazowieckie" },
-  { label: "Opolskie", value: "opolskie" },
-  { label: "Podkarpackie", value: "podkarpackie" },
-  { label: "Podlaskie", value: "podlaskie" },
-  { label: "Pomorskie", value: "pomorskie" },
-  { label: "Śląskie", value: "slaskie" },
-  { label: "Świętokrzyskie", value: "swietokrzyskie" },
-  { label: "Warmińsko-Mazurskie", value: "warminsko-mazurskie" },
-  { label: "Wielkopolskie", value: "wielkopolskie" },
-  { label: "Zachodniopomorskie", value: "zachodniopomorskie" },
+  { label: "Łódź", value: "Łódź" },
+  { label: "Rzgów", value: "Rzgów" },
+  { label: "Starowa Góra", value: "Starowa Góra" },
+  { label: "Zgierz", value: "Zgierz" },
 ];
