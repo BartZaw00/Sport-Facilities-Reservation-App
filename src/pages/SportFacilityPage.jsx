@@ -21,7 +21,7 @@ const SportFacilityPage = () => {
         setIsLoading={setIsLoading}
       />
       {!isLoading && (
-        <footer className="fixed bottom-0 bg-gray-800 py-4 text-center text-white w-full backdrop-blur z-50">
+        <footer className="fixed bottom-0 bg-gray-800 py-4 text-center text-white w-full backdrop-blur z-50 md:hidden">
           <p>&copy; {new Date().getFullYear()} Bartosz Zawadka</p>
         </footer>
       )}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { LoadingSpinner } from "../../../components/sharedComponents";
 import useAuth from "../../../hooks/useAuth";
-import ReservationCard from "./ModalReservationCard";
+import ModalReservationCard from "./ModalReservationCard";
 import { fetchReservationsByUser } from "../../../services/ReservationService";
 
 const ModalMyReservations = () => {
@@ -10,8 +10,8 @@ const ModalMyReservations = () => {
 
   // State to hold the user's reservations
   const [reservations, setReservations] = useState([]);
-  // State to track if reservations are currently being fetched
   const [isLoading, setIsLoading] = useState(false);
+
 
   // Fetch reservations by user when the user id changes
   useEffect(() => {
@@ -33,7 +33,7 @@ const ModalMyReservations = () => {
       ) : reservations.length > 0 ? (
         <div className="p-6 w-full sm:p-2">
           {reservations.map((reservation) => (
-            <ReservationCard
+            <ModalReservationCard
               key={reservation.reservationId}
               reservation={reservation}
               setIsLoading={setIsLoading}
